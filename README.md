@@ -10,5 +10,7 @@
 ***
 [Utilities](/Utilities) includes many useful tools for analyzing sequence data.
 ***
-
-[About Katz Lab](https://www.science.smith.edu/katz-lab/)
+## Katz lab
+[About Katz Lab](https://www.science.smith.edu/katz-lab/) \|
+📧[Mail](lkatz@smith.edu) \| 📞 Call : (413) 585-3825  \|:office: Address: Burton Hall 201, 46 College Lane,
+Smith College, Northampton Massachusetts.
