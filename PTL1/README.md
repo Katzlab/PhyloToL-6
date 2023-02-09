@@ -1,3 +1,4 @@
+![Lab image](https://github.com/Katzlab/PhyloToL-6/blob/621517812a5ed4256f19ba26498a665bdd5060af/Katzlab.png)
 # PLT1
 > Scripts for assigning transcripts and coding sequences to gene familes (OGs).
 
