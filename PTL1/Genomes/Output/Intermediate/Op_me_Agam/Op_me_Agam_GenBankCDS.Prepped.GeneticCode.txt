@@ -1,0 +1,7 @@
+Stop Codon	Frequency
+TGA	8
+TAG	10
+TAA	8
+
+Suggestion For Genetic Code:	Condylostoma or None
+

@@ -1,0 +1,886 @@
+<?xml version="1.0"?>
+<!DOCTYPE BlastOutput PUBLIC "-//NCBI//NCBI BlastOutput/EN" "http://www.ncbi.nlm.nih.gov/dtd/NCBI_BlastOutput.dtd">
+<BlastOutput>
+  <BlastOutput_program>blastp</BlastOutput_program>
+  <BlastOutput_version>BLASTP 2.2.29+</BlastOutput_version>
+  <BlastOutput_reference>Stephen F. Altschul, Thomas L. Madden, Alejandro A. Sch&amp;auml;ffer, Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), &quot;Gapped BLAST and PSI-BLAST: a new generation of protein database search programs&quot;, Nucleic Acids Res. 25:3389-3402.</BlastOutput_reference>
+  <BlastOutput_db>../OGBlastDB/renamed_aa_seqs_OrthoMCL-5_12653.fasta</BlastOutput_db>
+  <BlastOutput_query-ID>Query_1</BlastOutput_query-ID>
+  <BlastOutput_query-def>Contig_18_Len1392_OG5_127413</BlastOutput_query-def>
+  <BlastOutput_query-len>463</BlastOutput_query-len>
+  <BlastOutput_param>
+    <Parameters>
+      <Parameters_matrix>BLOSUM62</Parameters_matrix>
+      <Parameters_expect>1e-10</Parameters_expect>
+      <Parameters_gap-open>11</Parameters_gap-open>
+      <Parameters_gap-extend>1</Parameters_gap-extend>
+      <Parameters_filter>F</Parameters_filter>
+    </Parameters>
+  </BlastOutput_param>
+<BlastOutput_iterations>
+<Iteration>
+  <Iteration_iter-num>1</Iteration_iter-num>
+  <Iteration_query-ID>Query_1</Iteration_query-ID>
+  <Iteration_query-def>Contig_18_Len1392_OG5_127413</Iteration_query-def>
+  <Iteration_query-len>463</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000012-PAm_OG5_127413</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>463</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>920</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>463</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>463</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>462</Hsp_identity>
+      <Hsp_positive>462</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>462</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>2</Iteration_iter-num>
+  <Iteration_query-ID>Query_2</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_12_Len3402_OG5_127444</Iteration_query-def>
+  <Iteration_query-len>1041</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000018-PAm_OG5_127444</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>1041</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>2069</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>1041</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>1041</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>1040</Hsp_identity>
+      <Hsp_positive>1040</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>1040</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>3</Iteration_iter-num>
+  <Iteration_query-ID>Query_3</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_16_Len1512_OG5_129842</Iteration_query-def>
+  <Iteration_query-len>406</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_amel_XP392321_OG5_129842</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>406</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>101</Hsp_score>
+      <Hsp_evalue>1.15e-21</Hsp_evalue>
+      <Hsp_query-from>14</Hsp_query-from>
+      <Hsp_query-to>419</Hsp_query-to>
+      <Hsp_hit-from>14</Hsp_hit-from>
+      <Hsp_hit-to>419</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>405</Hsp_identity>
+      <Hsp_positive>405</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>405</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>4</Iteration_iter-num>
+  <Iteration_query-ID>Query_4</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_6_Len4477_OG5_128592</Iteration_query-def>
+  <Iteration_query-len>484</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_phum_PHUM163340_OG5_128592</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>484</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>99.4</Hsp_score>
+      <Hsp_evalue>3.00e-19</Hsp_evalue>
+      <Hsp_query-from>83</Hsp_query-from>
+      <Hsp_query-to>566</Hsp_query-to>
+      <Hsp_hit-from>83</Hsp_hit-from>
+      <Hsp_hit-to>566</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>483</Hsp_identity>
+      <Hsp_positive>483</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>483</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>5</Iteration_iter-num>
+  <Iteration_query-ID>Query_5</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_4_Len6450_OG5_132261</Iteration_query-def>
+  <Iteration_query-len>1661</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000020-PAm_OG5_132261</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>1661</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>3164</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>1661</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>1661</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>1660</Hsp_identity>
+      <Hsp_positive>1660</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>1660</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>6</Iteration_iter-num>
+  <Iteration_query-ID>Query_6</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_3_Len7344_OG5_131234</Iteration_query-def>
+  <Iteration_query-len>260</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_cbri_WBGene00027163_OG5_131234</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>260</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>208</Hsp_score>
+      <Hsp_evalue>1.83e-52</Hsp_evalue>
+      <Hsp_query-from>291</Hsp_query-from>
+      <Hsp_query-to>550</Hsp_query-to>
+      <Hsp_hit-from>291</Hsp_hit-from>
+      <Hsp_hit-to>550</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>259</Hsp_identity>
+      <Hsp_positive>259</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>259</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>7</Iteration_iter-num>
+  <Iteration_query-ID>Query_7</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_2_Len11031_OG5_129650</Iteration_query-def>
+  <Iteration_query-len>3332</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000017-PAm_OG5_129650</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>3332</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>5709</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>3332</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>3332</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>3331</Hsp_identity>
+      <Hsp_positive>3331</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>3331</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>8</Iteration_iter-num>
+  <Iteration_query-ID>Query_8</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_15_Len1929_OG5_138348</Iteration_query-def>
+  <Iteration_query-len>204</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_cpip_CPIJ020244_OG5_138348</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>204</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>201</Hsp_score>
+      <Hsp_evalue>1.61e-59</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>204</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>204</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>203</Hsp_identity>
+      <Hsp_positive>203</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>203</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>9</Iteration_iter-num>
+  <Iteration_query-ID>Query_9</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_21_Len1224_OG5_126883</Iteration_query-def>
+  <Iteration_query-len>365</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000008-PAm_OG5_126883</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>365</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>733</Hsp_score>
+      <Hsp_evalue>1.11e-268</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>365</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>365</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>364</Hsp_identity>
+      <Hsp_positive>364</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>364</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>10</Iteration_iter-num>
+  <Iteration_query-ID>Query_10</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_26_Len735_OG5_130103</Iteration_query-def>
+  <Iteration_query-len>242</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000014-PAm_OG5_130103</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>242</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>467</Hsp_score>
+      <Hsp_evalue>1.12e-167</Hsp_evalue>
+      <Hsp_query-from>46</Hsp_query-from>
+      <Hsp_query-to>287</Hsp_query-to>
+      <Hsp_hit-from>46</Hsp_hit-from>
+      <Hsp_hit-to>287</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>241</Hsp_identity>
+      <Hsp_positive>241</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>241</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>11</Iteration_iter-num>
+  <Iteration_query-ID>Query_11</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_10_Len3783_OG5_129671</Iteration_query-def>
+  <Iteration_query-len>1237</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000033-PAm_OG5_129671</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>1237</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>2180</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>1237</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>1237</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>1236</Hsp_identity>
+      <Hsp_positive>1236</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>1236</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>12</Iteration_iter-num>
+  <Iteration_query-ID>Query_12</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_20_Len1332_OG5_126731</Iteration_query-def>
+  <Iteration_query-len>443</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000011-PAm_OG5_126731</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>443</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>915</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>443</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>443</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>442</Hsp_identity>
+      <Hsp_positive>442</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>442</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>13</Iteration_iter-num>
+  <Iteration_query-ID>Query_13</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_19_Len1374_OG5_126740</Iteration_query-def>
+  <Iteration_query-len>295</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000005-PAm_OG5_126740</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>295</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>379</Hsp_score>
+      <Hsp_evalue>6.00e-129</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>295</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>295</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>294</Hsp_identity>
+      <Hsp_positive>294</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>294</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>14</Iteration_iter-num>
+  <Iteration_query-ID>Query_14</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_1_Len12366_OG5_129174</Iteration_query-def>
+  <Iteration_query-len>2386</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000029-PAm_OG5_129174</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>2386</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>3033</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>19</Hsp_query-from>
+      <Hsp_query-to>2404</Hsp_query-to>
+      <Hsp_hit-from>19</Hsp_hit-from>
+      <Hsp_hit-to>2404</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>2385</Hsp_identity>
+      <Hsp_positive>2385</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>2385</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>15</Iteration_iter-num>
+  <Iteration_query-ID>Query_15</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_17_Len1473_OG5_126600</Iteration_query-def>
+  <Iteration_query-len>490</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000028-PAm_OG5_126600</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>490</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>989</Hsp_score>
+      <Hsp_evalue>0.0</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>490</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>490</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>489</Hsp_identity>
+      <Hsp_positive>489</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>489</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>16</Iteration_iter-num>
+  <Iteration_query-ID>Query_16</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_8_Len4002_OG5_133784</Iteration_query-def>
+  <Iteration_query-len>232</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_mdom_ENSMODP00000021626_OG5_133784</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>232</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>55.5</Hsp_score>
+      <Hsp_evalue>5.75e-06</Hsp_evalue>
+      <Hsp_query-from>221</Hsp_query-from>
+      <Hsp_query-to>452</Hsp_query-to>
+      <Hsp_hit-from>221</Hsp_hit-from>
+      <Hsp_hit-to>452</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>231</Hsp_identity>
+      <Hsp_positive>231</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>231</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>17</Iteration_iter-num>
+  <Iteration_query-ID>Query_17</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_22_Len1152_OG5_136342</Iteration_query-def>
+  <Iteration_query-len>383</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000023-PAm_OG5_136342</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>383</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>779</Hsp_score>
+      <Hsp_evalue>5.43e-287</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>383</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>383</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>382</Hsp_identity>
+      <Hsp_positive>382</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>382</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+<Iteration>
+  <Iteration_iter-num>18</Iteration_iter-num>
+  <Iteration_query-ID>Query_18</Iteration_query-ID>
+  <Iteration_query-def>Op_me_Agam_Contig_23_Len1113_OG5_127649</Iteration_query-def>
+  <Iteration_query-len>334</Iteration_query-len>
+<Iteration_hits>
+<Hit>
+  <Hit_num>1</Hit_num>
+  <Hit_id>Fake_Entry</Hit_id>
+  <Hit_def>Op_me_agam_AGAP000010-PAm_OG5_127649</Hit_def>
+  <Hit_accession>Fake_Accession</Hit_accession>
+  <Hit_len>334</Hit_len>
+  <Hit_hsps>
+    <Hsp>
+      <Hsp_num>1</Hsp_num>
+      <Hsp_bit-score>1234</Hsp_bit-score>
+      <Hsp_score>697</Hsp_score>
+      <Hsp_evalue>7.37e-256</Hsp_evalue>
+      <Hsp_query-from>1</Hsp_query-from>
+      <Hsp_query-to>334</Hsp_query-to>
+      <Hsp_hit-from>1</Hsp_hit-from>
+      <Hsp_hit-to>334</Hsp_hit-to>
+      <Hsp_query-frame>0</Hsp_query-frame>
+      <Hsp_hit-frame>0</Hsp_hit-frame>
+      <Hsp_identity>333</Hsp_identity>
+      <Hsp_positive>333</Hsp_positive>
+      <Hsp_gaps>0</Hsp_gaps>
+      <Hsp_align-len>333</Hsp_align-len>
+      <Hsp_qseq></Hsp_qseq>
+      <Hsp_hseq></Hsp_hseq>
+      <Hsp_midline></Hsp_midline>
+    </Hsp>
+  </Hit_hsps>
+</Hit>
+
+</Iteration_hits>
+  <Iteration_stat>
+    <Statistics>
+      <Statistics_db-num>379660</Statistics_db-num>
+      <Statistics_db-len>197499634</Statistics_db-len>
+      <Statistics_hsp-len>123</Statistics_hsp-len>
+      <Statistics_eff-space>184705217500</Statistics_eff-space>
+      <Statistics_kappa>0.041</Statistics_kappa>
+      <Statistics_lambda>0.267</Statistics_lambda>
+      <Statistics_entropy>0.14</Statistics_entropy>
+    </Statistics>
+  </Iteration_stat>
+</Iteration>
+</BlastOutput_iterations>
+</BlastOutput>

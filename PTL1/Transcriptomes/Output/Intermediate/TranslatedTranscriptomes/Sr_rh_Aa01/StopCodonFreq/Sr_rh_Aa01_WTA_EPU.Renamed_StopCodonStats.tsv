@@ -1,0 +1,9 @@
+Stop Codon	Number of Seqs Analyzed	In-frame TAG	In-frame TGA	In-frame TAA	Total Codons	In-frame TAG density	In-frame TGA density	In-frame TAA density
+TGA	13	0	0	1	2258	0.00	0.00	0.44
+TAG	11	0	0	0	3700	0.00	0.00	0.00
+TAA	21	0	0	0	2433	0.00	0.00	0.00
+
+ 
+Summary	45	0	0	1	8391	0.00	0.00	0.12
+
+Total Seqs in Fasta	30

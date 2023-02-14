@@ -1,0 +1,7 @@
+Stop Codon	Frequency
+TGA	9
+TAG	23
+TAA	26
+
+Suggestion For Genetic Code:	Universal (table = 1)
+
