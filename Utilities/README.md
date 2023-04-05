@@ -2,6 +2,9 @@
 # Utilities
 > This folder contains many useful tools for analyzing sequence data.
 
+# For taxonomy dir:
+> Query_SRA_egs.py: input list of taxonomic names and output all SRAs or GCA since 2020 (can be adjusted by modifying script). For SRAs, the script also gives sequsncing technology used (pacbio, miseq, etc) and experiment type. It excludes all SRAs that include the word 'amplicon'.  Input is folder 'unique_taxon_lists' with files of keywords by major clade (separated by new lines). Put -t (transcriptome, SRA db) or -g (genome, assembly db) in the command line to specify data type. 
+>  >Example command line: python Query_SRA_egs.py -t OR -g
 
 
 ### Katz lab
