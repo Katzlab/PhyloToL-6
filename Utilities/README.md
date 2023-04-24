@@ -57,8 +57,8 @@ Written March 2023 by Elinor (esterner27@gmail.com) to plot length, coverage and
 
 **Input**
 	Directory of directories output by rnaSpades OR folder called Renamed_assembled_files of previously renamed files (if this is the case, put `-r` or --renamed in the command line)
-	txt file of LKH number and new names formatted like this: LKHxxx\tLKHxxx-10_digit_code-descriptor_of_taxon
-  R script plot_assemblies.R, which is called from within this python script
+	txt file of LKH number and new names formatted like this: LKHxxx\tLKHxxx-10_digit_code\tdescriptor_of_taxon
+	R script plot_assemblies.R, which is called from within this python script
 
 **Usage**
 
