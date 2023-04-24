@@ -5,7 +5,7 @@ This script will rename the spades output to new names in the txt file, then ite
 
 Input: 
 	Directory of directories output by rnaSpades OR folder called Renamed_assembled_files of previously renamed files (if this is the case, put -r or --renamed in the command line)
-	txt file of LKH number and new names formatted like this: LKHxxx\tLKHxxx-10_digit_code-descriptor_of_taxon
+	txt file of LKH number and new names formatted like this: LKHxxx\tLKHxxx-10_digit_code\tdescriptor_of_taxon
 
 To run if your files are already renamed:
 	python assess_transcriptomes.py <pathway to directory of spades output>
