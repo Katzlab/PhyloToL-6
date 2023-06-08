@@ -53,20 +53,18 @@ Input a spreadsheet with ten digit codes in the first column and the genus and s
 ### assess_transcriptomes.py:
 Written March 2023 by Elinor (esterner27@gmail.com) to plot length, coverage and GC of assembled transcripts
 
-**Purpose** Rename rnaSpades output to new names in the txt file, then iterate through them all and gather GC, length and coverage. With that data, it plots R scripts
+**Purpose** This script will iterate through all assembled files (named as 10 digit code plus assembledTranscripts) with and gather GC, length and coverage. With that data, it plots R scripts
+
 
 **Input**
-	Directory of directories output by rnaSpades OR folder called Renamed_assembled_files of previously renamed files (if this is the case, put `-r` or --renamed in the command line)
-	txt file of LKH number and new names formatted like this: LKHxxx\tLKHxxx-10_digit_code\tdescriptor_of_taxon
+	folder of renamed assemblies (if this is the case, put `-i` or --input in the command line)
+	tsv file of ten digit code and taxon info (lifestage, species, etc) formatted like this: 10_digit_code\tdescriptor_of_taxon
 	R script plot_assemblies.R, which is called from within this python script
 
 **Usage**
 
-To run if your rnaSpades output is **not** renamed yet:
->`python assess_transcriptomes.py --raw <pathway to directory of spades output>`
-
-To run if your files are already renamed:
->`python assess_transcriptomes.py --renamed  <pathway to directory of renamed assemblies>`
+To run:
+>`python assess_transcriptomes.py --input  <pathway to directory of renamed assemblies>`
 
 **Output** csv file of length, GC, coverage of each transcript, and multiple R plots, faceted by taxon and a csv file of data. It plots GC by length, and distributions of coverage, length and GC content across the whole transcript
 
