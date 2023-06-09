@@ -5,7 +5,7 @@ This script will iterate through all assembled files (named as 10 digit code _as
 
 Input: 
 	Folder called Renamed_assembled_files of previously renamed files (if this is the case, put -r or --renamed in the command line)
-	tsv file of LKH number and new names formatted like this: LKHxxx\tLKHxxx-10_digit_code\tdescriptor_of_taxon called new_names.tsv
+	tsv file of LKH number and new names formatted like this: 10_digit_code\tdescriptor_of_taxon called new_names.tsv
 
 To run:
 	python assess_transcriptomes.py -input <pathway to directory of spades output>
@@ -22,7 +22,7 @@ from Bio import SeqIO
 
 def script_help():
 
-	print('\nThis script grabs and plots GC, length and coverage of transcriptomes. \n\nInput:\ntsv file of tab separated LKH number, ten digit code and taxon info (taxonomy, lifestage, etc).\nAND\nfolder of the folders output by spades named with LKH number \n(LKH999 or WTALKH999)\nOR\ndirectory of renamed assemblies in this format: ten_digit_code_assembledTranscripts.fasta\n\nOutput is multiple R plots, faceted by taxon and a csv file of data. \n\nIt plots GC by length, and distributions of coverage, length and GC.\n\n To run: \n\n\tpython assess_transcriptomes.py <pathway to directory of spades output>\n\n-r or --renamed if your assemblies are already renamed to this format: ten_digit_code_assembledTranscript.fasta/nand this command if they are not yet named: --raw <path to directory of spades output folders>\n\n-h or --help for this message\n\n')
+	print('\nThis script grabs and plots GC, length and coverage of transcriptomes. \n\nInput:\ntsv file of tab separated ten digit code and taxon info (taxonomy, lifestage, etc).\nAND\n\ndirectory of assemblies renamed in this format: ten_digit_code_assembledTranscripts.fasta\n\nOutput is multiple R plots faceted by taxon and a csv file of data. \n\nIt plots GC by length, and distributions of coverage, length and GC.\n\n To run: \n\n\tpython assess_transcriptomes.py -i <pathway to directory of assemblies>\n\nRun -h or --help for this message\n\n')
 
 def get_args():
 	#this parses user arguments. Checks if the files are renamed already or not (--renamed or --raw), and gets the directory of those files.
