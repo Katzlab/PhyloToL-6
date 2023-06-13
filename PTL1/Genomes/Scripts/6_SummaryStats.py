@@ -67,7 +67,7 @@ def aa_comp_lengths(args, gcodes):
 
 					total += 1
 
-				aa_comp.update({ rec.id : { 'FYMINK' : fymink/total, 'GARP' : garp/total, 'Other' : other/total, 'X' : x} })
+				aa_comp.update({ rec.id : { 'FYMINK' : fymink/total, 'GARP' : garp/total, 'Other' : other/total, 'X' : x/total } })
 
 				recid_by_contig_n.update({ rec.id.split('Contig_')[-1].split('_')[0] : rec.id })
 
@@ -109,7 +109,7 @@ def per_seq(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, transcript_id
 
 	for taxon in taxa:
 		with open(args.input + '/PerSequenceStatSummaries/' + taxon + '.csv', 'w') as o:
-			o.write('Sequence,Taxon,OG,Transcript,TranscriptLength,CDSLength,AvgLengthOGinHook,AmbiguousCodons,GC-Overall,GC1,GC2,GC3,GC3-Degen,ExpWrightENc,ObsWrightENc_6Fold,ObsWrightENc_No6Fold,ObsWeightedENc_6Fold,ObsWeightedENc_No6Fold,FYMINK,GARP,OtherAA,N.Xs\n')
+			o.write('Sequence,Taxon,OG,OrigName,OrigLength,R2GLength,AvgLengthOGinHook,AmbiguousCodons,GC-Overall,GC1,GC2,GC3,GC3-Degen,ExpWrightENc,ObsWrightENc_6Fold,ObsWrightENc_No6Fold,ObsWeightedENc_6Fold,ObsWeightedENc_No6Fold,FYMINK,GARP,OtherAA,N.Xs\n')
 			for rec in nuc_comp:
 				if rec[:10] == taxon:
 					o.write(rec + ',' + rec[:10] + ',' + rec[-10:])
@@ -119,14 +119,14 @@ def per_seq(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, transcript_id
 					except KeyError:
 						o.write(',NA,NA')
 
-					o.write(',' + str(r2g_lengths[rec]) + ',' + str(og_mean_lens[rec[-10:]]))
+					o.write(',' + str(r2g_lengths[rec]) + ',' + str(round(og_mean_lens[rec[-10:]], 2)))
 
 					v = nuc_comp[rec]
-					gcs = [str(v.gcOverall), str(v.gc1), str(v.gc2), str(v.gc3), str(v.gc4F)]
-					ENc = [str(v.expENc), str(v.obsENc_6F), str(v.obsENc_No6F), str(v.SunENc_6F),str(v.SunENc_No6F)]
+					gcs = [str(round(v.gcOverall, 2)), str(round(v.gc1, 2)), str(round(v.gc2, 2)), str(round(v.gc3, 2)), str(round(v.gc4F, 2))]
+					ENc = [str(round(v.expENc, 2)), str(round(v.obsENc_6F, 2)), str(round(v.obsENc_No6F, 2)), str(round(v.SunENc_6F, 2)),str(round(v.SunENc_No6F, 2))]
 					o.write(',' + ','.join([str(v.amb_cdn)] + gcs + ENc))
 
-					o.write(',' + str(aa_comp[rec]['FYMINK']) + ',' + str(aa_comp[rec]['GARP']) + ',' + str(aa_comp[rec]['Other']) + ',' + str(aa_comp[rec]['X']) + '\n')
+					o.write(',' + str(round(aa_comp[rec]['FYMINK'], 2)) + ',' + str(round(aa_comp[rec]['GARP'], 2)) + ',' + str(round(aa_comp[rec]['Other'], 2)) + ',' + str(round(aa_comp[rec]['X'], 2)) + '\n')
 
 
 def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes, og_mean_lens):
@@ -134,7 +134,7 @@ def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes, og_me
 	taxa = list(dict.fromkeys([seq[:10] for seq in nuc_comp]))
 
 	with open(args.input + '/PerTaxonSummary.csv', 'w') as o:
-		o.write('Taxon,TranscriptsInput,Median_GCTranscripts,5-95Perc_GCTranscripts,Median_LenTranscripts,IQR_LenTranscripts,SeqsR2G,OGsR2G,Median_GC3R2G,5Perc_GC3R2G,95Perc_GC3R2G,5-95Perc_GC3R2G,Median_ENcR2G,IQR_ENcR2G,Median_LenR2G,IQR_LenR2G,Prop.G1.5_OGAvg,Prop.L0.5_OGAvg,GeneticCode\n')
+		o.write('Taxon,OrigSeqs,Orig_MedianGC,Orig_GCWidth_5-95Perc,Orig_MedianLen,Orig_IQRLen,R2GSeqs,R2GOGs,R2GMedian_GC3,R2G_5Perc_GC3,R2G_95Perc_GC3,R2G_GC3Width_5-95Perc,R2G_MedianENc,R2G_IQRENc,R2G_MedianLen,R2G_IQRLen,R2G_Prop.G1.5_OGAvg,R2G_Prop.L0.5_OGAvg,R2G_MeanXs,GeneticCode\n')
 
 		for taxon in taxa:
 			try:
@@ -148,12 +148,12 @@ def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes, og_me
 					transcript_gcs.append((transcript.count('G') + transcript.count('C'))/len(transcript))
 
 				transcript_gcs = sorted(transcript_gcs)
-				o.write(',' + str(transcript_gcs[floor(len(transcripts)*0.5)]))
-				o.write(',' + str(transcript_gcs[floor(len(transcripts)*0.95)] - transcript_gcs[floor(len(transcripts)*0.05)]))
+				o.write(',' + str(round(transcript_gcs[floor(len(transcripts)*0.5)], 2)))
+				o.write(',' + str(round(transcript_gcs[floor(len(transcripts)*0.95)] - transcript_gcs[floor(len(transcripts)*0.05)], 2)))
 
 				transcript_lens = sorted([len(transcript) for transcript in transcripts])
-				o.write(',' + str(transcript_lens[floor(len(transcripts)*0.5)]))
-				o.write(',' + str(transcript_lens[floor(len(transcripts)*0.75)] - transcript_lens[floor(len(transcripts)*0.25)]))
+				o.write(',' + str(round(transcript_lens[floor(len(transcripts)*0.5)], 2)))
+				o.write(',' + str(round(transcript_lens[floor(len(transcripts)*0.75)] - transcript_lens[floor(len(transcripts)*0.25)], 2)))
 
 				r2g_ntds = [nuc_comp[seq] for seq in nuc_comp if seq[:10] == taxon]
 				o.write(',' + str(len(r2g_ntds)))
@@ -161,23 +161,25 @@ def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes, og_me
 				o.write(',' + str(len(r2g_ogs)))
 
 				r2g_gc3s = sorted([seq.gc4F for seq in r2g_ntds])
-				o.write(',' + str(r2g_gc3s[floor(len(r2g_ntds)*0.5)]))
-				o.write(',' + str(r2g_gc3s[floor(len(r2g_gc3s)*0.05)]))
-				o.write(',' + str(r2g_gc3s[floor(len(r2g_gc3s)*0.95)]))
-				o.write(',' + str(r2g_gc3s[floor(len(r2g_gc3s)*0.95)] - r2g_gc3s[floor(len(r2g_gc3s)*0.05)]))
+				o.write(',' + str(round(r2g_gc3s[floor(len(r2g_ntds)*0.5)], 2)))
+				o.write(',' + str(round(r2g_gc3s[floor(len(r2g_gc3s)*0.05)], 2)))
+				o.write(',' + str(round(r2g_gc3s[floor(len(r2g_gc3s)*0.95)], 2)))
+				o.write(',' + str(round(r2g_gc3s[floor(len(r2g_gc3s)*0.95)] - r2g_gc3s[floor(len(r2g_gc3s)*0.05)], 2)))
 
 				r2g_encs = sorted([seq.obsENc_6F for seq in r2g_ntds])
-				o.write(',' + str(r2g_encs[floor(len(r2g_encs)*0.5)]))
-				o.write(',' + str(r2g_encs[floor(len(r2g_encs)*0.75)] - r2g_encs[floor(len(r2g_encs)*0.25)]))
+				o.write(',' + str(round(r2g_encs[floor(len(r2g_encs)*0.5)], 2)))
+				o.write(',' + str(round(r2g_encs[floor(len(r2g_encs)*0.75)] - r2g_encs[floor(len(r2g_encs)*0.25)], 2)))
 
 				tax_r2g_lens = sorted([r2g_lengths[seq] for seq in r2g_lengths if seq[:10] == taxon])
-				o.write(',' + str(tax_r2g_lens[floor(len(tax_r2g_lens)*0.5)]))
-				o.write(',' + str(tax_r2g_lens[floor(len(tax_r2g_lens)*0.75)] - tax_r2g_lens[floor(len(tax_r2g_lens)*0.25)]))
+				o.write(',' + str(round(tax_r2g_lens[floor(len(tax_r2g_lens)*0.5)], 2)))
+				o.write(',' + str(round(tax_r2g_lens[floor(len(tax_r2g_lens)*0.75)] - tax_r2g_lens[floor(len(tax_r2g_lens)*0.25)], 2)))
 
 				prop_len_g = len([seq for seq in r2g_lengths if seq[:10] == taxon and r2g_lengths[seq] > 4.5 * og_mean_lens[seq[-10:]]])/len(tax_r2g_lens)
 				prop_len_l = len([seq for seq in r2g_lengths if seq[:10] == taxon and r2g_lengths[seq] < 1.5 * og_mean_lens[seq[-10:]]])/len(tax_r2g_lens)
 
-				o.write(',' + str(prop_len_g) + ',' + str(prop_len_l))
+				o.write(',' + str(round(prop_len_g, 2)) + ',' + str(round(prop_len_l, 2)))
+
+				o.write(',' + str(mean([aa_comp[seq]['X'] for seq in aa_comp if seq[:10] == taxon])))
 
 				o.write(',' + gcodes[taxon] + '\n')
 			except:
