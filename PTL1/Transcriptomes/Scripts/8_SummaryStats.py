@@ -52,18 +52,20 @@ def aa_comp_lengths(args, gcodes):
 			for rec in SeqIO.parse(args.input + '/ReadyToGo/ReadyToGo_AA/' + file, 'fasta'):
 				r2g_lengths.update({ rec.id : len(str(rec.seq)) * 3 })
 
-				fymink = 0; garp = 0; other = 0; total = 0
+				fymink = 0; garp = 0; other = 0; total = 0; x = 0
 				for char in str(rec.seq):
-					if char in 'FYMINK':
+					if char in 'FYMINKfymink':
 						fymink += 1
-					elif char in 'GARP':
+					elif char in 'GARPgarp':
 						garp += 1
+					elif char in 'Xx':
+						x += 1
 					else:
 						other += 1
 
 					total += 1
 
-				aa_comp.update({ rec.id : { 'FYMINK' : fymink/total, 'GARP' : garp/total, 'Other' : other/total } })
+				aa_comp.update({ rec.id : { 'FYMINK' : fymink/total, 'GARP' : garp/total, 'Other' : other/total, 'X' : x} })
 
 				recid_by_contig_n.update({ rec.id.split('Contig_')[-1].split('_')[0] : rec.id })
 
@@ -89,7 +91,7 @@ def get_nuc_comp(args, gcodes):
 	nuc_comp = { }
 	for file in tqdm([f for f in os.listdir(args.input + '/ReadyToGo/ReadyToGo_NTD')]):
 		if file.endswith('.fasta') and file[:10] in gcodes:
-			cub_out = CUB.CalcRefFasta(args.input + '/ReadyToGo/ReadyToGo_NTD/' + file, gcodes[file[:10]])[0]
+			cub_out = CUB.CalcRefFasta(args.input + '/ReadyToGo/ReadyToGo_NTD/' + file, gcodes[file[:10]].lower())[0]
 			for k in cub_out:
 				nuc_comp.update({ k : cub_out[k] })
 
@@ -107,7 +109,7 @@ def per_seq(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, transcript_id
 
 	for taxon in taxa:
 		with open(args.input + '/PerSequenceStatSummaries/' + taxon + '.csv', 'w') as o:
-			o.write('Sequence,Taxon,OG,Transcript,TranscriptLength,CDSLength,AvgLengthOGinHook,AmbiguousCodons,GC-Overall,GC1,GC2,GC3,GC3-Degen,ExpWrightENc,ObsWrightENc_6Fold,ObsWrightENc_No6Fold,ObsWeightedENc_6Fold,ObsWeightedENc_No6Fold,FYMINK,GARP,OtherAA\n')
+			o.write('Sequence,Taxon,OG,Transcript,TranscriptLength,CDSLength,AvgLengthOGinHook,AmbiguousCodons,GC-Overall,GC1,GC2,GC3,GC3-Degen,ExpWrightENc,ObsWrightENc_6Fold,ObsWrightENc_No6Fold,ObsWeightedENc_6Fold,ObsWeightedENc_No6Fold,FYMINK,GARP,OtherAA,N.Xs\n')
 			for rec in nuc_comp:
 				if rec[:10] == taxon:
 					o.write(rec + ',' + rec[:10] + ',' + rec[-10:])
@@ -124,7 +126,7 @@ def per_seq(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, transcript_id
 					ENc = [str(v.expENc), str(v.obsENc_6F), str(v.obsENc_No6F), str(v.SunENc_6F),str(v.SunENc_No6F)]
 					o.write(',' + ','.join([str(v.amb_cdn)] + gcs + ENc))
 
-					o.write(',' + str(aa_comp[rec]['FYMINK']) + ',' + str(aa_comp[rec]['GARP']) + ',' + str(aa_comp[rec]['Other']) + '\n')
+					o.write(',' + str(aa_comp[rec]['FYMINK']) + ',' + str(aa_comp[rec]['GARP']) + ',' + str(aa_comp[rec]['Other']) + ',' + str(aa_comp[rec]['X']) + '\n')
 
 
 def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes):
@@ -132,7 +134,7 @@ def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes):
 	taxa = list(dict.fromkeys([seq[:10] for seq in nuc_comp]))
 
 	with open(args.input + '/PerTaxonSummary.csv', 'w') as o:
-		o.write('Taxon,TranscriptsInput,Median_GCTranscripts,IQR_GCTranscripts,Median_LenTranscripts,IRQ_LenTranscripts,SeqsR2G,OGsR2G,Median_GC3R2G,IQR_GC3R2G,Median_ENcR2G,IQR_ENcR2G,Median_LenR2G,IQR_LenR2G,GeneticCode\n')
+		o.write('Taxon,TranscriptsInput,Median_GCTranscripts,5-95Perc_GCTranscripts,Median_LenTranscripts,IRQ_LenTranscripts,SeqsR2G,OGsR2G,Median_GC3R2G,5Perc_GC3R2G,95Perc_GC3R2G,5-95Perc_GC3R2G,Median_ENcR2G,IQR_ENcR2G,Median_LenR2G,IQR_LenR2G,GeneticCode\n')
 
 		for taxon in taxa:
 			o.write(taxon)
@@ -146,7 +148,7 @@ def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes):
 
 			transcript_gcs = sorted(transcript_gcs)
 			o.write(',' + str(transcript_gcs[floor(len(transcripts)*0.5)]))
-			o.write(',' + str(transcript_gcs[floor(len(transcripts)*0.75)] - transcript_gcs[floor(len(transcripts)*0.25)]))
+			o.write(',' + str(transcript_gcs[floor(len(transcripts)*0.95)] - transcript_gcs[floor(len(transcripts)*0.05)]))
 
 			transcript_lens = sorted([len(transcript) for transcript in transcripts])
 			o.write(',' + str(transcript_lens[floor(len(transcripts)*0.5)]))
@@ -159,7 +161,9 @@ def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes):
 
 			r2g_gc3s = sorted([seq.gc4F for seq in r2g_ntds])
 			o.write(',' + str(r2g_gc3s[floor(len(r2g_ntds)*0.5)]))
-			o.write(',' + str(r2g_gc3s[floor(len(r2g_gc3s)*0.75)] - r2g_gc3s[floor(len(r2g_gc3s)*0.25)]))
+			o.write(',' + str(r2g_gc3s[floor(len(r2g_gc3s)*0.05)]))
+			o.write(',' + str(r2g_gc3s[floor(len(r2g_gc3s)*0.95)]))
+			o.write(',' + str(r2g_gc3s[floor(len(r2g_gc3s)*0.95)] - r2g_gc3s[floor(len(r2g_gc3s)*0.05)]))
 
 			r2g_encs = sorted([seq.obsENc_6F for seq in r2g_ntds])
 			o.write(',' + str(r2g_encs[floor(len(r2g_encs)*0.5)]))
@@ -223,7 +227,7 @@ def plot_jf(args, nuc_comp):
 if __name__ == "__main__":
 	args = get_args()
 
-	valid_codes = ['universal', 'blepharisma', 'chilodonella', 'condylostoma', 'euplotes', 'peritrich', 'vorticella', 'mesodinium', 'tag', 'tga', 'taa', 'none']
+	valid_codes = ['bleph','blepharisma','chilo','chilodonella','condy', 'condylostoma','none','eup','euplotes','peritrich','vorticella','ciliate','universal','taa','tag','tga','mesodinium']
 
 	gcodes = { }
 	if os.path.isfile(args.input + '/Intermediate/gcode_output.tsv'):
