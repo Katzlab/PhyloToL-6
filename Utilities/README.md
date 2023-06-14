@@ -68,6 +68,24 @@ To run:
 
 **Output** csv file of length, GC, coverage of each transcript, and multiple R plots, faceted by taxon and a csv file of data. It plots GC by length, and distributions of coverage, length and GC content across the whole transcript
 
+## For Trees dir:
+### count_tips.py
+
+Written Auden Cote-L'Heureux, updated by Elinor (esterner27@gmail.com) to count occurrences of taxa in each OG in a batch of post guidance files.
+
+**Purpose** This script will iterate through a directory of postguidance files and tally the number of times each taxa is found in an alignment.
+
+**Input**
+	folder of post guidance files (if this is the case, put `-i` or --input in the command line)
+
+**Usage**
+
+To run:
+>`python count_tips.py --input  <pathway to directory of post guidance files>`
+
+**Output** csv file of each taxa by each OG file, and tallies of the number of times each taxa is found in each OG
+
+
 
 ### Katz lab
 >[About Katz Lab](https://www.science.smith.edu/katz-lab/)  &nbsp; \| &nbsp;
