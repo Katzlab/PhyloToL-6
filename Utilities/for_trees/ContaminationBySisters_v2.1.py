@@ -122,7 +122,7 @@ def write_all_data(args):
 					consider = True
 				else:
 					for clade in args.query_clades:
-						if leaf.startswith(clade):
+						if leaf.name.startswith(clade):
 							consider = True
 							break
 
