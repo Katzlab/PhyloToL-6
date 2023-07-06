@@ -19,7 +19,7 @@ def get_params():
 	common.add_argument('--data', help = 'Path to the input dataset. The format of this varies depending on your --start parameter')
 	common.add_argument('--output', default = '../', help = 'Directory where the output folder should be created. If not given, the folder will be created in the parent directory of the folder containing the scripts.')
 	common.add_argument('--force', action = 'store_true', help = 'Overwrite all existing files in the "Output" folder.')
-	common.add_argument('--tree_method', default = 'iqtree', choices = {'iqtree, raxml, all'}, help = 'Program to use for tree-building')
+	common.add_argument('--tree_method', default = 'iqtree', choices = {'iqtree', 'raxml', 'all'}, help = 'Program to use for tree-building')
 
 	core = parser.add_argument_group('Core parameters (rarely altered from the defaults)')
 	core.add_argument('--blast_cutoff', default = 1e-20, type = float, help = 'Blast e-value cutoff')
@@ -28,7 +28,7 @@ def get_params():
 	core.add_argument('--overlap_cutoff', default = 0.35, type = float, help = 'A sequence is removed if its alignment length to the longest sequence in its OG & taxon is less than this proportion of the length of the longest sequence')
 	core.add_argument('--guidance_iters', default = 5, type = int, help = 'Number of Guidance iterations for sequence removal')
 	core.add_argument('--seq_cutoff', default = 0.3, type = float, help = 'During guidance, taxa are removed if their score is below this cutoff')
-	core.add_argument('--col_cutoff', default = 0.4, type = float, help = 'During guidance, columns are removed if their score is below this cutoff')
+	core.add_argument('--col_cutoff', default = 0.0, type = float, help = 'During guidance, columns are removed if their score is below this cutoff')
 	core.add_argument('--res_cutoff', default = 0.0, type = float, help = 'During guidance, residues are removed if their score is below this cutoff')
 	core.add_argument('--guidance_threads', default = 20, type = int, help = 'Number of threads to allocate to Guidance')
 
@@ -93,6 +93,7 @@ def clean_up(params):
 
 	if params.start in ('unaligned', 'aligned') or params.end in ('aligned', 'trees', None):
 		os.mkdir(params.output + '/Output/Guidance')
+		os.mkdir(params.output + '/Output/NotGapTrimmed')
 		if(params.start == 'aligned'):
 			copy_input('Guidance')
 
