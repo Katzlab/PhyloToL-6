@@ -25,7 +25,7 @@ def run(params):
 			tax_iqtree_outdir = params.output + '/Output/Temp/IQTree/' + file.split('.')[0].split('_preguidance')[0]
 			os.mkdir(tax_iqtree_outdir)
 
-			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
+			os.system('iqtree2 -s ' + guidance_path + '/' + file.split('.')[0].split('_preguidance')[0] + '.95gapTrimmed.fas -m LG+G --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
 			
 			if os.path.isfile(tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile'):
 				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
@@ -42,10 +42,10 @@ def run(params):
 
 			os.system('./Scripts/trimal-trimAl/source/trimal -in ' + guidance_path + '/' + file + ' -phylip -out ' + tax_raxml_outdir + '/aligned.phy')
 
-			print('raxmlHPC -s ' + tax_raxml_outdir + '/aligned.phy -m PROTGAMMALG -f d -p 12345 -# 10 -n ' + file.split('.')[0].split('_preguidance')[0] + '_RAxML -T ' + str(params.guidance_threads))
-			os.system('raxmlHPC -s ' + tax_raxml_outdir + '/aligned.phy -m PROTGAMMALG -f d -p 12345 -# 10 -n ' + file.split('.')[0].split('_preguidance')[0] + '_RAxML -T ' + str(params.guidance_threads))
+			print('raxmlHPC-PTHREADS-AVX2 -s ' + tax_raxml_outdir + '/aligned.phy -m PROTGAMMALG -f d -p 12345 -# 1 -w ' + tax_raxml_outdir + ' -n ' + file.split('.')[0].split('_preguidance')[0] + '_RAxML -T ' + str(params.guidance_threads))
+			os.system('raxmlHPC-PTHREADS-AVX2 -s ' + tax_raxml_outdir + '/aligned.phy -m PROTGAMMALG -f d -p 12345 -# 1 -w ' + tax_raxml_outdir + ' -n ' + file.split('.')[0].split('_preguidance')[0] + '_RAxML -T ' + str(params.guidance_threads))
 
-			if os.path.isfile(tax_raxml_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile'):
+			if os.path.isfile(tax_raxml_outdir + '/RAxML_bestTree.' + file.split('.')[0].split('_preguidance')[0] + '_RAxML'):
 				os.system('cp ' + tax_raxml_outdir + '/RAxML_bestTree.' + file.split('.')[0].split('_preguidance')[0] + '_RAxML ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_RAxML.tree')
 				#color(params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_RAxML.tree')
 			else:
