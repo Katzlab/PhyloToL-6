@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser(
                     )
 parser.add_argument('--input', '-i', required = True, type = str, help = 'Path to folder of unaligned amino acid fasta files to align. File extensions must be fasta, fa, fas, or faa. Try using the absolute rather than relative path if working on the Grid and having trouble')
 parser.add_argument('--output', '-o', default = '.', type = str, help = 'Path to folder where a folder named "GuidanceOutput" will be created')
+parser.add_argument('--codon', '-c', action = 'store_true', help = 'Run on nucleotide files by translating codons')
 parser.add_argument('--iterations', '-n', default = 5, type = int, help = 'Number of Guidance iterations (default = 5)')
 parser.add_argument('--guidance_path', '-p', default = 'guidance.v2.02', type = str, help = 'Path to the guidance_v2.02 folder')
 parser.add_argument('--seq_cutoff', '-s', default = 0.3, type = float, help = 'Taxa are removed if their score is below this cutoff')
@@ -74,8 +75,13 @@ for file in os.listdir(args.input):
 				else:
 					mafft_alg = 'auto'
 
+				if args.codon:
+					seqtype = 'codon'
+				else:
+					seqtype = 'aa'
+
 				#Run Guidance
-				os.system(args.guidance_path + '/www/Guidance/guidance.pl --seqFile ' + args.input + '/' + file + ' --msaProgram MAFFT --seqType aa --outDir ' + tax_guidance_outdir + ' --seqCutoff ' + str(args.seq_cutoff) + ' --colCutoff ' + str(args.col_cutoff) + " --outOrder as_input --bootstraps 10 --MSA_Param '\\--" + mafft_alg + " --maxiterate 1000 --thread " + str(args.guidance_threads) + " --bl 62 --anysymbol' > " + tax_guidance_outdir + '/log.txt')
+				os.system(args.guidance_path + '/www/Guidance/guidance.pl --seqFile ' + args.input + '/' + file + ' --msaProgram MAFFT --seqType ' + seqtype + ' --outDir ' + tax_guidance_outdir + ' --seqCutoff ' + str(args.seq_cutoff) + ' --colCutoff ' + str(args.col_cutoff) + " --outOrder as_input --bootstraps 10 --MSA_Param '\\--" + mafft_alg + " --maxiterate 1000 --thread " + str(args.guidance_threads) + " --bl 62 --anysymbol' > " + tax_guidance_outdir + '/log.txt')
 
 				#If it ran successfully
 				if os.path.isfile(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names'):
