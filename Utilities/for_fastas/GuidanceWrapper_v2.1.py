@@ -4,7 +4,7 @@
 #Dependencies: Python3, BioPython
 #Inputs: A folder of unaligned fasta files
 #Outputs: Folder for each input file with selected Guidance output files, renamed with the original file name at the front
-#Example: python3 GuidanceWrapper_v2.0.py -i FastaFiles
+#Example: python3 GuidanceWrapper_v2.1.py -i FastaFiles
 
 
 #Dependencies
@@ -14,12 +14,12 @@ from Bio import SeqIO
 
 #Reading arguments
 parser = argparse.ArgumentParser(
-                    prog = 'Guidance Wrapper v2.0',
-                    description = "Updated July 17, 2023 by Auden Cote-L'Heureux"
+                    prog = 'Guidance Wrapper v2.1',
+                    description = "Updated July 21, 2023 by Auden Cote-L'Heureux"
                     )
 parser.add_argument('--input', '-i', required = True, type = str, help = 'Path to folder of unaligned amino acid fasta files to align. File extensions must be fasta, fa, fas, or faa. Try using the absolute rather than relative path if working on the Grid and having trouble')
 parser.add_argument('--output', '-o', default = '.', type = str, help = 'Path to folder where a folder named "GuidanceOutput" will be created')
-parser.add_argument('--codon', '-c', action = 'store_true', help = 'Run on nucleotide files by translating codons')
+parser.add_argument('--codon', action = 'store_true', help = 'Run on nucleotide files by translating codons')
 parser.add_argument('--iterations', '-n', default = 5, type = int, help = 'Number of Guidance iterations (default = 5)')
 parser.add_argument('--guidance_path', '-p', default = 'guidance.v2.02', type = str, help = 'Path to the guidance_v2.02 folder')
 parser.add_argument('--seq_cutoff', '-s', default = 0.3, type = float, help = 'Taxa are removed if their score is below this cutoff')
