@@ -5,7 +5,7 @@ import CUB
 from statistics import mean
 from math import ceil, floor
 from tqdm import tqdm
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -249,7 +249,7 @@ if __name__ == "__main__":
 	if args.r2g_jf:
 		r2g_jf(args, nuc_comp, gcodes)
 
-	plot_jf(args, nuc_comp)
+	#plot_jf(args, nuc_comp)
 
 
 
