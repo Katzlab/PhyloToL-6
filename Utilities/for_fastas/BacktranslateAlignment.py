@@ -58,26 +58,27 @@ def backtranslate(aa, nucls, output):
 
 	for rec in aa:
 		if(rec.id in nucls):
-			if len(nucls[rec.id]) == len(str(rec.seq).replace('-', '')) * 3:
-				running_seq = ''; c = 0; fail = False
-				for i, char in enumerate(str(rec.seq)):
-					if(char == '-'):
-						running_seq += '---'
-					else:
-						codon = nucls[rec.id][c:c+3]
-						if char == 'X' or codon in codons_per_aa[char]:
-							running_seq += codon
-							c += 3
-						else:
-							fail = True
+			if len(nucls[rec.id]) != len(str(rec.seq).replace('-', '')) * 3:
+				print('\nWARNING: The nucleotide sequence ' + rec.id + ' is not 3x the length of the corresponding amino acid sequence. Trying to translate this sequence by starting at the beginning and working forward until the amino acid sequence ends.\n')
+				nucls[rec.id] = nucls[rec.id][:len(str(rec.seq).replace('-', '')) * 3]
 
-				if fail:
-					print('\nWARNING: The nucleotide sequence ' + rec.id + ' does not match the corresponding amino acid sequence. This sequence will be missing from the alignment.\n')
+			running_seq = ''; c = 0; fail = False
+			for i, char in enumerate(str(rec.seq)):
+				if(char == '-'):
+					running_seq += '---'
 				else:
-					o.write('>' + rec.id + '\n')
-					o.write(running_seq + '\n\n')
+					codon = nucls[rec.id][c:c+3]
+					if char == 'X' or codon in codons_per_aa[char]:
+						running_seq += codon
+						c += 3
+					else:
+						fail = True
+
+			if fail:
+				print('\nWARNING: The nucleotide sequence ' + rec.id + ' does not match the corresponding amino acid sequence. This sequence will be missing from the alignment.\n')
 			else:
-				print('\nWARNING: The nucleotide sequence ' + rec.id + ' is not 3x the length of the corresponding amino acid sequence. This sequence will be missing from the alignment.\n')
+				o.write('>' + rec.id + '\n')
+				o.write(running_seq + '\n\n')
 		else:
 			print('\nWARNING: There is no nucleotide sequence for the amino acid sequence ' + rec.id + '. This sequence will be missing from the alignment.\n')
 
