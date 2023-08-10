@@ -33,7 +33,10 @@ universal_6fold = {
         	'TGG': ['W', 'one', 0], 'TAT': ['Y', 'two', 0], 'TAC': ['Y', 'two', 0],
         	'GTT': ['V', 'four', 0], 'GTC': ['V', 'four', 0], 'GTA': ['V', 'four', 0],
         	'GTG': ['V', 'four', 0], 'TAA': ['*', 'none', 0], 'TGA': ['*', 'none', 0],
-        	'TAG': ['*', 'none', 0], 'XXX': ['_missing', 'none', 0]}
+        	'TAG': ['*', 'none', 0]}
+
+aas = list(dict.fromkeys([universal_6fold[codon][0] for codon in universal_6fold]))
+codons_per_aa = { aa : [codon for codon in universal_6fold if universal_6fold[codon][0] == aa] for aa in aas }
 
 
 def get_args():
@@ -56,19 +59,23 @@ def backtranslate(aa, nucls, output):
 	for rec in aa:
 		if(rec.id in nucls):
 			if len(nucls[rec.id]) == len(str(rec.seq).replace('-', '')) * 3:
-				o.write('>' + rec.id + '\n')
-
-				c = 0
+				running_seq = ''; c = 0; fail = False
 				for i, char in enumerate(str(rec.seq)):
 					if(char == '-'):
-						o.write('---')
+						running_seq += '---'
 					else:
-						o.write(nucls[rec.id][c:c+3])
+						codon = nucls[rec.id][c:c+3]
+						if char == 'X' or codon in codons_per_aa[char]:
+							running_seq += codon
+							c += 3
+						else:
+							fail = True
 
-						c += 3
-
-				o.write('\n\n')
-
+				if fail:
+					print('\nWARNING: The nucleotide sequence ' + rec.id + ' does not match the corresponding amino acid sequence. This sequence will be missing from the alignment.\n')
+				else:
+					o.write('>' + rec.id + '\n')
+					o.write(running_seq + '\n\n')
 			else:
 				print('\nWARNING: The nucleotide sequence ' + rec.id + ' is not 3x the length of the corresponding amino acid sequence. This sequence will be missing from the alignment.\n')
 		else:
