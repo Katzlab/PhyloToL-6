@@ -85,8 +85,12 @@ for file in os.listdir(args.input):
 
 				#If it ran successfully
 				if os.path.isfile(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names'):
+					sep = ' '
+					if '\t' in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names').readlines()[1]:
+						sep = '\t'
+					
 					#Create a record of sequences below the sequence score cutoff
-					seqs_below = len([line for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names').readlines()[1:-1] if float(line.split()[-1]) < args.seq_cutoff])
+					seqs_below = len([line for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names').readlines()[1:-1] if float(line.split(sep)[-1]) < args.seq_cutoff])
 
 					#If the number of remaining sequences is less than 4, then stop iterating
 					if n_recs - seqs_below < 4:
@@ -126,13 +130,21 @@ for file in os.listdir(args.input):
 				#Read in the MAFFT alignment
 				running_aln = { rec.description : str(rec.seq) for rec in SeqIO.parse(tax_guidance_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.postGuidance_MAFFT_realigned.fasta', 'fasta') }
 
+				sep = ' '
+				if '\t' in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr').readlines()[1]:
+					sep = '\t'
+				
 				#Apply residue cutoff per site per sequence
-				for site in [(int(line.split()[1]), int(line.split()[0]) - 1) for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr').readlines()[1:-1] if float(line.split(' ')[-1].strip()) < args.res_cutoff]:
+				for site in [(int(line.split(sep)[1]), int(line.split(sep)[0]) - 1) for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr').readlines()[1:-1] if float(line.split(sep)[-1].strip()) < args.res_cutoff]:
 					if(orig_seqs[site[0]] in seqs2keep):
 						running_aln[orig_seqs[site[0]]][site[1]] = 'X'
 
+				sep = ' '
+				if '\t' in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_col.scr').readlines()[1]:
+					sep = '\t'
+
 				#Apply column cutoff per column
-				cols2remove = [int(line.split()[0]) - 1 for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_col.scr').readlines()[1:-1] if float(line.split(' ')[-1].strip()) < args.col_cutoff]
+				cols2remove = [int(line.split(sep)[0]) - 1 for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_col.scr').readlines()[1:-1] if float(line.split(sep)[-1].strip()) < args.col_cutoff]
 				for seq in running_aln:
 					running_aln[seq] = ''.join([running_aln[seq][i] for i in range(len(running_aln[seq])) if i not in cols2remove])
 
