@@ -367,7 +367,7 @@ class GCeval():
     #     # This function return the GC content of the third position of four-fold
     #     # degenerate codons
         FrFold = round(GC(''.join([k[-1]*v[-1] for k, v in cdnTbl.items() if
-            'one' not in v[1]])), 4)
+            v[1] == 'four'])), 4)
         return FrFold
 
 class SeqInfo(object):
