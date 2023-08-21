@@ -10,7 +10,7 @@ import numpy as np
 from datetime import date
 
 
-today = date.today()
+today = str(date.today())
 
 def get_args():
 
