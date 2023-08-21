@@ -235,7 +235,7 @@ def plot_jf(args, nuc_comp):
 		plt.scatter(np.array([val[0] for val in comp_data]), np.array([val[1] for val in comp_data]), s = 1)
 		plt.xlabel("GC content (3rd pos, 4-fold sites)")
 		plt.ylabel("Observed Wright ENc (6 Fold)")
-		plt.savefig(args.input + '/GC3xENc_Plots/' + taxon + '.png')
+		plt.savefig(args.input + '/GC3xENc_Plots_' + today + '/' + taxon + '.png')
 	
 if __name__ == "__main__":
 	args = get_args()
