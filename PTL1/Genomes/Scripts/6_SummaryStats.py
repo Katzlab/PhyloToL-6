@@ -105,13 +105,13 @@ def get_nuc_comp(args, gcodes):
 
 def per_seq(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, transcript_id_corr, og_mean_lens):
 
-	if not os.path.isdir(args.input + '/PerSequenceStatSummaries_' + today):
-		os.mkdir(args.input + '/PerSequenceStatSummaries_' + today)
+	if not os.path.isdir(args.input + '/PerSequenceStatSummaries_' + str(today)):
+		os.mkdir(args.input + '/PerSequenceStatSummaries_' + str(today))
 
 	taxa = list(dict.fromkeys([seq[:10] for seq in nuc_comp]))
 
 	for taxon in taxa:
-		with open(args.input + '/PerSequenceStatSummaries_'  + today + '/' + taxon + '.csv', 'w') as o:
+		with open(args.input + '/PerSequenceStatSummaries_'  + str(today) + '/' + taxon + '.csv', 'w') as o:
 			o.write('Sequence,Taxon,OG,OrigName,OrigLength,R2GLength,AvgLengthOGinHook,AmbiguousCodons,GC-Overall,GC1,GC2,GC3,GC3-Degen,ExpWrightENc,ObsWrightENc_6Fold,ObsWrightENc_No6Fold,ObsWeightedENc_6Fold,ObsWeightedENc_No6Fold,FYMINK,GARP,OtherAA,N.Xs\n')
 			for rec in nuc_comp:
 				if rec[:10] == taxon:
@@ -136,7 +136,7 @@ def per_tax(args, nuc_comp, aa_comp, all_transcripts, r2g_lengths, gcodes, og_me
 
 	taxa = list(dict.fromkeys([seq[:10] for seq in nuc_comp]))
 
-	with open(args.input + '/PerTaxonSummary_' + today + '.csv', 'w') as o:
+	with open(args.input + '/PerTaxonSummary_' + str(today) + '.csv', 'w') as o:
 		o.write('Taxon,OrigSeqs,Orig_MedianGC,Orig_GCWidth_5-95Perc,Orig_MedianLen,Orig_IQRLen,R2GSeqs,R2GOGs,R2GMedian_GC3,R2G_5Perc_GC3,R2G_95Perc_GC3,R2G_GC3Width_5-95Perc,R2G_MedianENc,R2G_IQRENc,R2G_MedianLen,R2G_IQRLen,R2G_Prop.G1.5_OGAvg,R2G_Prop.L0.5_OGAvg,R2G_MeanXs,GeneticCode\n')
 
 		for taxon in taxa:
@@ -193,12 +193,12 @@ def r2g_jf(args, nuc_comp, gcodes):
 
 	#Q: should there be an maximum IQR cutoff at which we do NOT produce a file here?
 
-	if not os.path.isdir(args.input + '/ReadyToGo/ReadyToGo_NTD_JF_' + today):
-		os.mkdir(args.input + '/ReadyToGo/ReadyToGo_NTD_JF_' + today)
+	if not os.path.isdir(args.input + '/ReadyToGo/ReadyToGo_NTD_JF_' + str(today)):
+		os.mkdir(args.input + '/ReadyToGo/ReadyToGo_NTD_JF_' + str(today))
 
-	if not os.path.isdir(args.input + '/ReadyToGo/ReadyToGo_AA_JF_' + today):
-		os.mkdir(args.input + '/ReadyToGo/ReadyToGo_AA_JF_' + today)
-
+	if not os.path.isdir(args.input + '/ReadyToGo/ReadyToGo_AA_JF_' + str(today)):
+		os.mkdir(args.input + '/ReadyToGo/ReadyToGo_AA_JF_' + str(today))
+		
 	for file in os.listdir(args.input + '/ReadyToGo/ReadyToGo_NTD'):
 		if file.endswith('.fasta') and file[:10] in gcodes:
 			taxon = file[:10]
@@ -206,12 +206,12 @@ def r2g_jf(args, nuc_comp, gcodes):
 			r2g_ntds = [nuc_comp[seq] for seq in nuc_comp if seq[:10] == taxon]
 			r2g_gc3s = sorted([seq.gc4F for seq in r2g_ntds])
 
-			with open(args.input + '/ReadyToGo/ReadyToGo_NTD_JF_' + today + '/' + file.replace('.fasta', '.JF.fasta'), 'w') as o:
+			with open(args.input + '/ReadyToGo/ReadyToGo_NTD_JF_' + str(today) + '/' + file.replace('.fasta', '.JF.fasta'), 'w') as o:
 				for rec in SeqIO.parse(args.input + '/ReadyToGo/ReadyToGo_NTD/' + file, 'fasta'):
 					if nuc_comp[rec.id].gc4F > r2g_gc3s[floor(len(r2g_gc3s)*0.25)] and nuc_comp[rec.id].gc4F < r2g_gc3s[floor(len(r2g_gc3s)*0.75)]:
 						o.write('>' + rec.id + '\n' + str(rec.seq) + '\n\n')
 
-			with open(args.input + '/ReadyToGo/ReadyToGo_AA_JF_' + today + '/' + file.replace('.fasta', '.JF.fasta').replace('NTD', 'AA'), 'w') as o:
+			with open(args.input + '/ReadyToGo/ReadyToGo_AA_JF_' + str(today) + '/' + file.replace('.fasta', '.JF.fasta').replace('NTD', 'AA'), 'w') as o:
 				for rec in SeqIO.parse(args.input + '/ReadyToGo/ReadyToGo_AA/' + file.replace('NTD', 'AA'), 'fasta'):
 					if nuc_comp[rec.id].gc4F > r2g_gc3s[floor(len(r2g_gc3s)*0.25)] and nuc_comp[rec.id].gc4F < r2g_gc3s[floor(len(r2g_gc3s)*0.75)]:
 						o.write('>' + rec.id + '\n' + str(rec.seq) + '\n\n')
@@ -219,8 +219,8 @@ def r2g_jf(args, nuc_comp, gcodes):
 
 def plot_jf(args, nuc_comp):
 
-	if not os.path.isdir(args.input + '/GC3xENc_Plots_' + today):
-		os.mkdir(args.input + '/GC3xENc_Plots_' + today)
+	if not os.path.isdir(args.input + '/GC3xENc_Plots_' + str(today)):
+		os.mkdir(args.input + '/GC3xENc_Plots_' + str(today))
 
 	taxa = list(dict.fromkeys([rec[:10] for rec in nuc_comp]))
 
@@ -235,7 +235,7 @@ def plot_jf(args, nuc_comp):
 		plt.scatter(np.array([val[0] for val in comp_data]), np.array([val[1] for val in comp_data]), s = 1)
 		plt.xlabel("GC content (3rd pos, 4-fold sites)")
 		plt.ylabel("Observed Wright ENc (6 Fold)")
-		plt.savefig(args.input + '/GC3xENc_Plots_' + today + '/' + taxon + '.png')
+		plt.savefig(args.input + '/GC3xENc_Plots_' + str(today) + '/' + taxon + '.png')
 	
 if __name__ == "__main__":
 	args = get_args()
