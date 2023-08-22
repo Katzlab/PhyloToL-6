@@ -224,7 +224,7 @@ def color(file, args):
 		keys = sorted([key for key in colors if leaf.name.startswith(key)], key = lambda x : -len(x))
 
 		if len(keys) > 0:
-			if '[&!color=' in keys[0]:
+			if '[&!color=' in colors[keys[0]]:
 				leaf_colors.append(leaf.name + colors[keys[0]])
 			else:
 				leaf_colors.append(leaf.name + '[&!color=' + colors[keys[0]] + ']')
