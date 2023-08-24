@@ -34,9 +34,7 @@ args = parser.parse_args()
 #Creating an output folder
 if not os.path.isdir(args.output + '/GuidanceOutput'):
 	os.mkdir(args.output + '/GuidanceOutput')
-elif args.force:
-	os.system('rm -r ' + args.output + '/GuidanceOutput/*')
-else:
+elif not args.force:
 	print('\nERROR: An output folder already exists at the given path. Delete it or run in --force mode\n')
 	quit()
 
