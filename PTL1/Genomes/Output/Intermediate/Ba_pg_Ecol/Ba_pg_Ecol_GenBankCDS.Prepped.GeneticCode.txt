@@ -1,7 +1,0 @@
-Stop Codon	Frequency
-TGA	20
-TAG	3
-TAA	51
-
-Suggestion For Genetic Code:	Universal (table = 1)
-
