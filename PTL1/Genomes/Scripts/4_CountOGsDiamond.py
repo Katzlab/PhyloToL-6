@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.5
 
-##__Updated__: 19_09_2017
+##__Updated__: 18_09_2023 (by ACL)
 ##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
 ##__Usage__: python 3g_GCodeTranslate.py --help
 
@@ -246,6 +246,7 @@ def update_fasta(args):
 
 	hook_fasta = [file for file in os.listdir(args.databases + '/db_OG') if file.endswith('.fasta')][0]
 
+	#Getting average length in Hook: addition per 9/2023 update
 	OGLenDB = {}
 	for rec in SeqIO.parse(args.databases + '/db_OG/' + hook_fasta, 'fasta'):
 		if rec.id[-10:] not in OGLenDB:
@@ -272,6 +273,7 @@ def update_fasta(args):
 	updated_prot_name = { keep_dict[i.description] : str(i.seq).rstrip('*') for i in protFasta if i.description in keep_dict.keys() }
 	updated_ntd_name = { keep_dict[i.description] : str(i.seq).rstrip('*') for i in ntdFasta if i.description in keep_dict.keys() }
 
+	#Additional length filter here per 9/2023 update
 	with open(args.aa_out,'w+') as w:
 		for rec in updated_prot_name:
 			og_number = re.split('OG.{1}_', rec)[1][:6]
