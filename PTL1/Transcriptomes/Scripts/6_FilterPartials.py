@@ -328,8 +328,8 @@ def filter_NTD_data(args, OGLenDB):
 	pairs_per_og = { }
 	for line in open(proc_folder + '/SpreadSheets/All_NTD_SelfBLAST_Results.tsv'):
 
-		#IMPORTANT: This line is where the query coverage threshold is determined, and it might be helpful to adjust this when trying to optimally filter chimeras. By default it is set to 33%
-		if line.split('\t')[0] != line.split('\t')[1] and line.split('\t')[0][-10:] == line.split('\t')[1][-10:] and int(line.split('\t')[-1].strip()) > 33:
+		#IMPORTANT: This line is where the query coverage threshold is determined, and it might be helpful to adjust this when trying to optimally filter chimeras. By default it is set to 20%
+		if line.split('\t')[0] != line.split('\t')[1] and line.split('\t')[0][-10:] == line.split('\t')[1][-10:] and int(line.split('\t')[-1].strip()) > 20:
 			if line.split('\t')[0][-10:] not in pairs_per_og:
 				pairs_per_og.update({ line.split('\t')[0][-10:] : [] })
 

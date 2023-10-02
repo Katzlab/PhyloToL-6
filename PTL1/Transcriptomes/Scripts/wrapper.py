@@ -33,7 +33,11 @@ def script_one(args, ten_digit_codes):
 			os.system('python 1a_TranscriptLengthFilter.py --input_file ' + args.assembled_transcripts + '/' + file + ' --output_file ' + args.output + '/Output/' + file[:10] + ' --minLen ' + str(args.minlen) + ' --maxLen ' + str(args.maxlen) + ' --spades') #SPADES ARGUMENT??
 
 	if args.xplate_contam:
-		os.system('python 1b_CrossPlateContamination.py ' + args.output + '/Output/XlaneBleeding ' + str(args.minlen) + ' ' + args.conspecific_names)
+		if not os.path.isfile(args.conspecific_names):
+			print('\nERROR: If you are running cross-plate contamination, a file designating species assignments is required for the --conspecific_names argument\n')
+			exit()
+		else:
+			os.system('python 1b_CrossPlateContamination.py ' + args.output + '/Output/XlaneBleeding ' + str(args.minlen) + ' ' + args.conspecific_names)
 
 
 def script_two(args):
@@ -153,7 +157,7 @@ def script_seven(args):
 
 	for file in os.listdir(args.output + '/Output/ToRename'):
 		if '.AA.ORF.fasta' in file:
-			os.system('python 7_FinalizeName.py --input_file ' + args.output + '/Output/ToRename/' + file + ' --name ' + file[:10])
+			os.system('python 7a_FinalizeName.py --input_file ' + args.output + '/Output/ToRename/' + file + ' --name ' + file[:10])
 
 	os.mkdir(args.output + '/Output/Intermediate')
 
@@ -161,7 +165,7 @@ def script_seven(args):
 		if file != 'ReadyToGo' and file != 'Intermediate':
 			os.system('mv ' + args.output + '/Output/' + file + ' ' + args.output + '/Output/Intermediate')
 
-	os.system('python 8_SummaryStats.py -i ' + args.output + '/Output -d ' + args.databases)
+	os.system('python 7b_SummaryStats.py -i ' + args.output + '/Output -d ' + args.databases)
 
 
 if __name__ == "__main__":
