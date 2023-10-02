@@ -8,7 +8,7 @@ def get_args():
 
 	parser = argparse.ArgumentParser(
                 prog = 'PhyloToL v6.0 Part 1 for Transcriptomes',
-                description = "Updated January 19th, 2023 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
+                description = "Updated September 29th, 2023 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
                 )
 
 	parser.add_argument('-s', '--script', default = -1, type = int, choices = { 1, 2, 3, 4, 5, 6, 7 }, help = 'Script to run if you are only running one script')
@@ -30,20 +30,20 @@ def get_args():
 def script_one(args, ten_digit_codes):
 	for file in os.listdir(args.assembled_transcripts):
 		if file[10:] == '_assembledTranscripts.fasta' and file[:10] in ten_digit_codes:
-			os.system('python 1a_ContigFiltStats.py --input_file ' + args.assembled_transcripts + '/' + file + ' --output_file ' + args.output + '/Output/' + file[:10] + ' --minLen ' + str(args.minlen) + ' --maxLen ' + str(args.maxlen) + ' --spades') #SPADES ARGUMENT??
+			os.system('python 1a_TranscriptLengthFilter.py --input_file ' + args.assembled_transcripts + '/' + file + ' --output_file ' + args.output + '/Output/' + file[:10] + ' --minLen ' + str(args.minlen) + ' --maxLen ' + str(args.maxlen) + ' --spades') #SPADES ARGUMENT??
 
 	if args.xplate_contam:
-		os.system('python 1b_XSpeciesContaminationAgnes.py ' + args.output + '/Output/XlaneBleeding ' + str(args.minlen) + ' ' + args.conspecific_names)
+		os.system('python 1b_CrossPlateContamination.py ' + args.output + '/Output/XlaneBleeding ' + str(args.minlen) + ' ' + args.conspecific_names)
 
 
 def script_two(args):
 
 	for folder in os.listdir(args.output + '/Output/'):
 		if os.path.isfile(args.output + '/Output/' + folder + '/SizeFiltered/' + folder + '.' + str(args.minlen) + 'bp.fasta'):
-			os.system('python 2a_remove_rRNA.py --input_file ' + args.output + '/Output/' + folder + '/SizeFiltered/' + folder + '.' + str(args.minlen) + 'bp.fasta --databases ' + args.databases)
+			os.system('python 2a_Identify_rRNA.py --input_file ' + args.output + '/Output/' + folder + '/SizeFiltered/' + folder + '.' + str(args.minlen) + 'bp.fasta --databases ' + args.databases)
 
 			fasta_withBact = args.output + '/Output/' + folder + '/' + folder + '_NorRNAseqs.fasta'
-			os.system('python 2b_remove_Bact.py --input_file ' + fasta_withBact + ' --databases ' + args.databases)
+			os.system('python 2b_Identify_Proks.py --input_file ' + fasta_withBact + ' --databases ' + args.databases)
 
 #NEED TO SORT OUT FILE NAMES ETC. BELOW HERE
 
@@ -52,14 +52,14 @@ def script_three(args):
 
 	for folder in os.listdir(args.output + '/Output'):
 		if os.path.isfile(args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.fasta'):
-			os.system('python 3_CountOGsDiamond.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.fasta --evalue 1e-15 --databases ' + args.databases)
+			os.system('python 3_AssignOGs.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.fasta --evalue 1e-15 --databases ' + args.databases)
 
 
 #running the fourth script
 def script_four(args):			
 	for folder in os.listdir(args.output + '/Output'):
 		if os.path.isfile(args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta'):
-				os.system('python 4_InFrameStopFreq.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta --databases ' + args.databases)
+				os.system('python 4_InFrameStopCodonEstimator.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta --databases ' + args.databases)
 				
 	#putting all of the gcode summaries produced by fourth script into a spreadsheet
 	gcode_info = []
@@ -147,10 +147,7 @@ def script_six(args):
 
 	for prefix in unique_prefixes:
 		os.system('python 6_FilterPartials.py --file_prefix ' + args.output + '/Output/' + prefix + ' --hook_fasta ' + hook_fasta)
-			
-	for prefix in unique_prefixes:
-		os.system('python 6b_update_cov_post_removepartials.py ' + args.output + '/Output/' + prefix)
-
+		
 
 def script_seven(args):
 
