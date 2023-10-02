@@ -244,7 +244,7 @@ def next_script(args):
 	print (color.BOLD+'\n\nLook for '+color.DARKCYAN+args.output_file+'.'+str(args.minLen)+\
 	'bp.fasta'+color.END+color.BOLD+'\n\n')
 
-	print ('Next Script is: 'color.GREEN+' 2a_Idenfify_rRNA.py followed by 2b_Identify_Bact.py'\
+	print ('Next Script is: ' + color.GREEN + ' 2a_Idenfify_rRNA.py followed by 2b_Identify_Bact.py'\
 	+color.END+color.BOLD+')\n\n'+ color.END)
 
 
