@@ -301,7 +301,7 @@ def filter_NTD_data(args, OGLenDB):
 	good_NTD_seqs = []; good_AA_seqs = []
 	for rec in starting_NTD_seqs:
 		og_number = re.split('OG.{1}_', rec)[-1][:6]
-		og_prefix = rec.split(og_number)[0][-4:]
+		og_prefix = rec.split(og_number)[-2][-4:]
 		og = og_prefix + og_number
 
 		if len(starting_AA_seqs[rec]) <= 1.5*OGLenDB[og] and len(starting_AA_seqs[rec]) >= 0.33*OGLenDB[og] and '-'.join(rec.split('_')[1:]) not in short_from_translation:
