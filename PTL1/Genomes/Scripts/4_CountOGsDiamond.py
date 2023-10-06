@@ -262,7 +262,7 @@ def update_fasta(args):
 	keep_dict = { }
 	for line in keep:
 		og_number = re.split('OG.{1}_', line.split('\t')[1])[1][:6]
-		og_prefix = line.split('\t')[1].split(og_number)[0][-4:]
+		og_prefix = line.split('\t')[1].split(og_number)[-2][-4:]
 		og = og_prefix + og_number
 
 		keep_dict.update({ re.split('_OG.{1}_', line.split('\t')[0])[0]  : re.split('_OG.{1}_', line.split('\t')[0])[0] + '_' + og_prefix + line.split('\t')[1].split('_')[-1] })
