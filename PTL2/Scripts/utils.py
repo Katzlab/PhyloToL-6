@@ -24,7 +24,7 @@ def get_params():
 	core = parser.add_argument_group('Core parameters (rarely altered from the defaults)')
 	core.add_argument('--blast_cutoff', default = 1e-20, type = float, help = 'Blast e-value cutoff')
 	core.add_argument('--len_cutoff', default = 10, type = int, help = 'Amino acid length cutoff for removal of very short sequences after column removal in Guidance.')
-	core.add_argument('--sim_cutoff', default = 0.98, type = float, help = 'Sequences from the same taxa that are assigned to the same OG are removed if they are more similar than this cutoff')
+	core.add_argument('--sim_cutoff', default = 1, type = float, help = 'Sequences from the same taxa that are assigned to the same OG are removed if they are more similar than this cutoff')
 	core.add_argument('--overlap_cutoff', default = 0.35, type = float, help = 'A sequence is removed if its alignment length to the longest sequence in its OG & taxon is less than this proportion of the length of the longest sequence')
 	core.add_argument('--guidance_iters', default = 5, type = int, help = 'Number of Guidance iterations for sequence removal')
 	core.add_argument('--seq_cutoff', default = 0.3, type = float, help = 'During guidance, taxa are removed if their score is below this cutoff')
