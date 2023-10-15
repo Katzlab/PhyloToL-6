@@ -59,7 +59,7 @@ def run(params):
 						recs_to_remove = []
 						for line in diamond_out:
 							line = line.strip().split('\t')
-							alignment_length = int(line[3]); gaps = int(line[5]); seq = str(line[0]); identity = float(line[2])
+							alignment_length = int(line[3]); gaps = int(line[5]); seq = str(line[0]); identity = float(line[2])/100
 							
 							if ((alignment_length - gaps) < params.overlap_cutoff * len(recs[0].seq) and cycle == 0) or identity > params.sim_cutoff:
 								recs_to_remove.append(seq); removed =+ 1
