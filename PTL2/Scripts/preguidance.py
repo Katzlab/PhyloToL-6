@@ -37,8 +37,8 @@ def run(params):
 					else:
 						Logger.Warning('\tThe sequence ID ' + rec.description + ' is invalid. Please make sure that sequence IDs contain no spaces, tabs, etc. This sequence is being excluded.')
 
+				masters = []; removed = 0; flag = 0; cycle = 0
 				if params.sim_cutoff < 1:
-					masters = []; removed = 0; flag = 0; cycle = 0
 					if len(recs) > 1:
 						while flag == 0:
 							master_file_name = params.output + '/Output/Temp/SF_Diamond/' + og + '_' + taxon_file[:10] + '_master_' + str(cycle)
