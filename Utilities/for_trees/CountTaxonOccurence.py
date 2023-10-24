@@ -21,7 +21,7 @@ def get_args():
 		description = "Updated Oct 24th, 2023 by Auden Cote-L'Heureux."
 	)
 
-	parser.add_argument('-i', '--input', type = str, required = True, help = 'Path to the folder containing the input trees')
+	parser.add_argument('-i', '--input', type = str, required = True, help = 'Path to the folder containing the aligned/unaligned fasta files')
 	args = parser.parse_args()
 		
 	if(args.input.endswith('/')):
@@ -38,7 +38,7 @@ def count_tips(in_dir):
 
 	count_data = { }
 	for file in os.listdir(in_dir):
-		if(file.endswith('.fas')):
+		if file.split('.')[-1] in ('fasta', 'fas', 'faa', 'fna'):
 			fname = in_dir + '/' + file
 			
 			count_data.update({ file : { } })
