@@ -1,6 +1,6 @@
 '''
 Author: Auden Cote-L'Heureux
-Last updated: 06/14/23 by Elinor
+Last updated: 10/24/23
 Motivation: Count the number of occurences of each taxa in each OG in a post guidance file
 Dependencies: Bio python, os, sys
 Inputs: Directory of postguidance files
@@ -15,31 +15,22 @@ from Bio import SeqIO
 
 def get_args():
 
-	in_dir = ''
-	
-	if('--input' in sys.argv or '-i' in sys.argv):
-		try:
-			if('--input' in sys.argv):
-				in_dir = sys.argv[sys.argv.index('--input') + 1]
-			else:
-				in_dir = sys.argv[sys.argv.index('-i') + 1]
-		except IndexError:
-			print('\nError: Something went wrong went parsing the arguments... maybe you forgot to input an input directory of trees?\n')
-			print('\nPlease input a folder of .tre files:\n\n\tpython count_tips.py --input <path/to/folder>\n')
-			exit()
-	else:
-		print('\nPlease input a folder of .tre files:\n\n\tpython count_tips.py --input <path/to/folder>\n')
-		exit()
+	parser = argparse.ArgumentParser(
+		prog = 'Tip counting script',
+		description = "Updated Oct 24th, 2023 by Auden Cote-L'Heureux."
+	)
+
+	parser.add_argument('-i', '--input', type = str, required = True, help = 'Path to the folder containing the input trees')
+	args = parser.parse_args()
 		
+	if(args.input.endswith('/')):
+		args.input = args.input[:-1]
 		
-	if(in_dir.endswith('/')):
-		in_dir = in_dir[:-1]
-		
-	if(not os.path.isdir(in_dir)):
-		print('\nPlease input a folder of .tre files:\n\n\tpython count_tips.py --input <path/to/folder>\n')
+	if(not os.path.isdir(args.input)):
+		print('\nThe input folder (--input) could not be found. Make sure you have given the correct path.\n')
 		exit()
 				
-	return in_dir
+	return args.input
 
 
 def count_tips(in_dir):
