@@ -17,7 +17,7 @@ import argparse
 def get_args():
 
 	parser = argparse.ArgumentParser(
-		prog = 'Tip counting script',
+		prog = 'Taxon occurence counting script',
 		description = "Updated Oct 24th, 2023 by Auden Cote-L'Heureux."
 	)
 
