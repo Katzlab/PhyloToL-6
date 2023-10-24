@@ -11,6 +11,7 @@ Command line: python count_tips.py --input <dir of postguidance files>
 import os
 import sys
 from Bio import SeqIO
+import argparse
 
 
 def get_args():
