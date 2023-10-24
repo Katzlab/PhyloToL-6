@@ -52,7 +52,7 @@ def count_tips(in_dir):
 				
 	taxa = sorted(list(dict.fromkeys([tax for file in count_data for tax in count_data[file]])))
 				
-	with open('tip_count_data.csv', 'w') as o:
+	with open('TaxonOccurrence.csv', 'w') as o:
 		o.write(',' + ','.join(taxa) + '\n')
 		for file in count_data:
 			o.write(file)
