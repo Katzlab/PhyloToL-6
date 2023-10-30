@@ -1,5 +1,6 @@
 import os, sys, re
 import argparse
+import CheckSetup
 
 
 def get_args():
@@ -21,6 +22,8 @@ def get_args():
 
 
 def script_one(args, ten_digit_codes):
+
+	CheckSetup.run(args)
 
 	for file in os.listdir(args.cds):
 		if file[10:] == '_GenBankCDS.fasta' and file[:10] in ten_digit_codes:
@@ -125,7 +128,7 @@ def script_five(args):
 		if os.path.isdir(args.output + '/Output/' + folder):
 			gcode_formatted = gcode_by_folder[folder][0].upper() + gcode_by_folder[folder].lower()[1:]
 			if os.path.isfile(args.output + '/Output/' + folder + '/' + folder + '_GenBankCDS.Renamed.' + gcode_formatted + '.AA.fasta'):
-				step5_cmd = 'python 5_FinalizeName.py -in ' + args.output + '/Output/' + folder + '/DiamondOG/' + folder + '_GenBankCDS.Renamed.' + gcode_formatted + '.AA.fasta -n ' + folder
+				step5_cmd = 'python 5a_FinalizeName.py -in ' + args.output + '/Output/' + folder + '/DiamondOG/' + folder + '_GenBankCDS.Renamed.' + gcode_formatted + '.AA.fasta -n ' + folder
 				os.system(step5_cmd)
 
 	os.mkdir(args.output + '/Output/Intermediate')
@@ -134,7 +137,7 @@ def script_five(args):
 		if file != 'ReadyToGo' and file != 'Intermediate':
 			os.system('mv ' + args.output + '/Output/' + file + ' ' + args.output + '/Output/Intermediate')
 
-	os.system('python 6_SummaryStats.py -i ' + args.output + '/Output -d ' + args.databases)
+	os.system('python 5b_SummaryStats.py -i ' + args.output + '/Output -d ' + args.databases)
 
 
 if __name__ == "__main__":
@@ -143,7 +146,7 @@ if __name__ == "__main__":
 
 	if (args.first_script == 1 or args.script == 1) and not os.path.isdir(args.cds):
 		print('\nIf starting at the first script, a valid path to a folder of nucleotide CDS files (which must end in .fasta) should be input using the --cds argument')
-		quit()
+		exit()
 
 	ten_digit_codes = []
 	if args.first_script == 1 or args.script == 1:
@@ -153,24 +156,24 @@ if __name__ == "__main__":
 	else:
 		if not os.path.isdir(args.output + '/Output'):
 			print('\nA folder called "Output" is not found at the given output path. Enter the correct path for --output or start from script 1.\n')
-			quit()
+			exit()
 
 	if(len(ten_digit_codes) > len(list(dict.fromkeys(ten_digit_codes)))):
 		print('\nDuplicate 10-digit codes are not allowed. Aborting.\n')
-		quit()
+		exit()
 
 	for code in ten_digit_codes:
 		for c, char in enumerate(code):
 			if (c != 2 and c != 5 and char not in 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890') or ((c == 2 or c == 5) and char != '_'):
 				print('\n' + code + ' is an invalid 10-digit code sample identifier. It must of the format Op_me_hsap (Homo sapiens for example). Please ask for help if this does not make sense.\n')
-				quit()
+				exit()
 
 	if os.path.isdir(args.output + '/Output') and (args.first_script == 1 or args.script == 1):
 		print('\nAn "Output" folder already exists at the given path. Please delete or rename this folder and try again.\n')
-		quit()
+		exit()
 	elif os.path.isdir(args.output + '/Output/Intermediate'):
 		print('\nIt looks like this run is already complete. Try deleting/renaming the Output folder and try again.\n')
-		quit()
+		exit()
 	elif not os.path.isdir(args.output + '/Output'):
 		os.mkdir(args.output + '/Output')
 	
@@ -186,7 +189,7 @@ if __name__ == "__main__":
 					scripts[i + args.first_script](args)
 		else:
 			print('\nInvalid script combination: the first script must be less than the last script. If you want to use only once script, use the --script argument.\n')
-			quit()
+			exit()
 	else:
 		if args.script == 1:
 			scripts[args.script](args, ten_digit_codes)
