@@ -2,6 +2,7 @@
 import os, sys, re
 import shutil
 import argparse
+import CheckSetup
 
 
 def get_args():
@@ -28,6 +29,9 @@ def get_args():
 		
 #running the first script on all the bare files
 def script_one(args, ten_digit_codes):
+
+	CheckSetup.run(args)
+
 	for file in os.listdir(args.assembled_transcripts):
 		if file[10:] == '_assembledTranscripts.fasta' and file[:10] in ten_digit_codes:
 			os.system('python 1a_TranscriptLengthFilter.py --input_file ' + args.assembled_transcripts + '/' + file + ' --output_file ' + args.output + '/Output/' + file[:10] + ' --minLen ' + str(args.minlen) + ' --maxLen ' + str(args.maxlen) + ' --spades') #SPADES ARGUMENT??
