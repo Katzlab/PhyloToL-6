@@ -218,7 +218,21 @@ def concat(seqs_per_og, params):
 
 	taxa = list(dict.fromkeys([rec.id[:10] for og in seqs_per_og for rec in seqs_per_og[og]]))
 
-	seqs_per_og = { og : { rec.id[:10] : str(rec.seq) for rec in seqs_per_og[og] } for og in seqs_per_og }
+	seqs_per_og = { og : { rec.id : str(rec.seq).replace('-', '') for rec in seqs_per_og[og] } for og in seqs_per_og }
+
+	if not os.path.isdir(params.output + '/Output/DataToConcatenate'):
+		os.mkdir(params.output + '/Output/DataToConcatenate')
+		os.mkdir(params.output + '/Output/DataToConcatenate/Unaligned')
+		os.mkdir(params.output + '/Output/DataToConcatenate/Aligned')
+
+	for og in seqs_per_og:
+		with open(params.output + '/Output/DataToConcatenate/Unaligned/' + '.'.join(og.split('.')[:-1]) + '_TargetTaxaUnaligned.fasta', 'w') as o:
+			for tax in seqs_per_og[og]:
+				o.write('>' + tax + '\n' + seqs_per_og[og][tax] + '\n\n')
+
+		os.system('mafft ' + params.output + '/Output/DataToConcatenate/Unaligned/' + '.'.join(og.split('.')[:-1]) + '_TargetTaxaUnaligned.fasta > ' + params.output + '/Output/DataToConcatenate/Aligned/' + '.'.join(og.split('.')[:-1]) + '_TargetTaxaAligned.fasta')
+
+		seqs_per_og[og] = { rec.id[:10] : str(rec.seq) for rec in SeqIO.parse(params.output + '/Output/DataToConcatenate/Aligned/' + '.'.join(og.split('.')[:-1]) + '_TargetTaxaAligned.fasta', 'fasta') }
 
 	concat_seqs_per_tax = { tax : '' for tax in taxa }
 	for taxon in taxa:
