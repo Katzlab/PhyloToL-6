@@ -38,7 +38,7 @@ def run(params):
 						Logger.Warning('\tThe sequence ID ' + rec.description + ' is invalid. Please make sure that sequence IDs contain no spaces, tabs, etc. This sequence is being excluded.')
 
 				masters = []; removed = 0; flag = 0; cycle = 0
-				if params.sim_cutoff < 1:
+				if params.similarity_filter:
 					if len(recs) > 1:
 						while flag == 0:
 							master_file_name = params.output + '/Output/Temp/SF_Diamond/' + og + '_' + taxon_file[:10] + '_master_' + str(cycle)
@@ -60,7 +60,7 @@ def run(params):
 							for line in diamond_out:
 								line = line.strip().split('\t')
 								
-								if float(line[2])/100 > params.sim_cutoff:
+								if float(line[2])/100 >= params.sim_cutoff:
 									recs_to_remove.append(seq); removed =+ 1
 
 							if len([rec for rec in recs[1:] if rec.id not in recs_to_remove]) < 2:

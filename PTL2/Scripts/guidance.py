@@ -23,6 +23,9 @@ def run(params):
 		guidance_input = params.output + '/Output/Temp/Guidance/Input/'
 		os.system('cp -r ' + preguidance_path + '/* ' + guidance_input)
 
+		guidance_removed_file = open(params.output + '/Output/GuidanceRemovedSeqs.txt', 'w')
+		guidance_removed_file.write('Sequence\tScore\n')
+
 		for file in [f for f in os.listdir(guidance_input) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta')]:
 			tax_guidance_outdir = params.output + '/Output/Temp/Guidance/Output/' + file.split('.')[0].split('_preguidance')[0]
 			os.mkdir(tax_guidance_outdir)
@@ -56,6 +59,9 @@ def run(params):
 					if seqs_below == 0 or i == params.guidance_iters - 1:
 						Logger.Message('Guidance complete after ' + str(i + 1) + ' iterations for gene family ' + file.split('.')[0].split('_preguidance')[0])
 						break
+
+					for line in seqs_below:
+						guidance_removed_file.write(line)
 
 					os.system('cp ' + tax_guidance_outdir + '/Seqs.Orig.fas.FIXED.Without_low_SP_Seq.With_Names ' + guidance_input + '/' + file)
 
@@ -100,9 +106,7 @@ def run(params):
 							else:
 								os.system('mv ' + tax_guidance_outdir + '/' + gdir_file + ' ' + tax_guidance_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file)
 
-
-
-
+		guidance_removed_file.close()
 
 
 
