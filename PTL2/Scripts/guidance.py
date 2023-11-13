@@ -16,18 +16,18 @@ def run(params):
 		if len([f for f in os.listdir(preguidance_path) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta')]) == 0:
 			Logger.Error('No pre-Guidance (unaligned) files could be found at the path ' + preguidance_path + '. Make sure that the --start and --data parameters are correct, that the pre-Guidance step ran successfully, and that the unaligned files are formatted correctly (they must have the file extension .faa, .fa, or .fasta).')
 
-		os.mkdir(params.output + '/Output/Temp/Guidance')
-		os.mkdir(params.output + '/Output/Temp/Guidance/Input')
-		os.mkdir(params.output + '/Output/Temp/Guidance/Output')
+		os.mkdir(params.output + '/Output/Intermediate/Guidance')
+		os.mkdir(params.output + '/Output/Intermediate/Guidance/Input')
+		os.mkdir(params.output + '/Output/Intermediate/Guidance/Output')
 
-		guidance_input = params.output + '/Output/Temp/Guidance/Input/'
+		guidance_input = params.output + '/Output/Intermediate/Guidance/Input/'
 		os.system('cp -r ' + preguidance_path + '/* ' + guidance_input)
 
 		guidance_removed_file = open(params.output + '/Output/GuidanceRemovedSeqs.txt', 'w')
 		guidance_removed_file.write('Sequence\tScore\n')
 
 		for file in [f for f in os.listdir(guidance_input) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta')]:
-			tax_guidance_outdir = params.output + '/Output/Temp/Guidance/Output/' + file.split('.')[0].split('_preguidance')[0]
+			tax_guidance_outdir = params.output + '/Output/Intermediate/Guidance/Output/' + file.split('.')[0].split('_preguidance')[0]
 			os.mkdir(tax_guidance_outdir)
 
 			fail = False
@@ -46,7 +46,7 @@ def run(params):
 				else:
 					mafft_alg = 'auto'
 
-				os.system('Scripts/guidance.v2.02/www/Guidance/guidance.pl --seqFile ' + guidance_input + '/' + file + ' --msaProgram MAFFT --seqType aa --outDir ' + tax_guidance_outdir + ' --seqCutoff ' + str(params.seq_cutoff) + ' --colCutoff ' + str(params.col_cutoff) + " --outOrder as_input --bootstraps 10 --MSA_Param '\\--" + mafft_alg + " --maxiterate 1000 --thread " + str(params.guidance_threads) + " --bl 62 --anysymbol' > " + params.output + '/Output/Temp/Guidance/Output/' + file[:10] + '/log.txt')
+				os.system('Scripts/guidance.v2.02/www/Guidance/guidance.pl --seqFile ' + guidance_input + '/' + file + ' --msaProgram MAFFT --seqType aa --outDir ' + tax_guidance_outdir + ' --seqCutoff ' + str(params.seq_cutoff) + ' --colCutoff ' + str(params.col_cutoff) + " --outOrder as_input --bootstraps 10 --MSA_Param '\\--" + mafft_alg + " --maxiterate 1000 --thread " + str(params.guidance_threads) + " --bl 62 --anysymbol' > " + params.output + '/Output/Intermediate/Guidance/Output/' + file[:10] + '/log.txt')
 
 				if os.path.isfile(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names'):
 					seqs_below = len([line for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names').readlines()[1:-1] if float(line.split()[-1]) < params.seq_cutoff])
@@ -60,7 +60,7 @@ def run(params):
 						Logger.Message('Guidance complete after ' + str(i + 1) + ' iterations for gene family ' + file.split('.')[0].split('_preguidance')[0])
 						break
 
-					for line in seqs_below:
+					for line in [line for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names').readlines()[1:-1] if float(line.split()[-1]) < params.seq_cutoff]:
 						guidance_removed_file.write(line)
 
 					os.system('cp ' + tax_guidance_outdir + '/Seqs.Orig.fas.FIXED.Without_low_SP_Seq.With_Names ' + guidance_input + '/' + file)

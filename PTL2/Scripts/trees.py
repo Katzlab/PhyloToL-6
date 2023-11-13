@@ -19,10 +19,10 @@ def run(params):
 	for file in [f for f in os.listdir(guidance_path)  if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta') or f.endswith('.fas') or f.endswith('.aln')]:
 		
 		if params.tree_method == 'iqtree':
-			if not os.path.isdir(params.output + '/Output/Temp/IQTree'):
-				os.mkdir(params.output + '/Output/Temp/IQTree')
+			if not os.path.isdir(params.output + '/Output/Intermediate/IQTree'):
+				os.mkdir(params.output + '/Output/Intermediate/IQTree')
 
-			tax_iqtree_outdir = params.output + '/Output/Temp/IQTree/' + file.split('.')[0].split('_preguidance')[0]
+			tax_iqtree_outdir = params.output + '/Output/Intermediate/IQTree/' + file.split('.')[0].split('_preguidance')[0]
 			os.mkdir(tax_iqtree_outdir)
 
 			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
@@ -34,10 +34,10 @@ def run(params):
 				Logger.Warning('No tree file created by IQ-Tree for OG ' + file[:10])
 
 		elif params.tree_method == 'raxml':
-			if not os.path.isdir(params.output + '/Output/Temp/RAxML'):
-				os.mkdir(params.output + '/Output/Temp/RAxML')
+			if not os.path.isdir(params.output + '/Output/Intermediate/RAxML'):
+				os.mkdir(params.output + '/Output/Intermediate/RAxML')
 				
-			tax_raxml_outdir = params.output + '/Output/Temp/RAxML/' + file.split('.')[0].split('_preguidance')[0]
+			tax_raxml_outdir = params.output + '/Output/Intermediate/RAxML/' + file.split('.')[0].split('_preguidance')[0]
 			os.mkdir(tax_raxml_outdir)
 
 			os.system('./Scripts/trimal-trimAl/source/trimal -in ' + guidance_path + '/' + file + ' -phylip -out ' + tax_raxml_outdir + '/aligned.phy')

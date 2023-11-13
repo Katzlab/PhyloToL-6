@@ -24,7 +24,7 @@ def run(params):
 	if(len(missing_taxa) > 0):
 		Logger.Warning('The following taxa in the taxon list are missing amino-acid files in ' + params.data + ':\n' + '\n'.join(['\t' + t for t in missing_taxa]))
 
-	os.mkdir(params.output + '/Output/Temp/SF_Diamond')
+	os.mkdir(params.output + '/Output/Intermediate/SF_Diamond')
 
 	for og in ogs:
 		Logger.Message('Processing ' + og)
@@ -41,9 +41,9 @@ def run(params):
 				if params.similarity_filter:
 					if len(recs) > 1:
 						while flag == 0:
-							master_file_name = params.output + '/Output/Temp/SF_Diamond/' + og + '_' + taxon_file[:10] + '_master_' + str(cycle)
-							query_file_name = params.output + '/Output/Temp/SF_Diamond/' + og + '_' + taxon_file[:10] + '_queries_' + str(cycle) + '.faa'
-							diamond_out_name = params.output + '/Output/Temp/SF_Diamond/' + og + '_' + taxon_file[:10] + '_diamond_results_' + str(cycle) + '.tsv'
+							master_file_name = params.output + '/Output/Intermediate/SF_Diamond/' + og + '_' + taxon_file[:10] + '_master_' + str(cycle)
+							query_file_name = params.output + '/Output/Intermediate/SF_Diamond/' + og + '_' + taxon_file[:10] + '_queries_' + str(cycle) + '.faa'
+							diamond_out_name = params.output + '/Output/Intermediate/SF_Diamond/' + og + '_' + taxon_file[:10] + '_diamond_results_' + str(cycle) + '.tsv'
 
 							open(master_file_name + '.faa', 'w').write('>' + recs[0].id + '\n' + str(recs[0].seq) + '\n\n')
 							masters.append(recs[0])
@@ -61,7 +61,7 @@ def run(params):
 								line = line.strip().split('\t')
 								
 								if float(line[2])/100 >= params.sim_cutoff:
-									recs_to_remove.append(seq); removed =+ 1
+									recs_to_remove.append(line[0]); removed =+ 1
 
 							if len([rec for rec in recs[1:] if rec.id not in recs_to_remove]) < 2:
 								recs = [rec for rec in recs[1:] if rec.id not in recs_to_remove]
@@ -76,7 +76,7 @@ def run(params):
 					preguidance_file.write('>' + rec.id + '\n' + str(rec.seq) + '\n\n')
 
 	if(not params.keep_temp):
-		os.system('rm -r ' + params.output + '/Output/Temp/SF_Diamond')
+		os.system('rm -r ' + params.output + '/Output/Intermediate/SF_Diamond')
 
 
 
