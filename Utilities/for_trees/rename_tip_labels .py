@@ -16,8 +16,9 @@ parser.add_argument('-i', '--input')
 parser.add_argument('-s', '--spreadsheet')
 args = parser.parse_args()
 os.makedirs(args.input + '/renamed', exist_ok = True)
-df = pd.read_csv(args.spreadsheet)
+df = pd.read_csv(args.spreadsheet, index_col = 0)
 df = df.astype(str)
+df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 df['Merged'] = df.apply(lambda row: '_'.join(row), axis=1)
 for file in os.listdir(args.input):
     if file.endswith('.tree') or file.endswith('.tre'):
@@ -29,7 +30,7 @@ for file in os.listdir(args.input):
             tree = tree.replace('Len', 'L')
             tree = tree.replace('Cov', 'Cv')
             tree = tree.replace('Contig', 'Ct')
-            search_strings = df.iloc[:, 0].tolist()
+            search_strings = df.index.tolist()
             replacement_strings = df['Merged'].tolist()
             for search, replace in zip(search_strings, replacement_strings):
                 tree = tree.replace(search,replace)
