@@ -15,6 +15,11 @@ def run(params):
 	except (FileNotFoundError, TypeError) as e:
 		Logger.Error('Unable to read taxon list file. Please make sure that the path is correct and that the file is formatted correctly.\n\n' + str(e))
 
+	try:
+		blacklist_seqs = list(dict.fromkeys([line.strip() for line in open(params.blacklist)]))
+	except (FileNotFoundError, TypeError) as e:
+		print('\nUnable to read blacklist file. Please make sure that the path is correct and that the file is formatted correctly.\n\n' + str(e))
+	
 	if not os.path.isdir(params.data):
 		Logger.Error(Logger.Error('Input amino-acid data files not found. Please make sure that the given path (--data) is correct.'))
 
@@ -31,7 +36,7 @@ def run(params):
 		with open(params.output + '/Output/Pre-Guidance/' + og + '_preguidance.faa', 'w') as preguidance_file:
 			for taxon_file in aa_files:
 				recs = []
-				for rec in sorted([rec for rec in SeqIO.parse(params.data + '/' + taxon_file, 'fasta') if rec.id[-10:] == og], key=lambda x: -len(x.seq)):
+				for rec in sorted([rec for rec in SeqIO.parse(params.data + '/' + taxon_file, 'fasta') if rec.id[-10:] == og and rec.id not in blacklist_seqs], key=lambda x: -len(x.seq)):
 					if(rec.id == rec.description):
 						recs.append(rec)
 					else:
