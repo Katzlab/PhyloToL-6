@@ -16,6 +16,11 @@ def run(params):
 		Logger.Error('Unable to read taxon list file. Please make sure that the path is correct and that the file is formatted correctly.\n\n' + str(e))
 
 	try:
+		sim_taxa = list(dict.fromkeys([line.strip() for line in open(params.sim_taxa)]))
+	except (FileNotFoundError, TypeError) as e:
+		Logger.Error('Unable to read similarity taxa list file. Please make sure that the path is correct and that the file is formatted correctly.\n\n' + str(e))
+
+	try:
 		blacklist_seqs = list(dict.fromkeys([line.strip() for line in open(params.blacklist)]))
 	except (FileNotFoundError, TypeError) as e:
 		print('\nUnable to read blacklist file. Please make sure that the path is correct and that the file is formatted correctly.\n\n' + str(e))
@@ -30,20 +35,22 @@ def run(params):
 		Logger.Warning('The following taxa in the taxon list are missing amino-acid files in ' + params.data + ':\n' + '\n'.join(['\t' + t for t in missing_taxa]))
 
 	os.mkdir(params.output + '/Output/Intermediate/SF_Diamond')
+	
+	removed_file = open(params.output + '/Output/Pre-Guidance/SimFilter_removed.txt', 'w')
 
 	for og in ogs:
 		Logger.Message('Processing ' + og)
 		with open(params.output + '/Output/Pre-Guidance/' + og + '_preguidance.faa', 'w') as preguidance_file:
 			for taxon_file in aa_files:
 				recs = []
-				for rec in sorted([rec for rec in SeqIO.parse(params.data + '/' + taxon_file, 'fasta') if rec.id[-10:] == og and rec.id not in blacklist_seqs], key=lambda x: -len(x.seq)):
+				for rec in sorted([rec for rec in SeqIO.parse(params.data + '/' + taxon_file, 'fasta') if rec.id[-10:] == og and rec.id not in blacklist_seqs and params.og_identifier in rec.id], key=lambda x: -len(x.seq)):
 					if(rec.id == rec.description):
 						recs.append(rec)
 					else:
 						Logger.Warning('\tThe sequence ID ' + rec.description + ' is invalid. Please make sure that sequence IDs contain no spaces, tabs, etc. This sequence is being excluded.')
 
 				masters = []; removed = 0; flag = 0; cycle = 0
-				if params.similarity_filter:
+				if params.similarity_filter and taxon_file[:10] in sim_taxa:
 					if len(recs) > 1:
 						while flag == 0:
 							master_file_name = params.output + '/Output/Intermediate/SF_Diamond/' + og + '_' + taxon_file[:10] + '_master_' + str(cycle)
@@ -74,11 +81,16 @@ def run(params):
 							else:
 								recs = [rec for rec in recs[1:] if rec.id not in recs_to_remove]
 								cycle += 1
+							
+							for item in recs_to_remove:
+								removed_file.write(f"{item}\n")
 
 					Logger.Message('\t' + str(removed) + ' sequence(s) removed by the similarity filter (' + str(cycle + 1) + ' iterations) from ' + taxon_file[:10])
 				
 				for rec in recs + masters:
 					preguidance_file.write('>' + rec.id + '\n' + str(rec.seq) + '\n\n')
+    
+	removed_file.close()
 
 	if(not params.keep_temp):
 		os.system('rm -r ' + params.output + '/Output/Intermediate/SF_Diamond')
