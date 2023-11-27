@@ -280,7 +280,7 @@ def update_fasta(args):
 			og_prefix = rec.split(og_number)[0][-4:]
 			og = og_prefix + og_number
 
-			if len(updated_prot_name[rec]) > 0.33*OGLenDB[og] and len(updated_prot_name[rec]) < 1.5*OGLenDB[og]:
+			if 3*len(updated_prot_name[rec]) > OGLenDB[og] and len(updated_prot_name[rec]) < 1.5*OGLenDB[og]:
 				w.write('>' + rec + '\n' + updated_prot_name[rec] + '\n\n')
 
 	with open(args.ntd_out,'w+') as x:
@@ -289,7 +289,11 @@ def update_fasta(args):
 			og_prefix = rec.split(og_number)[0][-4:]
 			og = og_prefix + og_number
 
-			if len(updated_ntd_name[rec]) > OGLenDB[og] and len(updated_ntd_name[rec]) < 4.5*OGLenDB[og]:
+			ntd_len = len(updated_ntd_name[rec])
+			if updated_ntd_name[rec].lower().endswith('tag') or updated_ntd_name[rec].lower().endswith('tga') or updated_ntd_name[rec].lower().endswith('taa'):
+				ntd_len = ntd_len - 3
+
+			if ntd_len > OGLenDB[og] and ntd_len < 4.5*OGLenDB[og]:
 				x.write('>' + rec + '\n' + updated_ntd_name[rec] + '\n\n')
 
 
