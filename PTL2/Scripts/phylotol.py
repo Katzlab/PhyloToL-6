@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import os, sys, re
-import contamination
 import utils
 import preguidance
 import guidance
@@ -27,10 +26,6 @@ if __name__ == '__main__':
 	if params.start != 'trees' and params.end == 'trees':
 		print('\nBuilding trees\n')
 		trees.run(params)
-
-	if params.contamination_loop != None:
-		print('\nRunning contamination loop\n')
-		contamination.run(params)
 
 	if params.concatenate:
 		print('\nChoosing orthologs and concatenating alignments...\n')
