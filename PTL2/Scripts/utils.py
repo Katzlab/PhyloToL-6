@@ -20,7 +20,7 @@ def get_params():
 	common.add_argument('--force', action = 'store_true', help = 'Overwrite all existing files in the "Output" folder.')
 	common.add_argument('--tree_method', default = 'iqtree', choices = {'iqtree', 'raxml', 'all'}, help = 'Program to use for tree-building')
 	common.add_argument('--blacklist', type = str, help = 'A text file with a list of sequence names not to consider')
-	common.add_argument('--og_identifier', default = '_OG', choices = {'_OG6','_OGA','_OGG', '_OG'}, help = 'Program to use for selecting seq by GC width')
+	common.add_argument('--og_identifier', choices = {'_OG','_OG6','_OGA','_OGG'}, help = 'Program to use for selecting seq by GC width')
 	common.add_argument('--sim_taxa', default = None, help = 'Path to the file with the taxa (10-digit codes) to apply the similarity filter on.')
 	
 	core = parser.add_argument_group('Core parameters (rarely altered from the defaults)')
