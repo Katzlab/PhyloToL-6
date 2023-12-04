@@ -25,7 +25,7 @@ def run(params):
 			tax_iqtree_outdir = params.output + '/Output/Intermediate/IQTree/' + file.split('.')[0].split('_preguidance')[0]
 			os.mkdir(tax_iqtree_outdir)
 
-			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
+			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G -T AUTO --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
 			
 			if os.path.isfile(tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile'):
 				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
