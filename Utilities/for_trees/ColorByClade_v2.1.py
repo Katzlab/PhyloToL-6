@@ -240,7 +240,7 @@ def color(file, args):
 		else:
 			print('\nERROR: your input keyfile could not be found\n')
 	else:
-		colors = { 'Ba' : '[&!color=#000000]', 'Za' : '[&!color=#808080]', 'Sr' : '[&!color=#7b2516]', 'Op' : '[&!color=#12aaff]', 'Pl' : '[&!color=#006300]', 'Ex' : '[&!color=#ffa100]', 'EE' : '[&!color=#ff6288]', 'Am' : '[&!color=#aa00ff]' }
+		colors = { 'Ba' : '[&!color=#000000]', 'Za' : '[&!color=#808080]', 'Sr' : '[&!color=#B4A26D]', 'Op' : '[&!color=#1260CC]', 'Pl' : '[&!color=#026736]', 'Ex' : '[&!color=#E63B60]', 'EE' : '[&!color=#C76A6A]', 'Am' : '[&!color=#29C5F6]', 'EE_cr' : '[&!color=#08B461]', 'EE_ha' : '[&!color=#03EA74]', 'Sr_ci' : '[&!color=#A97533]', 'Sr_ap' : '[&!color=#D4BA99]', 'Sr_rh' : '[&!color=#8A3324]', 'Sr_st' : '[&!color=#E97451]', 'Sr_di' : '[&!color=#492815]' }
 		
 	newick = get_newick(file)
 
