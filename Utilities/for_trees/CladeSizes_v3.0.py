@@ -1,4 +1,4 @@
-#Author, date: Auden Cote-L'Heureux, last updated Dec 1st 2023
+#Author, date: Auden Cote-L'Heureux, last updated Dec 18th 2023
 #Motivation: Understand the topology of trees
 #Intent: Describe clade sizes for different taxonomic groups
 #Dependencies: Python3, ete3
@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser(
                     prog = 'Clade sizes utility version 2.0',
-                    description = "Updated Dec 1, 2023 by Auden Cote-L'Heureux"
+                    description = "Updated Dec 18th, 2023 by Auden Cote-L'Heureux"
                     )
 
 	parser.add_argument('-i', '--input', required = True, help = 'Path to folder of tree files')
