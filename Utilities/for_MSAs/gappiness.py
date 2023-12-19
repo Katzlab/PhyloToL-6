@@ -38,7 +38,7 @@ def faralog_gaps():
             split = []
             #reading the fasta files with Biopython (looping each sequence in a file and populating the empty name and seq lists).
             for x in SeqIO.parse(args.alignment + '/' + file, "fasta"):
-                if x.id.startswith(args.code):
+                if (args.code != None and x.id.startswith(args.code)) or args.code == None:
                     name.append(x.id)
                     seq.append(x.seq)
                     seq_len.append(len(x.seq))
