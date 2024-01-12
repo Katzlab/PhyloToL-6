@@ -1,17 +1,12 @@
 '''
-Written March 2023 by Elinor (esterner27@gmail.com) to plot length, coverage and GC of assembled transcripts
-
-This script will iterate through all assembled files (named as 10 digit code _assembledTranscripts) with and gather GC, length and coverage. With that data, it plots R scripts
-
-Input: 
-	Folder called Renamed_assembled_files of previously renamed files (if this is the case, put -r or --renamed in the command line)
+#Author, date: Elinor Sterner(esterner27@gmail.com), March 2023. Last updated Nov 27th 2023
+#Motivation: To describe transcriptomes.
+#Intent: Plot length, coverage and GC of assembled transcripts with stats generated.
+#Dependencies: Python3
+#Inputs: Folder called Renamed_assembled_files of previously renamed files (if this is the case, put -r or --renamed in the command line)
 	tsv file of LKH number and new names formatted like this: 10_digit_code\tdescriptor_of_taxon called new_names.tsv
-
-To run:
-	python assess_transcriptomes.py -input <pathway to directory of spades output>
-
-Output: csv file of length, GC, coverage of each transcript, and multiple R plots, faceted by taxon and a csv file of data. It plots GC by length, and distributions of coverage, length and GC
-
+#Outputs: A spreadsheet containing the length, GC, and coverage of each transcript.
+#Example: python assess_transcriptomes.py -input <pathway to directory of spades output>
 '''
 import os
 import sys
