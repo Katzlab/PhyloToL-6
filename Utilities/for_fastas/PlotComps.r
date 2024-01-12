@@ -1,6 +1,7 @@
-#The purpose of this script is to make a simple jellyfish plot from a dataset like the one
-#produced by the CUB_v2.1.py script, also in the Github Utilities folder. This script was written
-#by Auden Cote-L'Heureux and last updated in September 2023 by Adri
+#Author, date: Auden Cote-L'Heureux, last updated in September 2023 by Adri
+#Intent: To make a simple jellyfish plot from a dataset like the one
+#produced by the CUB_v2.1.py script, also in the Github Utilities folder. 
+
 
 #load necessary packages
 library(tidyverse)
