@@ -1,3 +1,12 @@
+'''
+#Author, date: Uploaded by Adri Grow, 2023
+#Intent: map a group of trimmed reads to a reference. 
+#Dependencies: Python3, hisat2, samtools, sambamba
+#Inputs: Folder named 'TrimmedReads' containing all the trimmed reads.
+#Outputs: Folders with the names of the LKHs containing the sam/bam files.
+#Example: python readmapping.py
+'''
+
 #python week 6
 #map a group of trimmed reads to a reference
 #IMPORTANT: Please read commented-out (grey) notes. They will tell you where you need to edit the script.
