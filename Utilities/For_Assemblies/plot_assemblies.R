@@ -1,3 +1,11 @@
+#Author, date: Elinor Sterner(esterner27@gmail.com), March 2023. 
+#Motivation: To describe transcriptomes.
+#Intent: Plot length, coverage and GC of assembled transcripts with stats generated from assess_transcriptomes.py.
+#Dependencies: Python3
+#Inputs: assess_transcriptomes.py output (assembly_assessment.csv)
+#Outputs: Several plots showing the distribution of length, GC content, and Coverage.
+
+
 library(ggplot2)
 library(tidyverse)
 library(scales)
