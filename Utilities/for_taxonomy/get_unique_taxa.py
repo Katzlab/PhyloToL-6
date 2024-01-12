@@ -1,19 +1,14 @@
+'''
+#Author, date: Elinor Sterner Jan-26-2023, updated Feb-12-2023.
+#Intent: To get the unique taxa from a taxonomic classification. 
+#Dependencies: Python3
+#Inputs: text file of taxonomies. make sure each taxonomic level is separated with '; ' (semicolon space).
+#Outputs: Spreadsheet with unique taxa. If you run the script multiple times, DELETE THE PREVIOUS OUTPUT. 
+#Example: python get_unique_taxa.py 
+'''
+
 import os
 from pathlib import Path
-
-'''
-Written by Elinor 1/26, updated 2/12
-
-Input: text file of taxonomies. make sure each taxonomic level is separated with '; ' (semicolon space) or the
-script will not parse the names right
-
-This cuts off the genus (and species if there is one), uniquifies the list and writes them out to files by the first
-word of the taxonomy
-
-WARNING: if you run the script multiple times, DELETE THE PREVIOUS OUTPUT. this is because it appends lines to the 
-end of files so you will have many duplicates
-
-'''
 
 Path(f'unique_taxon_lists').mkdir(parents=True, exist_ok=True)#makes output folder
 
