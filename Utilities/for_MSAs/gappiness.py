@@ -3,7 +3,7 @@
 #Intent: To use the gappyness stats in filtering paralogs.
 #Inputs: A folder of alignment files
 #Outputs: A spreadsheet of the gappyness stats
-#Example: python faralog.py --alignment /Path/to/alignments  --code ten digit code
+#Example: python gappiness.py --alignment /Path/to/alignments  --code ten digit code
 
 #Dependencies
 import os, sys, re
@@ -16,11 +16,11 @@ import argparse
 
 
 parser = argparse.ArgumentParser(
-                    prog = 'F/paralog assessment script',
+                    prog = 'gappiness assessment script',
                     description = "Updated November 7, 2023 by Godwin Ani.")
 
 parser.add_argument('-a', '--alignment', help = 'The alignment files folder')
-parser.add_argument('-c', '--code', help = 'The ten digit code for f/paralog assessment')
+parser.add_argument('-c', '--code', help = 'The ten digit code for gappiness assessment')
 args = parser.parse_args()
 
 
