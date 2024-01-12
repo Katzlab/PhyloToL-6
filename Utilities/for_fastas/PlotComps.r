@@ -1,7 +1,9 @@
+'''
 #Author, date: Auden Cote-L'Heureux, last updated in September 2023 by Adri
-#Intent: To make a simple jellyfish plot from a dataset like the one
-#produced by the CUB_v2.1.py script, also in the Github Utilities folder. 
-
+#Intent: To make a simple jellyfish plot from a dataset like the one produced by the CUB_v2.1.py script, also in the Github Utilities folder. 
+#Input: CompTrans.ENc.Raw.tsv and ENc.Null.tsv
+#Output: Jellyfish plots
+'''
 
 #load necessary packages
 library(tidyverse)
