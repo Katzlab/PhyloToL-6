@@ -1,3 +1,12 @@
+'''
+#Author, date: Uploaded by Adri Grow, 2023
+#Intent: To get the NCBI taxonomic classification of organisms. 
+#Dependencies: Python3, esearch
+#Inputs: Spreadsheet with ten digit codes in the first column and the genus and species names in the second column.
+#Outputs: Spreadsheet with taxonomy.
+#Example: python get_taxonomy.py --input_file <path to .csv file>
+'''
+
 import os
 import sys
 from subprocess import check_output
