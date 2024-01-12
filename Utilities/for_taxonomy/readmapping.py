@@ -7,10 +7,6 @@
 #Example: python readmapping.py
 '''
 
-#python week 6
-#map a group of trimmed reads to a reference
-#IMPORTANT: Please read commented-out (grey) notes. They will tell you where you need to edit the script.
-
 import os
 from Bio import SeqIO
 
