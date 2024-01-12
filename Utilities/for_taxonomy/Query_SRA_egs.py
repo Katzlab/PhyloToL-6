@@ -1,16 +1,10 @@
 '''
-Modified by Elinor 2/13 to grab recent assemblies (since 2020) and GCA codes. Input is folder 'unique_taxon_lists' with files
-of keywords by major clade (separated by new lines). Put -t (transcriptome, SRA db) or -g (genome, assembly db) in the command 
-line to specify data type
-
-restrictions:
-	All data is since 2020
-	SRA excludes entries with 'Amplicon' in the description, and outputs the experiment and sequencing technology.
-
-example command line: python Query_SRA_egs.py -t
-
-Output: file of species, IDs, and GCA or SRR codes AND a file with uniquified codes. Updated 3.21.23 to output sequencing machine and type of experiment from SRA
-
+#Author, date: Elinor Sterner, Feb 2023
+#Intent: To grab recent assemblies (since 2020) and GCA codes. 
+#Dependencies: Python3, Biopython
+#Inputs: Folder named 'unique_taxon_lists' with files of keywords by major clade (separated by new lines).
+#Outputs: File of species, IDs, and GCA or SRR codes AND a file with uniquified codes.
+#Example: python Query_SRA_egs.py -t (transcriptome, SRA db) or -g (genome, assembly db)
 '''
 
 from Bio import Entrez
