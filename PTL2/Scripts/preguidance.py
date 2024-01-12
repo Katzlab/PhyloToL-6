@@ -52,7 +52,7 @@ def run(params):
 		with open(params.output + '/Output/Pre-Guidance/' + og + '_preguidance.fasta', 'w') as preguidance_file:
 			for taxon_file in aa_files:
 				recs = []
-				for rec in sorted([rec for rec in SeqIO.parse(params.data + '/' + taxon_file, 'fasta') if rec.id[-10:] == og and rec.id not in blacklist_seqs and params.og_identifier in rec.id], key=lambda x: -len(x.seq)):
+				for rec in sorted([rec for rec in SeqIO.parse(params.data + '/' + taxon_file, 'fasta') if rec.id[-10:] == og and rec.id not in blacklist_seqs and rec.id[-10:].startswith(params.og_identifier)], key=lambda x: -len(x.seq)):
 					if(rec.id == rec.description):
 						recs.append(rec)
 					else:
