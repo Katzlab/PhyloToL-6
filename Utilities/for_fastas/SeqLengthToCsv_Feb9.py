@@ -1,8 +1,12 @@
 '''
-Professor L. Katz and Godwin Ani
-9th-Feb-2023
-Seq_length_to_csv is a program that exports the length of DNA sequences excluding gaps and missing data to a csv file.
+#Author, date: Godwin Ani, 9th- Feb - 2023.
+#Dependencies: Python3, Biopython
+#Intent: Exports the length of DNA sequences excluding gaps and missing data to a csv file.
+#Inputs: A folder named 'Seq_length' containing DNA fasta files.
+#Outputs: A spreadsheet containing the length of the sequences.
+#Example: python Seq_length_to_csv.py
 '''
+
 
 import os, sys, re
 from Bio import SeqIO
