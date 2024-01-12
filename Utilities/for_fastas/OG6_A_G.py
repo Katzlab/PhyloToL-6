@@ -1,11 +1,11 @@
+'''
 #Author, date: Godwin Ani, 24th- Nov - 2023.
 #Dependencies: Python3, Biopython
 #Inputs: A folder of containing ReadyToGo files, PerSequenceStatSummaries, rules file and the script.
 #The csv file should contain 10 digit codes and the limits(column headers are name, lower, and upper).
 #Outputs: a folder of curated ready to go files.
-#Example: python OG6_A_G.py -i (input folder of r2gs), -r (rules csv file), -s (folder of per seq stats) '''
-#
-
+#Example: python OG6_A_G.py -i (input folder of r2gs), -r (rules csv file), -s (folder of per seq stats) 
+'''
 
 
 import os
