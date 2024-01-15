@@ -4,7 +4,7 @@
 #Dependencies: Python3, hisat2, samtools, sambamba
 #Inputs: Folder named 'TrimmedReads' containing all the trimmed reads.
 #Outputs: Folders with the names of the LKHs containing the sam/bam files.
-#Example: python readmapping.py
+#Example: python ReadMapping_v2.0.py
 '''
 
 import os
