@@ -4,7 +4,7 @@
 #Dependencies: Python3, Biopython
 #Inputs: Folder named 'unique_taxon_lists' with files of keywords by major clade (separated by new lines).
 #Outputs: File of species, IDs, and GCA or SRR codes AND a file with uniquified codes.
-#Example: python Query_SRA_egs.py -t (transcriptome, SRA db) or -g (genome, assembly db)
+#Example: python QuerySRA_v1.0.py -t (transcriptome, SRA db) or -g (genome, assembly db)
 '''
 
 from Bio import Entrez
