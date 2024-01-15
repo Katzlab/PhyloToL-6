@@ -6,7 +6,7 @@
 #Inputs: Folder called Renamed_assembled_files of previously renamed files (if this is the case, put -r or --renamed in the command line)
 	tsv file of LKH number and new names formatted like this: 10_digit_code\tdescriptor_of_taxon called new_names.tsv
 #Outputs: A spreadsheet containing the length, GC, and coverage of each transcript.
-#Example: python assess_transcriptomes.py -input <pathway to directory of spades output>
+#Example: python Assess_transcriptomes_v2.0.py -input <pathway to directory of spades output>
 '''
 import os
 import sys
