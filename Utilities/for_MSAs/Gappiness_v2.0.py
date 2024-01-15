@@ -3,7 +3,7 @@
 #Intent: To use the gappyness stats in filtering paralogs.
 #Inputs: A folder of alignment files
 #Outputs: A spreadsheet of the gappyness stats
-#Example: python gappiness.py --alignment /Path/to/alignments  --code ten digit code
+#Example: python Gappiness_v2.0.py --alignment /Path/to/alignments  --code ten digit code
 
 #Dependencies
 import os, sys, re
