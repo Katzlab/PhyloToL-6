@@ -4,7 +4,7 @@
 #Dependencies: Python3
 #Inputs: text file of taxonomies. make sure each taxonomic level is separated with '; ' (semicolon space).
 #Outputs: Spreadsheet with unique taxa. If you run the script multiple times, DELETE THE PREVIOUS OUTPUT. 
-#Example: python get_unique_taxa.py 
+#Example: python GetUniqueTaxa_v1.0.py 
 '''
 
 import os
