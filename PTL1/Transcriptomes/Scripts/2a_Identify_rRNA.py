@@ -1,29 +1,13 @@
-#!/usr/bin/env python3.5
+# Last updated 8/18/2017
 
-##__Updated__: 18_08_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 2a_remove_rDNA.py --help
+# This script is intended to identify and isolate SSU/LSU sequences by BLASTn-ing
+# all length-filtered assembled transcripts against a reference database.
 
-##########################################################################################
-## This script is intended to identify and isolate SSU/LSU sequences 					##
-## Prior to running this script, ensure the following:									##
-##																						##
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file 				##
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder					##
-## 2. Removed small sequences (usually sequences < 300bp) with ContigFilterPlusStats.py	##
-## 3. Have the Databases set up correctly (e.g. with BLAST or Diamond) and in their 	##
-##	  respective folders! See the manual if you need help								##
-##																						##
-## 								COMMAND Example Below									##
-##																						##
-## 				E-mail Xyrus (author) for help if needed: maurerax@gmail.com			##
-##																						##
-##							Next Script(s) to Run: 										##
-##								2b_removeBact.py										##
-##																						##
-##########################################################################################
+# You must run Script 1a before this step. Optionally, you may also have run Script 1b.
+# Before running this script, ensure that you have a properly formatted rRNA reference
+# BLAST database in the Databases/db_BvsE/SSULSUdb folder.
 
-
+#Dependencies
 import argparse, os, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
 from Bio import SeqIO
@@ -198,25 +182,6 @@ def remove_rDNA(args, rRNA_folder):
 				no_SSULSU += 1
 
 	return str(with_SSULSU), str(no_SSULSU)
-	
-	
-###########################################################################################
-###--------------------------- Updates Log of SSU/LSU Removal --------------------------###
-###########################################################################################
-	
-def update_log(args, with_SSU, no_SSU):
-
-	if os.path.isdir('../PostAssembly_Logs/') != True:
-		os.system('mkdir ../PostAssembly_Logs/')
-	
-	print (color.BOLD+'There are '+color.RED+with_SSU+' rRNA contigs'+color.END+color.BOLD\
-	+' and '+color.PURPLE+no_SSU+' Putative Protein-coding contigs'+color.END+color.BOLD\
-	+'\nin '+color.DARKCYAN+args.input_file.split('/')[1]+'\n' + color.END)
-	
-	with open('../PostAssembly_Logs/'+args.input_file.split('/')[1].split('.fas')[0]+'.Log.txt','a') as LogFile:
-		LogFile.write('rDNA Contigs\t'+with_SSU+'\tn/a\tn/a\n')
-		LogFile.write('Non-rDNA Contigs\t'+no_SSU+'\tn/a\tn/a\n')
-
 
 ###########################################################################################
 ###-------------------------------- Next Script Message --------------------------------###
@@ -251,9 +216,7 @@ def main():
 	code, rRNA_folder = prep_folders(args)
 
 	with_SSULSU, no_SSULSU = remove_rDNA(args, rRNA_folder)
- 	
-	#update_log(args, with_SSULSU, no_SSULSU)
- 	
+ 	 	
 	clean_up(args)
  
 	next_script(args)
