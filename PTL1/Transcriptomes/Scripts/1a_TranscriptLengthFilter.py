@@ -1,7 +1,6 @@
 #!/usr/bin/env python3.6
 
 ##__Updated__: 01_04_2023 by Auden Cote-L'Heureux
-##__Authors__: Xyrus Maurer-Alcala 
 ##__Usage__: python 1_ContigFiltStats.py
 ##__Options__: python 1_ContigFiltStats.py --help
 
