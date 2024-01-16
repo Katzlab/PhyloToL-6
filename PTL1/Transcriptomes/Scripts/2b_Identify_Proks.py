@@ -328,31 +328,6 @@ def compare_hits(args):
 		
 	return str(len(Euk_Fasta)), str(len(Prok_Fasta)), str(len(Und_Fasta))	
 
-
-###########################################################################################
-###----------------------- Updates Log of Prok vs Euk Comparisons ----------------------###
-###########################################################################################
-	
-def update_log(args, Euk_Contigs, Prok_Contigs, Und_Contigs):
-
-	if os.path.isdir('../PostAssembly_Logs/') != True:
-		os.system('mkdir ../PostAssembly_Logs/')
-	else:
-		pass
-			
-	print (color.BOLD +'\n\nThere are '+color.RED+Prok_Contigs+' Strongly Prokaryotic contigs'+color.END\
-	+color.BOLD+',\n'+color.ORANGE+Euk_Contigs+' Strongly Eukaryotic contigs'+color.END\
-	+color.BOLD+',\nand '+color.PURPLE+Und_Contigs+' Undetermined Contigs\n'+color.END\
-	+color.BOLD+'in '+args.input_file.split('/')[-1]+color.END)
-	
-	for Logname in os.listdir(os.curdir+'./PostAssembly_Logs/'):
-		if Logname.startswith(args.input_file.split('/')[-1].split('_No')[0]) and Logname.endswith('Log.txt'): # ACL - ???
-			with open('../PostAssembly_Logs/'+Logname,'a') as Logfilename:
-				Logfilename.write('Prokaryotic Contigs\t'+Prok_Contigs+'\tn/a\tn/a\n')
-				Logfilename.write('Eukaryotic Contigs\t'+Euk_Contigs+'\tn/a\tn/a\n')
-				Logfilename.write('Undetermined Contigs\t'+Und_Contigs+'\tn/a\tn/a\n')
-
-
 ###########################################################################################
 ###-------------------------------- Next Script Message --------------------------------###
 ###########################################################################################
@@ -392,9 +367,7 @@ def main():
 	ublast_BvE(args, usearch_path)
 
 	Euk_Contigs, Prok_Contigs, Und_Contigs = compare_hits(args)
-	
-	#update_log(args, Euk_Contigs, Prok_Contigs, Und_Contigs)
-	
+		
 	clean_up(args)
 	
 	next_script(args)
