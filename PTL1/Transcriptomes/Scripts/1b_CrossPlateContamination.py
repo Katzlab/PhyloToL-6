@@ -1,11 +1,16 @@
 # Last updated 2/23/2022
+# Authors: Jean-David Grattepanche and Auden Cote-L'Heureux
 
 # This script is intended to remove intra-plate contamination
 # by removing sequences with low coverage relative to other
 # very similar sequences from samples sequenced on the same
-# plate.
+# plate. This script is optional, but to be run as part of the
+# PhyloToL version 6 Part 1 pipeline using the script wrapper.py
 
-# Before running this script, you must run Script 1a.
+# Before running this script, you must run Script 1a. The default
+# clustering parameters are below, decided upon after manual inspection
+# of results from sample data under multiple parametrizations, but are
+# free to be changed by the user.
 
 #Dependencies
 import sys
