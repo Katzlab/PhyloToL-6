@@ -7,6 +7,7 @@
 
 # Before running this script, you must run Script 1a.
 
+#Dependencies
 import sys
 import os
 import re
@@ -15,10 +16,15 @@ import string
 import os.path
 from Bio import SeqIO
 from sys import argv
+
+#Holds a list of all taxon names
 listtaxa=[]
+
+#Clustering parameters
 toosim = 0.99
 seqcoverage = 0.7
 
+#Group all sequences across all samples into one fasta file, which will then be clustered.
 def merge_files(folder, minlen, conspecific_names):
 	mergefile = open('/'.join(folder.split('/')[:-1]) + '/forclustering.fasta','w+')
 	print("MERGE following files")
@@ -35,7 +41,7 @@ def merge_files(folder, minlen, conspecific_names):
 
 	sort_cluster(folder, listtaxa, minlen, conspecific_names)
 
-
+#Cluster all sequences across all samples using Vsearch
 def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 	if not os.path.exists('/'.join(folder.split('/')[:-1]) + '/clusteringresults_vsearch/'):
 		os.makedirs('/'.join(folder.split('/')[:-1]) + '/clusteringresults_vsearch/')
@@ -43,7 +49,7 @@ def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 	fastalist = []; fastadict= {}
 	conspecific_names_dict = { line.split('\t')[0] : line.split('\t')[1].strip() for line in open(conspecific_names) }
 
-	print('CREATE a dictionnary of sequences')
+	print('Creating a dictionnary of sequences\n')
 	for record in SeqIO.parse(open('/'.join(folder.split('/')[:-1]) + '/forclustering.fasta','r'),'fasta'):
 		if record.id[:10] not in conspecific_names_dict:
 			print('\nError in cross-plate contamination assessment: the ten-digit code ' + record.id[:10] + ' is not found in the conspecific names file. Please check that this file is correct and try again.\n')
@@ -53,14 +59,17 @@ def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 		fastalist.append(IDL)
 		fastadict[record.description] = record.seq
 
-	print("CLUSTER sequences that overlap at least 70%")
+	print("\nClustering sequences that overlap at least 70%")
+
+	#Cluster at 99% identity over 70% of the length
 	os.system('vsearch --cluster_fast ' + '/'.join(folder.split('/')[:-1]) + '/forclustering.fasta --strand both --query_cov '+str(seqcoverage)+' --id '+str(toosim) +' --uc ' + '/'.join(folder.split('/')[:-1]) + '/clusteringresults_vsearch/results_forclustering.uc --threads 60' )
 	
 	cluster_output = '/'.join(folder.split('/')[:-1]) + '/clusteringresults_vsearch/results_forclustering.uc'
 	out2 = open('/'.join(folder.split('/')[:-1]) + '/fastatokeep.fas','w+')
 	out3 = open('/'.join(folder.split('/')[:-1]) + '/fastatoremoved.fas','w+')
 	out4 = open('/'.join(folder.split('/')[:-1]) + '/fastatoremoved.uc','w+')
-	print("CREATE a dictionary with clustering results")
+	
+	print("Creating a dictionary with clustering results\n")
 	clustdict= {}; clustlist = []; allseq = []; clustline = {}; list= []; i=0; j=0
 	for row2 in open(cluster_output, 'r'):
 		if row2.split('\t')[0] == 'C' and int(row2.split('\t')[2]) < 2: # keep all unique sequences
@@ -75,26 +84,35 @@ def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 			clustline[row3.split('\t')[8].replace('\n','')] = row3.replace('\n','')
 			clustline[row3.split('\t')[9].replace('\n','')] = row3.replace('\n','')
 
-	print("PARSE the clusters: keep seed sequences (highest coverage) for each cluster")
+	print("Parsing the clusters: keeping seed sequences (highest coverage) for each cluster")
+	#For each cluster
 	for clust in clustlist:
+		#Define the highest covered sequence in the cluster as the 'master,' against which all
+		#more lowly covered sequences will be compared.
 		list = sorted(clustdict[clust], reverse = True, key=lambda x: int(x.split('_Cov')[1]))
 		master = list[0]
 		Covmaster = int(list[0].split('_Cov')[1])
 		master8dig = ('_').join(list[0].split('_')[0:3])[:-2]
+		
+		#For each sequence that is not the highest covered sequence in the cluster
 		for seq in list:
 			clustered =  seq.replace('\n','')
 			Covclustered = int(clustered.split('_Cov')[1])
 			clustered8dig = ('_').join(clustered.split('_')[0:3])[:-2]
 
+			#Keep any sequence if it has more than 1/10 the coverage of the highest covered sequence in the cluster
 			if float(Covmaster/Covclustered) < 10:
 				out2.write('>'+clustered + '\n' + str(fastadict[clustered])+ '\n')
 				i +=1
+			#Don't remove a sequence if it is from the same taxon as the highest covered sequence in the cluster
 			elif conspecific_names_dict[master[:10]] == conspecific_names_dict[clustered[:10]]:
 				out2.write('>'+clustered + '\n' + str(fastadict[clustered])+ '\n')
 				i +=1
+			#Keep any sequence with coverage >= 50
 			elif Covclustered >= 50:				
 				out2.write('>'+clustered + '\n' + str(fastadict[clustered])+ '\n')
 				i +=1
+			#Otherwise, remove the lower covered sequence
 			else:
 				j +=1
 				out4 = open('/'.join(folder.split('/')[:-1]) + '/fastatoremoved.uc','a')
@@ -110,7 +128,8 @@ def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 	out3.close()
 
 	splittaxa(folder, listtaxa, minlen)
-	
+
+#Rewriting the files per taxon, minus the sequences removed by the similarity comparison
 def splittaxa(folder, listtaxa, minlen):
 	for taxa in listtaxa:
 		tax_sf_path = '/'.join(folder.split('/')[:-1]) + '/' + taxa + '/SizeFiltered/'
