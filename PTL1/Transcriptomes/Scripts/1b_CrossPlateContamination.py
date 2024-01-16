@@ -1,10 +1,11 @@
-#!/usr/bin/python3
+# Last updated 2/23/2022
 
-__author__ = 'Jean-David Grattepanche'
-__version__ = 'ACL fixed sequence naming issue Feb 23, 2022'
-__email__ = 'jeandavid.grattepanche@gmail.com'
+# This script is intended to remove intra-plate contamination
+# by removing sequences with low coverage relative to other
+# very similar sequences from samples sequenced on the same
+# plate.
 
-
+# Before running this script, you must run Script 1a.
 
 import sys
 import os
@@ -55,8 +56,6 @@ def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 	print("CLUSTER sequences that overlap at least 70%")
 	os.system('vsearch --cluster_fast ' + '/'.join(folder.split('/')[:-1]) + '/forclustering.fasta --strand both --query_cov '+str(seqcoverage)+' --id '+str(toosim) +' --uc ' + '/'.join(folder.split('/')[:-1]) + '/clusteringresults_vsearch/results_forclustering.uc --threads 60' )
 	
-	#input2 = open('/'.join(folder.split('/')[:-1]) + '/clusteringresults_vsearch/results_forclustering.uc','r')
-	#input2 = open('/Output_PostClusterBackup/clusteringresults_vsearch/results_forclustering.uc','r')
 	cluster_output = '/'.join(folder.split('/')[:-1]) + '/clusteringresults_vsearch/results_forclustering.uc'
 	out2 = open('/'.join(folder.split('/')[:-1]) + '/fastatokeep.fas','w+')
 	out3 = open('/'.join(folder.split('/')[:-1]) + '/fastatoremoved.fas','w+')
@@ -67,13 +66,11 @@ def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 		if row2.split('\t')[0] == 'C' and int(row2.split('\t')[2]) < 2: # keep all unique sequences
 			out2.write('>'+row2.split('\t')[8] + '\n' + str(fastadict[row2.split('\t')[8]])+ '\n')
 		if row2.split('\t')[0] == 'C' and int(row2.split('\t')[2]) > 1: # create another dictionary
-#			print("create dico: ", row2.split('\t')[8])
 			clustdict.setdefault(row2.split('\t')[8], [row2.split('\t')[8]])
 			clustlist.append(row2.split('\t')[8])
 
 	for row3 in open(cluster_output, 'r'):
 		if row3.split('\t')[0] == 'H':
-#			print("add dico: ", row3.split('\t')[9], row3.split('\t')[8])
 			clustdict[row3.split('\t')[9].replace('\n','')].append(row3.split('\t')[8].replace('\n',''))
 			clustline[row3.split('\t')[8].replace('\n','')] = row3.replace('\n','')
 			clustline[row3.split('\t')[9].replace('\n','')] = row3.replace('\n','')
@@ -88,7 +85,7 @@ def sort_cluster(folder, listtaxa, minlen, conspecific_names):
 			clustered =  seq.replace('\n','')
 			Covclustered = int(clustered.split('_Cov')[1])
 			clustered8dig = ('_').join(clustered.split('_')[0:3])[:-2]
-# 			print(master8dig, Covmaster, '//', clustered8dig, Covclustered)
+
 			if float(Covmaster/Covclustered) < 10:
 				out2.write('>'+clustered + '\n' + str(fastadict[clustered])+ '\n')
 				i +=1
