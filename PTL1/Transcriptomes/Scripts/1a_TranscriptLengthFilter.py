@@ -1,25 +1,14 @@
-#!/usr/bin/env python3.6
+# Last updated 01/04/2023
 
-##__Updated__: 01_04_2023 by Auden Cote-L'Heureux
-##__Usage__: python 1_ContigFiltStats.py
-##__Options__: python 1_ContigFiltStats.py --help
+# This script is intended to remove transcripts below or above a given   		 			 
+# size range from a transcriptome assembly.
 
-########################################################################################
-## This script is intended to remove transcripts below or above a given   		 			 
-## size range from a transcriptome assembly.                                            
-##                                                                                      
-## Prior to running this script, ensure the following:                                  
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file              
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder                    
-##                                                                                      
-##                              COMMAND Example Below                                   
-##                                                                                      
-##          E-mail Xyrus (author) for help if needed: maurerax@gmail.com                
-##                                                                                      
-##                          Next Script(s) to Run:                                      
-##  AutoBactVsEuk.py (removes SSU then Bact) or 2a_removeSSU.py then 2b_removeBact.py   
-##                                                                                      
-########################################################################################
+# Prior to running this script, ensure that you have assembled your
+# transcriptome and renamed the assembled transcripts in the format of
+# rnaSpades. Each file name should be of the format 
+# Op_me_Hsap_assembledTranscripts.fasta, replacing "Op_me_Hsap" with the
+# 10-digit taxon identifier of your choice. See example data on the GitHub
+# for reference.
 
 
 import argparse, os, sys
