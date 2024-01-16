@@ -1,28 +1,20 @@
-#!/usr/bin/env python3.5
+# Last updated Sept. 2023
+# Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
-##__Updated__: 18_08_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 2b_remove_Bact.py --help
+# This script is intended to identify likely prokarotic (contaminant) sequences. It does 
+# this by similarity-searching against a reference database of eukaryote and prokaryote
+# sequences, and it labels the output sequences with an "E" (likely eukaryotic), "P" (likely
+# prokaryotic) or "U" (Unknown) in the sequence ID. This is done by comparing e-values: if
+# a sequence hits a eukaryotic sequence with an e-value >100 times that of its best hit
+# to a prokaryotic sequence, it is labeled with an "E"; if it's best hit to a prokaryotic
+# sequence has an e-value >1000 times that of its best hit to a eukaryotic sequence, it is
+# labeled with a "P". Anything else gets a "U". This script should be run as part of the 
+# PhyloToL version 6 Part 1 pipeline using the script wrapper.py.
 
-##########################################################################################
-## This script is intended to identify and isolate SSU/LSU sequences 					##
-## Prior to running this script, ensure the following:									##
-##																						##
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file 				##
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder					##
-## 2. Removed small sequences (usually sequences < 300bp) with ContigFilterPlusStats.py	##
-## 3. Have the Databases set up correctly (e.g. with BLAST or Diamond) and in their 	##
-##	  respective folders! See the manual if you need help								##
-## 4. Run removeSSU.py on your Fasta file												##
-##																						##
-## 								COMMAND Example Below									##
-##																						##
-## 				E-mail Xyrus (author) for help if needed: maurerax@gmail.com			##
-##																						##
-##							Next Script(s) to Run: 										##
-##							 3_CountOGsDiamond.py										##
-##																						##
-##########################################################################################
+# Prior to running this script, ensure that you have run scripts 1a (and optionally
+# script 1b) and 2a, and that your prokaryote and reference databases (or the default 
+# ones provided on the GitHub) is in the proper database folder 
+# (Databases/BvsE/eukout.dmnd and micout.dmnd).
 
 
 import argparse, os, sys
