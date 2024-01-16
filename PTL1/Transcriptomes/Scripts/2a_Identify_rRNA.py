@@ -1,7 +1,11 @@
 # Last updated 8/18/2017
+# Authors: Xyrus Maurer-Alcala
 
 # This script is intended to identify and isolate SSU/LSU sequences by BLASTn-ing
-# all length-filtered assembled transcripts against a reference database.
+# all length-filtered assembled transcripts against a reference database. It then
+# writes these sequences into a separate file, removing them from the remainder
+# of the sequences that will go forwards for gene family assignment. This script
+# should be in Part 1 of the PhyloToL version 6 pipeline using the script wrapper.py.
 
 # You must run Script 1a before this step. Optionally, you may also have run Script 1b.
 # Before running this script, ensure that you have a properly formatted rRNA reference
