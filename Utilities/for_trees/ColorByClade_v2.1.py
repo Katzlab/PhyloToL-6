@@ -250,6 +250,9 @@ def color(file, args):
 	for leaf in tree:
 		keys = sorted([key for key in colors if leaf.name.startswith(key)], key = lambda x : -len(x))
 
+		# the line below allows you to have keys anywhere within name and not just start of name.. to use, you have to # the line above
+		#keys = sorted([key for key in colors if key in leaf.name], key=lambda x: -len(x))
+		
 		if len(keys) > 0:
 			if '[&!color=' in colors[keys[0]]:
 				leaf_colors.append(leaf.name + colors[keys[0]])
