@@ -1,29 +1,14 @@
-#!/usr/bin/env python3.5
+# Last updated Sept 2023
+# Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
-##__Updated__: 16_10_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 3_CountOGsDiamond.py --help
-
-
-##########################################################################################
-## This script is intended to classify the STRONGLY Eukaryotic and UNDETERMINED/UNKNOWN ##
-## contigs into different OGs (e.g. orthologous gene-families)							##
-##																						##
-## For more info about the OGs, check out: OrthoMCL.org									##
-##																						##
-## Prior to running this script, ensure the following:									##
-##																						##
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file 				##
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder					##
-## 2. Removed small sequences (usually sequences < 300bp) with ContigFilterPlusStats.py	##
-## 3. Removed SSU/LSU sequences from your Fasta File									## 
-##																						##
-## 			E-mail Xyrus (author) for help if needed: maurerax@gmail.com				##
-##																						##
-##								Next Script(s) to Run: 									##
-##							 	 4_StopFrequency.py										##
-##																						##
-##########################################################################################
+# This script classifies assembled transcripts into gene families by
+# similarity-searching using Diamond against a reference database of
+# gene families. We provide the Hook database on the GitHub, but this
+# may be replaced with a custom reference database by REPLACING the
+# .dmnd and .fasta files in the Databases/db_OG folder. This script
+# is intended to be run as part of the PhyloToL 6 Part 1 pipeline using
+# the script wrapper.py.
+								
 
 import argparse, os, sys, re
 from argparse import RawTextHelpFormatter,SUPPRESS
