@@ -9,6 +9,43 @@
 # if unsure. This step can be skipped if genetic codes were input from the beginning. This
 # script should be run through the PhyloToL 6 Part 1 pipeline using the script wrapper.py.
 
+#----------------------------------------- NOTES -----------------------------------------#
+#
+# This script is designed to HELP you make an informed decision about the genetic code being
+# used by your particular organism. Be aware that it will be limited by the quality of the
+# data given to it! 
+#
+# You will need:
+#
+# Diamond, BioPython, AND the output from '3_AssignOGs.py'
+#
+#------------------------------- Interpretation of Results -------------------------------#
+#
+# Example output using CILIATE (TGA) genetic Code (NOTE THE In-Frame Densities):
+#
+# Stop Codon   Number_of_Seqs_Analyzed   In-frame TAG   In-frame TGA   In-frame TAA   Total Codons   In-frame TAG density   In-frame TGA density   In-frame TAA density
+# TGA                   341                   14              0			    	  22            113156              1.2                     0                     0.92
+# TAG                   424                    0              0			    	  34            140085               0                      0                     0.78
+# TAA                   205                   14              0			    	   0             16714              0.84                    0                      0
+# Summary               970                   28              0			    	  56            269955              2.04                    0                     1.7
+#
+# VALUES in summary line (OR SUM of Density) that are > 1.5 likely indicate that the STOP 
+# codon has been reassigned... in the case above, TAG and TAA look like they have been
+# reassigned.
+#
+#
+# Example output using UNIVERSAL genetic Code (NOTE THE In-Frame Densities):
+#
+# Stop Codon   Number_of_Seqs_Analyzed   In-frame TAG   In-frame TGA   In-frame TAA   Total Codons   In-frame TAG density   In-frame TGA density   In-frame TAA density
+# TGA                   341                    1              0			    	   2            113156              0.2                     0                     0.05
+# TAG                   424                    0              2			    	   4            140085               0                      0                     0.08
+# TAA                   205                    1              0			    	   0             16714              0.04                    0                      0
+# Summary               970                    2              2			    	   6            269955              0.15                    0                     0.06
+#
+# VALUES in summary line (OR SUM of Density) that are > 0.5 likely indicate that the STOP 
+# codon still acts as STOP... in the case above, TAG, TGA and TAA look like they still behave
+# as a stop codon.
+
 import argparse, os, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
 from distutils import spawn
@@ -720,52 +757,3 @@ def main():
 	next_script(args)
  
 main()
-
-
-#----------------------------------------- NOTES -----------------------------------------#
-#
-# This script is designed to HELP you make an informed decision about the genetic code being
-# used by your particular organism. Be aware that it will be limited by the quality of the
-# data given to it! 
-#
-# You will need:
-#
-# Diamond, BioPython, AND the output from '3_CountOGSDiamond.py'
-#
-# If you are not using the Author's database, update your database name(s) in lines: 345-360
-#
-# katzlab$ python StopFrequency.py YourFastaFile.fasta
-#
-#
-#------------------------------- Interpretation of Results -------------------------------#
-#
-# FORMATTED BELOW WITH TEXTWRANGLER... 
-#
-# Example output using CILIATE (TGA) genetic Code (NOTE THE In-Frame Densities):
-#
-# Stop Codon   Number_of_Seqs_Analyzed   In-frame TAG   In-frame TGA   In-frame TAA   Total Codons   In-frame TAG density   In-frame TGA density   In-frame TAA density
-# TGA                   341                   14              0			    	  22            113156              1.2                     0                     0.92
-# TAG                   424                    0              0			    	  34            140085               0                      0                     0.78
-# TAA                   205                   14              0			    	   0             16714              0.84                    0                      0
-# Summary               970                   28              0			    	  56            269955              2.04                    0                     1.7
-#
-# VALUES in summary line (OR SUM of Density) that are > 1.5 likely indicate that the STOP 
-# codon has been reassigned... in the case above, TAG and TAA look like they have been
-# reassigned.
-#
-#
-# Example output using UNIVERSAL genetic Code (NOTE THE In-Frame Densities):
-#
-# Stop Codon   Number_of_Seqs_Analyzed   In-frame TAG   In-frame TGA   In-frame TAA   Total Codons   In-frame TAG density   In-frame TGA density   In-frame TAA density
-# TGA                   341                    1              0			    	   2            113156              0.2                     0                     0.05
-# TAG                   424                    0              2			    	   4            140085               0                      0                     0.08
-# TAA                   205                    1              0			    	   0             16714              0.04                    0                      0
-# Summary               970                    2              2			    	   6            269955              0.15                    0                     0.06
-#
-# VALUES in summary line (OR SUM of Density) that are > 0.5 likely indicate that the STOP 
-# codon still acts as STOP... in the case above, TAG, TGA and TAA look like they still behave
-# as a stop codon.
-#
-# THIS IS A ROUGH GUIDE FOR INTERPRETING THE RESULTS!!!! BE VERY VERY WARY! NUMBER OF TOTAL
-# SEQUENCES AND TOTAL CODONS OBSERVED ARE IMPORTANT (TOO FEW AND ANY INTERPRETATION IS DEVOID
-# OF ANY MEANING).
