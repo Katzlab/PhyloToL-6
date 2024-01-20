@@ -1,32 +1,13 @@
-#!/usr/bin/env python
+# Last updated Sept 2023
+# Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
-##__Updated__: 18_08_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 4_InFrameStopFreq.py --help
-
-
-##########################################################################################
-## This script is intended to aid in identifying the genetic code of the data given		##
-##																						##
-## Prior to running this script, ensure the following:									##
-##																						##
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file 				##
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder					##
-## 2. Removed small sequences (usually sequences < 300bp) with ContigFilterPlusStats.py	##
-## 3. Removed SSU/LSU sequences from your Fasta File									##
-## 4. Classified your sequences as Strongly Prokaryotic/Eukaryotic or Undetermined		##
-## 5. Classified the Non-Strongly Prokaryotic sequences into OGs 						##
-##																						##
-## 								COMMAND Example Below									##
-##							Extra Notes at Bottom of Script								##
-##																						##
-## 			E-mail Xyrus (author) for help if needed: maurerax@gmail.com				##
-##																						##
-##								Next Script(s) to Run: 									##
-##							 	 5_GCodeTranslate.py									##
-##																						##
-##########################################################################################
-
+# This script is intended to aid in identifying the genetic code of assembled
+# transcripts by similarity searching against a reference database of representative
+# sequences (Databases/RepEukProts) and calculating and reporting in-frame stop coding 
+# frequencies in all reading frames; it then reports these frequencies in a spreadsheet
+# (gcodes_output.tsv) for the user to inspect in deciding which genetic codes to use,
+# if unsure. This step can be skipped if genetic codes were input from the beginning. This
+# script should be run through the PhyloToL 6 Part 1 pipeline using the script wrapper.py.
 
 import argparse, os, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
