@@ -265,40 +265,7 @@ def update_fasta(args):
 
 	with open(args.input_file.replace('.fasta','.LackOG.fasta'),'w+') as x:
 		for i in seqs_without_OG:
-			x.write(i)		
-
-
-###########################################################################################
-###-------------------- Updates Log With OG Assignment Information ---------------------###
-###########################################################################################
-	
-def update_log(args):
-
-	if os.path.isdir('../PostAssembly_Logs/') != True:
-		os.system('mkdir ../PostAssembly_Logs/')
-	else:
-		pass
-
-	home_folder = '/'.join(args.input_file.split('/')[:-1]) + '/'
-	
-	Renamed_TSV = home_folder+args.input_file.split('/')[-1].replace('.fasta','.Renamed_allOGCleanresults.tsv')
-
-	keep = [line for line in open(Renamed_TSV).readlines()]
-	all_ogs = [line.split('\t')[1].split('_')[-1] for line in keep if len(re.split('_OG.{1}_', line.split('\t')[1])) > 1]
-
-	total_with_ogs = str(len(all_ogs))
-	unique_ogs = str(len(set(all_ogs)))
-	
-	print (color.BOLD +'There are '+color.BLUE +total_with_ogs+' Contigs'+color.END\
-	+color.BOLD+' that hit '+color.DARKCYAN+unique_ogs+' Unique OGs\n'+color.END)
-
-	
-	for Logname in os.listdir(os.curdir+'./PostAssembly_Logs/'):
-		if Logname.startswith(args.input_file.split('/')[2].split('_WTA')[0]) and Logname.endswith('Log.txt'):
-			with open('../PostAssembly_Logs/'+Logname,'a') as LogFile:
-				LogFile.write('Contigs With OG\t'+total_with_ogs+'\tn/a\tn/a\n')
-				LogFile.write('Unique OGs\t'+unique_ogs+'\tn/a\tn/a\n')
-
+			x.write(i)
 
 ##########################################################################################
 ###--------------------- Cleans up the Folder and Moves Final Files -------------------###
@@ -347,8 +314,6 @@ def main():
 	keep_best(args)
 
 	update_fasta(args)
-
-	#update_log(args)
 
 	clean_up(args)
 
