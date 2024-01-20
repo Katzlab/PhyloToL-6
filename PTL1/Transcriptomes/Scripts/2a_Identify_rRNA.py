@@ -9,7 +9,8 @@
 
 # You must run Script 1a before this step. Optionally, you may also have run Script 1b.
 # Before running this script, ensure that you have a properly formatted rRNA reference
-# BLAST database in the Databases/db_BvsE/SSULSUdb folder.
+# BLAST database in the Databases/db_BvsE/SSULSUdb folder; it is relatively narrow in scope 
+# and could be easily replaced
 
 #Dependencies
 import argparse, os, sys
