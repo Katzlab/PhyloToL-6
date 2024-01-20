@@ -7,6 +7,10 @@
 # plate. This script is optional, but to be run as part of the
 # PhyloToL version 6 Part 1 pipeline using the script wrapper.py
 
+# The specifics of parameters are described below and include removing seqs 1/10 
+# the coverage of the most highly expressed, and keeping all seqs with coverage >50.
+# All of these parameters can be changed by users.
+
 # Before running this script, you must run Script 1a. The default
 # clustering parameters are below, decided upon after manual inspection
 # of results from sample data under multiple parametrizations, but are
