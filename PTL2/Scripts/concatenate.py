@@ -179,7 +179,7 @@ def remove_paralogs(params):
 						best_size = max(list(clades.values()))
 
 						#Get a list of sequences in a clade of that size
-						best_seqs = [seq for seq in taxseqs]# if clades[seq] == best_size]
+						best_seqs = [seq for seq in taxseqs if clades[seq] == best_size]
 
 						#If there is only one sequence in the best-sized clade, take it and finish
 						if len(best_seqs) == 1:
