@@ -1,3 +1,16 @@
+# Last updated Sept 2023
+# Author: Auden Cote-L'Heureux
+
+# This script is a WRAPPER for the PhyloToL Part 1 GENOMES pipeline. Users should
+# use this script to run the pipeline, rather than running any of the sub-scripts (number 1a through 5b)
+# independently. To run an individual step in the pipeline, use --script X where X is the number (1 through 5).
+# To run multiple sets (usually all of them), use --first script 1 --last_script 5, or whichever first
+# and last scripts are desired. Run "python wrapper.py --help" for details on how to run this script. Before
+# running this script ensure that the databases are correctly located and named, and that input CDS are named 
+# in the format Op_me_Hsap_GenBankCDS.fasta, where Op_me_Hsap can be replaced with any 10-digit sample 
+# identifier.
+
+
 import os, sys, re
 import argparse
 import CheckSetup
@@ -10,7 +23,7 @@ def get_args():
                 description = "Updated January 19th, 2023 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
                 )
 
-	parser.add_argument('-s', '--script', default = -1, type = int, choices = { 1, 2, 3, 4, 5, 6 }, help = 'Script to run if you are only running one script')
+	parser.add_argument('-s', '--script', default = -1, type = int, choices = { 1, 2, 3, 4, 5 }, help = 'Script to run if you are only running one script')
 	parser.add_argument('-1', '--first_script', default = -1, type = int, choices = { 1, 2, 3, 4 }, help = 'First script to run')
 	parser.add_argument('-2', '--last_script', default = -1, type = int, choices = { 2, 3, 4, 5 }, help = 'First script to run')
 	parser.add_argument('-c', '--cds', type = str, help = 'Path to a folder of nucleotide CDS. Each file name should start with a unique 10 digit code, and end in "_GenBankCDS.fasta", E.g. Op_me_hsap_GenBankCDS.fasta')
