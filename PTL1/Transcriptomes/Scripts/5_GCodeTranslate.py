@@ -1,30 +1,24 @@
-#!/usr/bin/env python3.5
+# Last updated Sept 2023
+# Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
-##__Updated__: 20_09_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 5_GCodeTranslate.py --help
+# This script is intended to translate nucleotide sequences. It does this using
+# the gcode_output.tsv file output by script 4 and containing in-frame stop codon
+# frequencies. The user can use this stop codon information to fill in the last 
+# column in this file with the genetic code for each taxon. If the user input a
+# genetic code or list of genetic codes to script 1, then the gcode_output.tsv will
+# be filled automatically. sequences are translated using the Diamond BLASTp results 
+# from OG assignment as a starting point for determining coding sequence boundaries. 
+# The first in-frame start codon (if the 5’ boundary of the BLASTp hit is not at a start codon) 
+# and last in-frame stop codon (using the assigned genetic code) outside of these bounds 
+# are found, while ensuring that in-frame stop codons are not introduced (given the nature 
+# of transcriptomic data, poor genetic code assignment or low-quality/partial data can 
+# interfere with this process).
 
+# This script is intended to be run using the wrapper.py as part of the PhyloToL 6 Part 1 
+# pipeline. It requires that the setup of the 'Output' folder be that as output by script 4
+# of this pipeline.
 
-##########################################################################################
-## This script is intended to aid in identifying the genetic code of the data given		##
-##                                                                                      ##
-## Prior to running this script, ensure the following:									##
-##                                                                                      ##
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file              ##
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder                    ##
-## 2. Removed small sequences (usually sequences < 300bp) with 1_ContigFiltStats.py     ##
-## 3. Removed SSU/LSU sequences from your Fasta File                                    ##
-## 4. Classified your sequences as Strongly Prokaryotic/Eukaryotic or Undetermined      ##
-## 5. Classified the Non-Strongly Prokaryotic sequences into OGs                        ##
-## 6. You either know (or have inferred) the genetic code of the organism               ##
-##                                                                                      ##
-##             E-mail Xyrus (author) for help if needed: maurerax@gmail.com             ##
-##                                                                                      ##
-##                              Next Script(s) to Run:                                  ##
-##                 6_FilterPatials.py (in FinalizeTranscripts Folder)                   ##
-##                                                                                      ##
-##########################################################################################
-
+#Dependencies
 import argparse, os, re, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
 
