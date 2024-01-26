@@ -1,13 +1,12 @@
-#!/usr/bin/env python3
-# coding=utf-8
-
-'''Aim of this script is to generate lots of codon usage statistics to aid in
-identifying useful characteristics for de novo ORF calling'''
-
+# Last updated Sept 2023
 # Author: Xyrus Maurer-Alcalá
-# Contact: maurerax@gmail.com or xyrus.maurer-alcala@izb.unibe.ch
-# Last Modified: 2020-09-17
-# usage: python CUB.py
+
+# The aim of this script is to generate lots of codon usage statistics to aid in
+# identifying useful characteristics for de novo ORF calling. It is intended to be
+# stored in the 'Scripts' folder for the PhyloToL Part 1 pipeline scripts, and is
+# called by Script 7b to calculate composition statistics for Part 1 output files.
+# It should not be run separately.
+
 
 # Dependencies:
 # Python3, numpy, BioPython
