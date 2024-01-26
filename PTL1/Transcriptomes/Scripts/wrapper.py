@@ -1,3 +1,15 @@
+# Last updated Sept 2023
+# Author: Auden Cote-L'Heureux
+
+# This script is a WRAPPER for the PhyloToL Part 1 TRANSCRIPTOMES pipeline. Users should
+# use this script to run the pipeline, rather than running any of the sub-scripts (number 1a through 7b)
+# independently. To run an individual step in the pipeline, use --script X where X is the number (1 through 7).
+# To run multiple sets (usually all of them), use --first script 1 --last_script 7, or whichever first
+# and last scripts are desired. Run "python wrapper.py --help" for details on how to run this script. Before
+# running this script ensure that the databases are correctly located and named, and that input assembled
+# transcripts are named in the format Op_me_Hsap_assembledTranscripts.fasta, where Op_me_Hsap can be replaced
+# with any 10-digit sample identifier.
+
 #Dependencies
 import os, sys, re
 import shutil
@@ -5,6 +17,7 @@ import argparse
 import CheckSetup
 
 
+#Reading in the arguments
 def get_args():
 
 	parser = argparse.ArgumentParser(
@@ -32,10 +45,12 @@ def script_one(args, ten_digit_codes):
 
 	CheckSetup.run(args)
 
+	#Running script 1a on all files
 	for file in os.listdir(args.assembled_transcripts):
 		if file[10:] == '_assembledTranscripts.fasta' and file[:10] in ten_digit_codes:
 			os.system('python 1a_TranscriptLengthFilter.py --input_file ' + args.assembled_transcripts + '/' + file + ' --output_file ' + args.output + '/Output/' + file[:10] + ' --minLen ' + str(args.minlen) + ' --maxLen ' + str(args.maxlen) + ' --spades') #SPADES ARGUMENT??
 
+	#Run script 1b if the XPC step is being run
 	if args.xplate_contam:
 		if not os.path.isfile(args.conspecific_names):
 			print('\nERROR: If you are running cross-plate contamination, a file designating species assignments is required for the --conspecific_names argument\n')
@@ -46,6 +61,7 @@ def script_one(args, ten_digit_codes):
 
 def script_two(args):
 
+	#Run scripts 2a and 2b on all files.
 	for folder in os.listdir(args.output + '/Output/'):
 		if os.path.isfile(args.output + '/Output/' + folder + '/SizeFiltered/' + folder + '.' + str(args.minlen) + 'bp.fasta'):
 			os.system('python 2a_Identify_rRNA.py --input_file ' + args.output + '/Output/' + folder + '/SizeFiltered/' + folder + '.' + str(args.minlen) + 'bp.fasta --databases ' + args.databases)
@@ -55,7 +71,7 @@ def script_two(args):
 
 #NEED TO SORT OUT FILE NAMES ETC. BELOW HERE
 
-#running the third script
+#running the third script on all files
 def script_three(args):
 
 	for folder in os.listdir(args.output + '/Output'):
@@ -79,8 +95,10 @@ def script_four(args):
 						if line_sep[0] == 'Summary':
 							gcode_info.append([folder, line_sep[6], line_sep[7], line_sep[8][:-1]])
 
+	#Available genetic codes
 	valid_codes = ['bleph','blepharisma','chilo','chilodonella','condy', 'condylostoma','none','eup','euplotes','peritrich','vorticella','ciliate','universal','taa','tag','tga','mesodinium']
-	
+
+	#Reading the input genetic codes file if given (should be tab-separated)
 	stop = False
 	gcode_file = { }
 	if args.genetic_code.endswith('.txt') or args.genetic_code.endswith('.tsv'):
@@ -98,6 +116,8 @@ def script_four(args):
 			print('\nGenetic code ERROR -- it looks like you tried to enter a .txt/.tsv file, but it could not be found. Stopping after script 4; you may fill out the file gcode_output.tsv and continue with script 5.\n')
 			stop = True
 
+	#Writing the gcode_output.tsv file with in-frame stop codon frequencies. If you didn't input genetic codes originally,
+	#edit the last column in this file to contain your desired genetic codes for each sample.
 	with open(args.output + '/Output/gcode_output.tsv', 'w') as g:
 		g.writelines('10 Digit Code\tIn-frame TAG Density\tIn-frame TGA Density\tIn-frame TAA Density\tGenetic Code\n')
 		for row in gcode_info:
@@ -121,6 +141,7 @@ def script_four(args):
 		exit()
 
 
+#Running script 5 on all taxa
 def script_five(args):
 	
 	valid_codes = ['bleph','blepharisma','chilo','chilodonella','condy', 'condylostoma','none','eup','euplotes','peritrich','vorticella','ciliate','universal','taa','tag','tga','mesodinium']
@@ -132,10 +153,11 @@ def script_five(args):
 				for line in lines:
 					if line[0] == folder and line[-1].lower() in valid_codes:
 						os.system('python 5_GCodeTranslate.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta --genetic_code ' + line[-1])
-					elif line[-1].lower() not in valid_codes and line[-1] != 'Genetic Code':
+					#Taxa without valid genetic codes will be skipped.
+					elif line[-1].lower() not in valid_codes and 'Genetic Code' not in line:
 						print('\n' + line[-1] + ' is not a valid genetic code. Skipping taxon ' + folder + '.\n')
 
-
+#Run script 6 on all files
 def script_six(args):
 
 	prefixes = []
@@ -145,6 +167,7 @@ def script_six(args):
 	
 	unique_prefixes = list(dict.fromkeys(prefixes))
 
+	#Checking to make sure there is only one fasta file for the OG reference database, and recording its name.
 	hook_fasta = ''
 	for file in os.listdir(args.databases + '/db_OG'):
 		if file.split('.')[-1] in ('fasta', 'fas', 'fa', 'faa'):
@@ -152,11 +175,12 @@ def script_six(args):
 
 	if hook_fasta == '':
 		print('\nNo .fasta file could be found containing Hook sequences. This should be supplied along with the .dmnd-formatted database file in the Databases/db_OG folder. Quitting before script 6.\n')
-
+		exit()
+	
 	for prefix in unique_prefixes:
 		os.system('python 6_FilterPartials.py --file_prefix ' + args.output + '/Output/' + prefix + ' --hook_fasta ' + hook_fasta)
 		
-
+#Running scripts 7a and 7b on all taxa
 def script_seven(args):
 
 	for file in os.listdir(args.output + '/Output/ToRename'):
@@ -176,6 +200,7 @@ if __name__ == "__main__":
 
 	args = get_args()
 
+	#The following code checks to make sure combinations of input arguments are compatible
 	if (args.first_script == 1 or args.script == 1) and (args.assembled_transcripts == None or not os.path.isdir(args.assembled_transcripts)):
 		print('\nERROR: If starting at the first script, a valid path to a folder of assembled transcript files (which must end in .fasta, .fa, or .fna) should be input using the --assembled_transcripts argument')
 		quit()
@@ -184,7 +209,7 @@ if __name__ == "__main__":
 		if args.first_script < 5 and args.last_script >= 5:
 			print('\nERROR: You cannot run script 5 without giving a genetic code! If all of the taxa in the run use the same genetic code, then use the --genetic_code argument (e.g. -g Universal). Otherwise, stop after script 4, fill out the spreadsheet called "gcode_translate.tsv," and then run scripts 5-7. If this does not make sense, please ask for help.')
 			quit()
-
+			
 	ten_digit_codes = []
 	if args.first_script == 1 or args.script == 1:
 		for file in os.listdir(args.assembled_transcripts):
