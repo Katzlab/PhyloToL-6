@@ -1,18 +1,15 @@
-#!/usr/bin/env python3.5
+# Last updated Sept 2017
+# Author: Xyrus Maurer-Alcala
 
-##__Updated__: 19_09_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 2g_GCodeEval.py --help
+# This script is intended to aid in determining which genetic code to use in translating sequences
+# (done in script 3) by checking stop codons used at the end of the input CDS, as well as determining
+# if there is a significant number of in-frame stop codons (>5%). It outputs the results of this
+# stop-codon analysis into the gcode_output.tsv file, which the user can fill in with desired genetic
+# codes to use in translation. If genetic codes were input originally (using the --genetic_code argument in
+# wrapper.py), then no action is needed here. This script is intended to be run as part of the PhyloToL 6
+# Part 1 pipeline using the script wrapper.py.
 
-
-#############################################################################################
-#                                                                                           #
-# Suggests which Genetic Code to use based upon Presence/Absence of Specific Stop Codons    #
-# at the end of the CDS sequences. This is to provide a ROUGH gauge for the user.           #
-#                                                                                           #
-#############################################################################################
-
-
+#Dependencies
 import argparse, os, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
 from Bio import SeqIO
