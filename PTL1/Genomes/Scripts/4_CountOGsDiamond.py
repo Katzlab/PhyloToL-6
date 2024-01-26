@@ -1,18 +1,13 @@
-#!/usr/bin/env python3.5
+# Last updated Sept 19th 2023
+# Author: Xyrus Maurer-Alcala
 
-##__Updated__: 18_09_2023 (by ACL)
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 3g_GCodeTranslate.py --help
-
-##############################################################################
-##                                                                          ##
-## This scrip will categorize TRANSLATED CDSs into Homologous Gene Families ##
-##                                                                          ##
-##     Questions about Gene Family Binning/Source? SEE NOTES at Bottom!     ##
-##                                                                          ##
-##      E-mail Xyrus (author) for help if needed: maurerax@gmail.com        ##
-##                                                                          ##
-##############################################################################
+# This script classifies translated CDS into gene families by
+# similarity-searching using Diamond against a reference database of
+# gene families. We provide the Hook database on the GitHub, but this
+# may be replaced with a custom reference database by REPLACING the
+# .dmnd and .fasta files in the Databases/db_OG folder. This script
+# is intended to be run as part of the PhyloToL 6 Part 1 pipeline using
+# the script wrapper.py.
 
 import argparse, os, re, sys
 from argparse import RawTextHelpFormatter, SUPPRESS
