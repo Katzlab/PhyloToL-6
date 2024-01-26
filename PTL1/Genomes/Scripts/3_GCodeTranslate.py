@@ -1,23 +1,14 @@
-#!/usr/bin/env python3.5
+# Last updated Sept 2017
+# Author: Xyrus Maurer-Alcala
 
-##__Updated__: 19_09_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 3g_GCodeTranslate.py --help
+# Translates CDSs sequences using the provided genetic code (as read from the gcode_output.tsv
+# file output by script 2, and filled in by the user if they did not pass genetic code
+# assignments to the --genetic_code argument to wrapper.py. The genetic code tables can be found
+# at the top of the script. In-frame stop codons are replaced with a * (the process is much simpler
+# here than in the transcriptomes pipeline). This script is intended to be run using the script
+# wrapper.py as part of the PhyloToL 6 Part 1 pipeline.
 
-
-##############################################################################
-##																			##
-## Translates CDSs sequences using the Provided Genetic Code. 				##
-##																			##
-## NOTE: 																	##
-##		No provided input for genetic code results in Translation with the	##
-## 		UNIVERSAL genetic code (as default)									##
-##																			##
-##		E-mail Xyrus (author) for help if needed: maurerax@gmail.com		##
-##																			##
-##############################################################################
-
-
+#Dependencies
 import argparse, os, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
 from Bio import SeqIO
