@@ -1,31 +1,19 @@
-#!/usr/bin/env python3.5
-
-##__Updated__: 2023-09-27 by Auden Cote-L'Heureux
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com; xyrus.maurer-alcala@izb.unibe.ch
-##__Usage__: python 6_FilterPartials.py --help
+# Last updated Sept 2023
+# Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
 
-##################################################################################################
-## This script is intended to remove incomplete transcripts that have a more complete mate		##
-##																								##
-## Prior to running this script, ensure the following:											##
-##																								##
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file 						##
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder							##
-## 2. Removed small sequences (usually sequences < 200bp)			##
-## 3. Removed SSU/LSU sequences from your Fasta File											##
-## 4. Classified your sequences as Strongly Prokaryotic/Eukaryotic or Undetermined				##
-## 5. Classified sequences into OGs 								##
-## 6. You either know (or have inferred) the genetic code of the organism						##
-## 7. You have translated the sequences and checked for the data in the RemovePartials folder	##
-##																								##
-## 					E-mail Xyrus (author) for help if needed: maurerax@gmail.com				##
-##																								##
-##										Next Script(s) to Run: 									##
-##						 	  			  7_FinalRename.py										##
-##																								##
-##################################################################################################
+# This script is intended to remove incomplete transcripts that have a more complete mate.
+# First, all sequences shorter than 33% or longer than 150% the average length of sequences 
+# from the same OG in the Hook database are removed. Then, for each transcriptomic sample, 
+# all sequences within an OG are compared at the nucleotide level to the sequence with the 
+# highest “score” (defined as k-mer coverage multiplied by length). The script should be run
+# as part of the PhyloToL 6 Part 1 pipeline using the script wrapper.py. It requires that the
+# structure of the 'Output' folder be as output by script 5, and that the Databases/db_OG folder
+# contains a .fasta file containing all amino acid sequences in the OG reference database (Hook)
+# with the same file name (until the extension) as the .dmnd file for the reference database used
+# in script 3.
 
+#Dependencies
 from Bio import SeqIO
 from Bio.Seq import Seq
 from statistics import mean
