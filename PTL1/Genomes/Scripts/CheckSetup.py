@@ -1,3 +1,10 @@
+# Last updated Nov 2023
+# Author: Auden Cote-L'Heureux
+
+# This script is run as the first step of the PhyloToL 6 Part 1 GENOMES pipeline,
+# before any sequence data are actually processed. It checks to ensure that the input
+# CDS files and databases are properly located and formatted.
+
 import os, sys, re
 from Bio import SeqIO
 
@@ -21,6 +28,11 @@ def check_databases(params):
 			fasta = [file for file in os.listdir(params.databases + '/db_OG') if file.endswith('.fasta')]
 			dmnd = [file for file in os.listdir(params.databases + '/db_OG') if file.endswith('.dmnd')]
 
+			if len(fasta) == 1 and len(dmnd) == 1:
+				if fasta[0].split('.fasta')[0] != dmnd[0].split('.dmnd')[0]:
+					print('\nERROR: The file names (except for the extensions) of the OG reference (Hook) database .fasta and .dmnd databases must match!\n')
+					exit()
+			
 			if len(fasta) == 0:
 				print('\nERROR: No Hook fasta file found in the Databases/db_OG folder\n')
 				exit()
