@@ -1,7 +1,6 @@
 # Last updated Sept 2023
 # Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
-
 # This script is intended to remove incomplete transcripts that have a more complete mate.
 # First, all sequences shorter than 33% or longer than 150% the average length of sequences 
 # from the same OG in the Hook database are removed. Then, for each transcriptomic sample, 
