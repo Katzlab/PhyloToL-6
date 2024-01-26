@@ -1,3 +1,15 @@
+# Last updated Sept 2023
+# Author: Auden Cote-L'Heureux
+
+# This script produces both taxon- and sequence-level statistics to describe the ReadyToGo files
+# output by PhyloToL Part 1, as well as some OG-level information from the Hook (OG reference)
+# database and the original input assembled transcripts. It relies on the utility script CUB.py
+# to calculate composition statistics (GC content, Effective Number of Codons, etc.). Both sequence
+# level and taxon-level stats are summarized in tab-separated outputs written to the Output folder.
+# This script requires that the OG reference database is available as an amino acid fasta file 
+# in the Databases/db_OG folder with the same file name as the .dmnd file used in script 3. This script
+# is intended to be run as part of the PhyloToL 6 Part 1 pipeline using the script wrapper.py.
+
 import os, sys
 import argparse
 from Bio import SeqIO
