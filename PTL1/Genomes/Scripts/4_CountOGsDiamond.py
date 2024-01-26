@@ -5,7 +5,9 @@
 # similarity-searching using Diamond against a reference database of
 # gene families. We provide the Hook database on the GitHub, but this
 # may be replaced with a custom reference database by REPLACING the
-# .dmnd and .fasta files in the Databases/db_OG folder. This script
+# .dmnd and .fasta files in the Databases/db_OG folder. This script also
+# includes a filter that removes sequences shorter than 33% and longer than
+# 150% the average length of the sequence's OG in the OG reference DB. This script
 # is intended to be run as part of the PhyloToL 6 Part 1 pipeline using
 # the script wrapper.py.
 
