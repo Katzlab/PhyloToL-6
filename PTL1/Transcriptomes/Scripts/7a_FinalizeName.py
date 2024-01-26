@@ -1,34 +1,10 @@
-#!/usr/bin/env python3.5
+# Last updated Sept 29th, 2023
+# Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
-##__Updated__: 9_29_2023 by Auden Cote-L'Heureux
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 6_FilterPartials.py --help
-
-##################################################################################################
-## This script is intended to rename the outputs of the FilterPartials script					##
-## to a given 10-character that is used in the Katz lab Phylogenomic Tree building methods		##
-##																								##
-## Prior to r`ning this script, ensure the following:											##
-##																								##
-## 1. You have assembled your transcriptome and COPIED the 'assembly' file 						##
-##    (contigs.fasta, or scaffolds.fasta) to the PostAssembly Folder							##
-## 2. Removed small sequences (usually sequences < 300bp) with ContigFilterPlusStats.py			##
-## 3. Removed SSU/LSU sequences from your Fasta File											##
-## 4. Classified your sequences as Strongly Prokaryotic/Eukaryotic or Undetermined				##
-## 5. Classified the Non-Strongly Prokaryotic sequences into OGs 								##
-## 6. You either know (or have inferred) the genetic code of the organism						##
-## 7. You have translated the sequences and checked for the data in the RemovePartials folder	##
-## 8. Partial sequences have been removed from the transcriptomic data sets						##
-##																								##
-## 										COMMAND Example Below									##
-##									Extra Notes at Bottom of Script								##
-##																								##
-## 					E-mail Xyrus (author) for help if needed: maurerax@gmail.com				##
-##																								##
-##										Next Script(s) to Run: 									##
-##                                     NONE! You're FINISHED! :D                                ##
-##																								##
-##################################################################################################
+# This script does not process sequence data in any way. It only renames the outputs of 
+# script 6 to the 10-digit taxon code which prefixes the file names, and then moves output
+# 'ReadyToGo' files into a separate folder. It is intended to be run as part of the PhyloToL
+# 6 Part 1 pipeline using the script wrapper.py.
 
 import argparse, os, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
