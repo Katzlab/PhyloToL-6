@@ -1,9 +1,12 @@
-#!/usr/bin/env python3.5
+# Last updated Sept 2017
+# Author: Xyrus Maurer-Alcala
 
-##__Updated__: 19_09_2017
-##__Author__: Xyrus Maurer-Alcala; maurerax@gmail.com
-##__Usage__: python 1g_RenameCDS.py --help
-
+# This script takes in CDS as formatted by GenBank for genome assemblies,
+# removes input CDS that are shorter than 30bp, renames CDSs for ease of processing
+# in later steps of the pipeline, and creates the general output folder structure.
+# Input CDS should be named as Op_me_Hsap_GenBankCDS.fasta, with Op_me_Hsap replaced with
+# a unique 10-digit sample identifier for each input file. This script is intended to be
+# run as part of the PhyloToL 6 Part 1 pipeline using the script wrapper.py.
 
 from Bio import SeqIO
 from Bio.SeqUtils import GC
