@@ -5,6 +5,7 @@
 #Inputs: A folder of trees and corresponding unaligned .fasta files
 #Outputs: A folder of grabbed clades and filtered unaligned fasta files
 #Example: python CladeGrabbing_v2.1.py --input /Path/to/trees --target Sr_rh --min_presence 20
+#IMPORTANT: key parameters explained in "add_argument" section below
 
 #Dependencies
 import os, re, sys
@@ -19,7 +20,7 @@ def get_args():
 		prog = 'Clade grabber, Version 2.1',
 		description = "Updated Aug 1st, 2023 by Auden Cote-L'Heureux"
 	)
-
+#add_argument section with parameters explained
 	parser.add_argument('-i', '--input', type = str, required = True, help = 'Path to a folder containing input trees (which must have the file extension .tre, .tree, .treefile, or .nex)')
 	parser.add_argument('-t', '--target', type = str, required = True, help = 'A comma-separated list of any number of digits/characters to describe focal taxa (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes. All sequences containing the complete/partial code will be identified as belonging to target taxa.')
 	parser.add_argument('-m', '--min_presence', type = int, required = True, help = 'Minimum number of target taxa present in clade for it to be selected')
