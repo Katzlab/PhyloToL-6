@@ -52,11 +52,11 @@ def main():
         os.mkdir(args.output)
 
     if args.type == 'aa':
-        threshold = input_validation(args.threshold, 'ERROR! Use format 0.## for Amino acids sequence identity threshold.')
+        threshold = input_validation(args.identity, 'ERROR! Use format 0.## for Amino acids sequence identity threshold.')
         overlap = input_validation(args.overlap, 'ERROR! Use format 0.## for Amino acids sequence alignment overlap value.')
         cluster_sequences('cd-hit', threshold, overlap, args.input, args.output)
     elif args.type == 'dna':
-        threshold = input_validation(args.threshold, 'ERROR! Use format 0.## for DNA sequence identity threshold.')
+        threshold = input_validation(args.identity, 'ERROR! Use format 0.## for DNA sequence identity threshold.')
         overlap = input_validation(args.overlap, 'ERROR! Use format 0.## for DNA sequence alignment overlap value.')
         cluster_sequences('cd-hit-est', threshold, overlap, args.input, args.output)
     else:
