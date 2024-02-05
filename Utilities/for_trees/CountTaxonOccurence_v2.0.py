@@ -5,7 +5,7 @@ Motivation: Count the number of occurences of each taxa in each OG in a post gui
 Dependencies: Bio python, os, sys
 Inputs: Directory of postguidance files
 Outputs: CSV file tallying all the counts of taxa in each OG file
-Command line: python count_tips.py --input <dir of postguidance files>
+Command line: python CountTaxonOccurence_v2.0.py --input <dir of postguidance files>
 '''
 
 import os
