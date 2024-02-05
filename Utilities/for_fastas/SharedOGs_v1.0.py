@@ -2,7 +2,7 @@
 #Motivation: Get record of OG presence across taxa from ReadyToGo files
 #Intent: Create a spreadsheet summarizing OG presence
 #Inputs: A folder of ReadyToGo files
-#Outputs: Spreadsheet
+#Outputs: Spreadsheet.
 #Example: Python SharedOGs_v1.0.py ReadyToGo_AA
 
 
