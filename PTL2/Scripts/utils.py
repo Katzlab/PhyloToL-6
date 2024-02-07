@@ -1,13 +1,23 @@
+# Last updated: Jan 2024
+# Author: Auden Cote-L'Heureux
+
+# This script is a general utility script that does two main things. First, it has
+# a function to read in all PhyloToL parameters, which is called in phylotol.py.
+# It also has a function that checks for and cleans up existing PhyloToL part 2
+# output files from previous runs, and creates a new, empty Output folder structure
+# for the new run. This function is also called only in phylotol.py.
+
+#Dependencies
 import os, sys, re
 import argparse
 import shutil
 
-
+#Reading in all parameters. This function is only called once, in phylotol.py
 def get_params():
 
 	parser = argparse.ArgumentParser(
                     prog = 'PhyloToL v6.0',
-                    description = "Updated December 9, 2022 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
+                    description = "Updated January, 2022 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
                     )
 
 	common = parser.add_argument_group('Commonly adjusted parameters')
@@ -62,18 +72,26 @@ def get_params():
 	return parser.parse_args()
 
 
+#Cleaning up existing output and creating a new output folder structure. This function is only called once, in phylotol.py
 def clean_up(params):
 
+	#If an output folder doesn't exist, create one.
 	if not os.path.isdir(params.output + '/Output'):
 		os.mkdir(params.output + '/Output')
+	#If an output folder already exists at the given path and not running in force mode, stop.
 	elif os.path.isdir(params.output + '/Output') and params.force == False:
 		print('\nAn "Output" folder already exists at the given path. Please delete or rename this folder and try again.\n')
+		exit()
+	#If running in force mode, delete any existing output.
 	elif params.force and len([d for d in os.listdir(params.output + '/Output') if d != '.DS_Store']) > 0:
 		print('\nAn "Output" folder already exists at the given path, but all contents were deleted in --force mode.\n')
 		os.system('rm -r ' + params.output + '/Output/*')
 
+	#Create a folder to hold intermediate files.
 	os.mkdir(params.output + '/Output/Intermediate')
 
+	#General function to copy over input data files into the appropriate folder (e.g. if one unaligned amino acid file
+	#is input per OG, then these files will be put into the Output/Pre-Guidance folder.
 	def copy_input(dirname):
 		if os.path.isdir(params.data):
 			input_files = [f for f in os.listdir(params.data) if f.endswith('.faa') or f.endswith('.fasta') or f.endswith('.fa')]
@@ -84,17 +102,21 @@ def clean_up(params):
 				print('\nThe given path to a folder of ' + params.start.strip('s') + ' files was located, but no ' + params.start.strip('s') + ' files were found. Make sure the file extensions are .fasta, .fa, or .faa.\n')
 		else:
 			print('\nInput ' + params.start.strip('s') + ' data files not found. Please make sure that the given path (--data) is correct or set --start to "raw".\n')
-	
+
+	#Create the Pre-Guidance folder and copy over any input data files that are 
+	#formatted as Pre-Guidance files
 	os.mkdir(params.output + '/Output/Pre-Guidance')
 	if params.start == 'unaligned':
 		copy_input('Pre-Guidance')
 
+	#Do the same for aligned files
 	if params.start in ('unaligned', 'aligned') or params.end in ('aligned', 'trees', None):
 		os.mkdir(params.output + '/Output/Guidance')
 		os.mkdir(params.output + '/Output/NotGapTrimmed')
 		if params.start == 'aligned':
 			copy_input('Guidance')
-
+			
+	#And for trees
 	if params.end == 'trees' or params.contamination_loop != None:
 		os.mkdir(params.output + '/Output/Trees')
 		os.mkdir(params.output + '/Output/ColoredTrees')
