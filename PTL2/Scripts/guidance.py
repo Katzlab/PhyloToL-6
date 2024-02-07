@@ -12,10 +12,12 @@ def run(params):
 
 		if not os.path.isdir(preguidance_path):
 			print('\nERROR: The path ' + preguidance_path + ' could not be found when trying to locate pre-Guidance (unaligned) files. Make sure that the --start and --data parameters are correct and/or that the pre-Guidance step ran successfully.\n')
-
+			exit()
+		
 		if len([f for f in os.listdir(preguidance_path) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta')]) == 0:
 			print('\nERROR: No pre-Guidance (unaligned) files could be found at the path ' + preguidance_path + '. Make sure that the --start and --data parameters are correct, that the pre-Guidance step ran successfully, and that the unaligned files are formatted correctly (they must have the file extension .faa, .fa, or .fasta).\n')
-
+			exit()
+			
 		os.mkdir(params.output + '/Output/Intermediate/Guidance')
 		os.mkdir(params.output + '/Output/Intermediate/Guidance/Input')
 		os.mkdir(params.output + '/Output/Intermediate/Guidance/Output')
