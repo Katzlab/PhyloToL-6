@@ -36,23 +36,22 @@ def get_params():
 
 	CL = parser.add_argument_group('Contamination loop parameters')
 	CL.add_argument('--contamination_loop', default = None, choices = {'seq', 'clade', 'both'}, help = 'Remove sequences by looking at the sisters of each sequence in a rules file or by picking the best clades')
-	CL.add_argument('--nloops', default = 5, type = int, help = 'The maximum number of contamination-removal loops')
-	
-	CL.add_argument('--sister_rules', default = None, help = 'Path to a file of rules, nly used in "seq" mode. Sequences in the rules file with specified contaminants will be removed if sister only to those contaminants')
+	CL.add_argument('--nloops', default = 10, type = int, help = 'The maximum number of contamination-removal loops')
+	CL.add_argument('--cl_tree_method', default = 'fasttree', choices = {'iqtree', 'raxml', 'fasttree', 'iqtree_fast'}, help = 'Tree-building method to use in each contamination loop iteration.')
+	CL.add_argument('--cl_alignment_method', default = 'mafft_only', choices = {'mafft_only', 'guidance'}, help = 'Alignment method to use in each contamination loop iteration.')
+	CL.add_argument('--cl_exclude_taxa', type = str, default = None, help = 'Path to a file containing taxon names present in input MSA/tree files but which should be removed in the first iteration of the contamination loop.')
 
-	CL.add_argument('--target_taxa', nargs = '+', default = None, help = 'Only used in "clade" mode. Selected clades can have no more than num_contams (below) sequences that are not of this clade (can be 2, 4, 5, 7, 8, or 10 digits). You may give a list of options or a path to a file, each line containing a taxon code.')
+	CL.add_argument('--sister_rules', default = None, help = 'Path to a file of rules, nly used in "seq" mode. Sequences in the rules file with specified contaminants will be removed if sister only to those contaminants')
+	CL.add_argument('--subsister_rules', default = None, help = 'Path to a file of rules, nly used in "seq" mode. Sequences in the rules file with specified contaminants will be removed if nested in a clade of those contaminants')
+	CL.add_argument('--cocontaminants', default = None, help = 'Path to a file of rules defining samples to be processed as a single taxon in the "sisters" mode. The cocontaminant identifer should match an identifier in the sister rules file')
+
+	CL.add_argument('--clade_grabbing_rules_file', default = None, help = 'Path to a file of rules if clade grabbing on multiple taxonomic groups simultaneously, only used in "clade" mode. It should have 5 tab-separated columns without headers, corresponding to the --target_taxa (separate these by spaces if multiple), --num_contams, --min_target_presence, --required_taxa, and --required_taxa_num argument. This files should NOT have column headers.')
+	CL.add_argument('--target_taxa', type = str, default = None, help = 'Only used in "clade" mode. Selected clades can have no more than num_contams (below) sequences that are not of this clade (can be 2, 4, 5, 7, 8, or 10 digits). You may either one taxon code or a path to a file, each line containing a taxon code.')
 	CL.add_argument('--num_contams', type = int, default = 2, help = 'Only used in "clade" mode. Selected clades can have no more than this number of sequences that are not of the target clade')
 	CL.add_argument('--min_target_presence', type = int, default = 8, help = 'Only used in "clade" mode. The minimum number of species belonging to a target clade allowed in a selected clade')
-	CL.add_argument('--required_taxa', default = None, help = 'Only used in "clade" mode. A file containing 2, 4, 5, 7, 8, or 10 digit codes; any selected clade must have at least at_least_sisters_num of taxa that match these criteria; this is used to require the presence of certain sister lineages')
-	CL.add_argument('--required_taxa_num', type = int, default = 1, help = 'Only used in "clade" mode. See above.')
-
-	sisters = parser.add_argument_group('Parameters for the sister report')
-	CL.add_argument('--query_clades', nargs = '+', default = None, help = 'A list of 2, 4, 5, 7, 8, or 10 digit codes specifying which taxa for which to count sisters, separated by a comma. Alternatively, input a file containing a list of 10 digit codes of taxa for which to return sisters if there are a lot')
-	CL.add_argument('--sister_clades', nargs = '+', help = 'A list of 2, 4, 5, 7, 8, or 10 digit codes specifying which taxa which sisters to represent in the spreadsheet, separated by a comma. Alternatively, input a file containing a list of 10 digit codes of taxa for sisters to represent if there are a lot')
-	CL.add_argument('--break_up', nargs = '+', default = None, help = 'A list of major clades for which to break up the sister report into minor clades')
-	CL.add_argument('--branch_length_filter', default = 'avg', choices = {'avg', int, float}, help = 'Filter tips to represent by branch length')
-	CL.add_argument('--single_sister_only', action = 'store_true', help = 'Whether or not you only want to report sister relationships when there is only a single taxon sister to a sequence')
-
+	CL.add_argument('--required_taxa', type = str, default = None, help = 'Only used in "clade" mode. A file containing 2, 4, 5, 7, 8, or 10 digit codes; any selected clade must have at least at_least_sisters_num of taxa that match these criteria; this is used to require the presence of certain sister lineages')
+	CL.add_argument('--required_taxa_num', type = int, default = 0, help = 'Only used in "clade" mode. See above.')
+	CL.add_argument('--clade_grabbing_exceptions', type = str, default = None, help = 'Path to a file containing identifiers for taxa that should count towards clades but should never be removed (e.g. photosynthetic orphan lineages if grabbing clades of photosynthetic taxa).')
 
 	other = parser.add_argument_group('Other arguments')
 	other.add_argument('--concatenate', action = 'store_true', help = 'Remove paralogs and generate an alignment for concatenation')
