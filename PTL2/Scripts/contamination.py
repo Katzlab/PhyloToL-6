@@ -86,9 +86,9 @@ def get_subtrees(args, file):
 
 			for line in lines:
 				if line[4].lower() == 'na':
-					rules_per_clade.append({ 'target_taxa' : line[0], 'num_contams' : int(line[1]), 'min_target_presence' : int(line[2]), 'required_taxa' : line[3], 'required_taxa_num' : 0 })
+					rules_per_clade.append({ 'target_taxa' : line[0], 'num_contams' : float(line[1]), 'min_target_presence' : int(line[2]), 'required_taxa' : line[3], 'required_taxa_num' : 0 })
 				else:
-					rules_per_clade.append({ 'target_taxa' : line[0], 'num_contams' : int(line[1]), 'min_target_presence' : int(line[2]), 'required_taxa' : line[3], 'required_taxa_num' : int(line[4]) })
+					rules_per_clade.append({ 'target_taxa' : line[0], 'num_contams' : float(line[1]), 'min_target_presence' : int(line[2]), 'required_taxa' : line[3], 'required_taxa_num' : int(line[4]) })
 
 		else:
 			print('\nError: it looks like you tried to input a clade grabbing rules file, but it could not be found.\n')
