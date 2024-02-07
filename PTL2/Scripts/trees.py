@@ -1,6 +1,5 @@
 import os, sys, re
 from Bio import SeqIO
-from logger import Logger
 from color import color
 
 def run(params):
@@ -11,11 +10,13 @@ def run(params):
 		guidance_path = params.output + '/Output/Guidance'
 
 	if not os.path.isdir(guidance_path):
-		Logger.Error('The path ' + guidance_path + ' could not be found when trying to locate Guidance (aligned) files. Make sure that the --start and --data parameters are correct and/or that the Guidance step ran successfully.')
-
+		print('\nERROR: The path ' + guidance_path + ' could not be found when trying to locate Guidance (aligned) files. Make sure that the --start and --data parameters are correct and/or that the Guidance step ran successfully.\n')
+		exit()
+		
 	if len([f for f in os.listdir(guidance_path) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta') or f.endswith('.fas') or f.endswith('.aln')]) == 0:
-		Logger.Error('No Guidance (unaligned) files could be found at the path ' + guidance_path + '. Make sure that the --start and --data parameters are correct, that the Guidance step ran successfully, and that the aligned files are formatted correctly (they must have the file extension .faa, .fa, .aln, .fas, or .fasta).')
-
+		print('\nERROR: No Guidance (unaligned) files could be found at the path ' + guidance_path + '. Make sure that the --start and --data parameters are correct, that the Guidance step ran successfully, and that the aligned files are formatted correctly (they must have the file extension .faa, .fa, .aln, .fas, or .fasta).\n')
+		exit()
+	
 	for file in [f for f in os.listdir(guidance_path)  if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta') or f.endswith('.fas') or f.endswith('.aln')]:
 		
 		if params.tree_method == 'iqtree':
@@ -31,7 +32,7 @@ def run(params):
 				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
 				#color(params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
 			else:
-				Logger.Warning('No tree file created by IQ-Tree for OG ' + file[:10])
+				print('\nWARNING: No tree file created by IQ-Tree for OG ' + file[:10] + '\n')
 
 		elif params.tree_method == 'raxml':
 			if not os.path.isdir(params.output + '/Output/Intermediate/RAxML'):
@@ -49,7 +50,7 @@ def run(params):
 				os.system('cp ' + tax_raxml_outdir + '/RAxML_bestTree.' + file.split('.')[0].split('_preguidance')[0] + '_RAxML ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_RAxML.tree')
 				#color(params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_RAxML.tree')
 			else:
-				Logger.Warning('No tree file created by RAxML for OG ' + file[:10])
+				print('\nWARNING: No tree file created by RAxML for OG ' + file[:10] + '\n')
 
 
 
