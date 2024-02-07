@@ -21,6 +21,7 @@ import concatenate
 
 if __name__ == '__main__':
 
+	#Reading in all input parameters
 	params = utils.get_params()
 
 	#First, checking for and cleaning up existing outputs from previous runs,
