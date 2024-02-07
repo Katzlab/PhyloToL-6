@@ -1,6 +1,21 @@
-#Updated by ACL on 1/16 to fix subsisters
+# Last updated Jan 2024
+# Authors: Auden Cote-L'Heureux, Mario Ceron-Romero.
 
+# This script contains the entirety of the contamination loop, an iterative tool to assess 
+# and remove contamination based on analyses of single gene trees. This tool allows for the 
+# use of one or both of two main methods of contamination assessment informed by tree topology. 
+# The first method – “clade-based contamination removal” –  is intended for cases when the 
+# user is interested in genes present in a group of organisms with multiple representative 
+# samples and/or species in the gene trees. For a given set of target taxa, this method identifies 
+# robust, monophyletic clades containing those taxa within each gene tree, and removes all other
+# sequences belonging to the group of target taxa. The second available method is 'sister-based 
+# contamination removal', where sequences are removed based on their sister relationship to 
+# user-specified contaminants. After sequences are removed in each iteration, the loop re-aligns and 
+# re-builds each tree excluding all removed sequences, and then repeats a specified number of times
+# (--n_loops). Running in botb of these modes requires the user to input several parameters, 
+# which can be found in the manual, and in the 'CL' argument group in utils.py.
 
+#Dependencies
 import os, sys, re
 from Bio import SeqIO
 import ete3
@@ -8,7 +23,7 @@ import guidance
 import trees
 from statistics import mean
 
-	
+#Utility function to extract Newick strings from Nexus files.
 def get_newick(fname):
 	
 	newick = ''
@@ -59,7 +74,7 @@ def reroot(tree):
 
 	return tree
 	
-	
+#Clade-based contamination removal
 def get_subtrees(args, file):
 
 	newick = get_newick(file)	
@@ -71,6 +86,7 @@ def get_subtrees(args, file):
 	except:
 		print('\nUnable to re-root the tree ' + file + ' (maybe it had only 1 major clade, or an inconvenient polytomy). Skipping this step and continuing to try to grab robust clades from the tree.\n')					
 
+	#Reading in clade grabbing exceptions
 	exceptions = []
 	if args.clade_grabbing_exceptions != None:
 		if os.path.isfile(args.clade_grabbing_exceptions):
@@ -79,6 +95,7 @@ def get_subtrees(args, file):
 			print('\nError: it looks like you tried to input a clade grabbing exceptions file, but it could not be found.\n')
 			exit()
 
+	#Reading clade grabbing rules
 	rules_per_clade = []
 	if args.clade_grabbing_rules_file != None:
 		if os.path.isfile(args.clade_grabbing_rules_file):
@@ -95,7 +112,8 @@ def get_subtrees(args, file):
 			exit()
 	else:
 		rules_per_clade.append({ 'target_taxa' : args.target_taxa, 'num_contams' : args.num_contams, 'min_target_presence' : args.min_target_presence, 'required_taxa' : args.required_taxa, 'required_taxa_num' : args.required_taxa_num })
-		
+
+	#Reformatting rules
 	for clade in rules_per_clade:
 		if os.path.isfile(clade['target_taxa']):
 			try:
@@ -122,6 +140,7 @@ def get_subtrees(args, file):
 	#Creating a record of selected subtrees, and all of the leaves in those subtrees
 	selected_leaves = []
 
+	#For each set of rules (set of target taxa)
 	for clade in rules_per_clade:
 		seen_leaves = []
 
@@ -174,7 +193,7 @@ def get_subtrees(args, file):
 
 	return seqs2keep
 
-
+#Sisters-based contamination removal
 def get_sisters(args, file, sister_contam_per_tax, subsister_contam_per_tax):
 
 	seqs2remove = []
@@ -192,6 +211,7 @@ def get_sisters(args, file, sister_contam_per_tax, subsister_contam_per_tax):
 
 	all_taxa_in_tree = [leaf.name[:10] for leaf in tree]
 
+	#Reading in cocontaminants
 	coconts = { }
 	if args.cocontaminants != None:
 		if os.path.isfile(args.cocontaminants):
@@ -237,6 +257,7 @@ def get_sisters(args, file, sister_contam_per_tax, subsister_contam_per_tax):
 			#Create a record of the sister sequences
 			sisters = list(dict.fromkeys(sisters))
 
+			#Getting list of removable sequences by sister relationships
 			sisters_removable = []; bls = []
 			for contam in bad_sisters:
 				for sister in sisters:
@@ -244,6 +265,7 @@ def get_sisters(args, file, sister_contam_per_tax, subsister_contam_per_tax):
 						sisters_removable.append(sister)
 						bls.append(bad_sisters[contam])
 
+			#Getting list of removable sequences by sub-sister relationships
 			subsisters_removable = []
 			for contam in bad_subsisters:
 				for sub_sister in sub_sisters:
@@ -262,7 +284,7 @@ def get_sisters(args, file, sister_contam_per_tax, subsister_contam_per_tax):
 
 	return [leaf.name for leaf in tree if leaf.name not in seqs2remove]
 
-
+#Creating new unaligned file without the removed sequences
 def write_new_preguidance(params, seqs2keep, seqs_per_og, tree_file):
 
 	if params.cl_exclude_taxa != None:
@@ -294,6 +316,7 @@ def write_new_preguidance(params, seqs2keep, seqs_per_og, tree_file):
 		return seq_file[0], seqs_removed_from_og
 
 
+#Utility function to run MAFFT in between iterations (if this is the chosen alignment method)
 def cl_mafft(params):
 
 	for file in os.listdir(params.output + '/Output/Pre-Guidance'):
@@ -302,14 +325,14 @@ def cl_mafft(params):
 
 			os.system('Scripts/trimal-trimAl/source/trimal -in ' + params.output + '/Output/NotGapTrimmed/' + file + ' -out ' + params.output + '/Output/Guidance/' + file.split('.')[0] + '.95gapTrimmed.fasta' + ' -gapthreshold 0.05 -fasta')
 
-
+#Utility function to run FastTree in between iterations (if this is the chosen tree-building method)
 def cl_fasttree(params):
 
 	for file in os.listdir(params.output + '/Output/Guidance'):
 		if file.split('.')[-1] in ('fasta', 'fas', 'faa'):
 			os.system('FastTree ' + params.output + '/Output/Guidance/' + file + ' > ' + params.output + '/Output/Trees/' + file.split('.')[0] + '.FastTree.tre')
 
-
+#Wrapper script to manage parameters and iteration
 def run(params):
 
 	seqs_removed = []
@@ -318,8 +341,11 @@ def run(params):
 	with open('SequencesRemoved_ContaminationLoop.txt', 'w') as o:
 		o.write('Sequence\tLoopRemoved\n')
 
+	#For each iteration
 	for loop in range(params.nloops):
 		seqs_removed_loop = []
+
+		#Finding input files
 		if params.start == 'raw':
 			seqs_per_og = { file : { rec.id : str(rec.seq) for rec in SeqIO.parse(params.output + '/Output/Pre-Guidance/' + file, 'fasta') } for file in os.listdir(params.output + '/Output/Pre-Guidance') if file.split('.')[-1] in ('fasta', 'fas', 'faa') }
 		elif params.start in ('unaligned', 'aligned', 'trees'):
@@ -329,12 +355,12 @@ def run(params):
 				for file in os.listdir(params.data):
 					if file.split('.')[-1] in ('tre', 'tree', 'treefile'):
 						os.system('cp ' + params.data + '/' + file + ' ' + params.output + '/Output/Trees')
-
 		if loop > 0 or params.start == 'raw':
 			os.system('mv ' + params.output + '/Output/Pre-Guidance ' + params.output + '/Output/Pre-Guidance_' + str(loop))
 
 			os.mkdir(params.output + '/Output/Pre-Guidance')
 
+		#Wrapper for running clade-based contamination removal on all trees
 		if params.contamination_loop == 'clade':
 			for tree_file in os.listdir(params.output + '/Output/Trees'):
 				if tree_file.split('.')[-1] in ('tre', 'tree', 'treefile', 'nex') and tree_file not in completed_ogs:
@@ -346,7 +372,7 @@ def run(params):
 						completed_ogs.append(tree_file)
 					else:
 						seqs_removed_loop += [seq for seq in seqs_per_og[seq_file] if seq not in seqs2keep and seq not in seqs_removed]
-
+		#Wrapper for running sisters-based contamination removal on all trees
 		elif params.contamination_loop == 'seq':
 
 			sister_contam_per_tax = { }
@@ -385,12 +411,14 @@ def run(params):
 						completed_ogs.append(tree_file)
 					else:
 						seqs_removed_loop += [seq for seq in seqs_per_og[seq_file] if seq not in seqs2keep and seq not in seqs_removed]
-		
+
+		#Keeping record of removed sequences
 		seqs_removed += seqs_removed_loop
 		with open(params.output + '/Output/SequencesRemoved_ContaminationLoop.txt', 'a') as o:
 			for seq in seqs_removed_loop:
 				o.write(seq + '\t' + str(loop) + '\n')
 
+		#Writing output files with sequences removed, with the iteration labeled
 		os.system('mv ' + params.output + '/Output/Trees ' + params.output + '/Output/Trees_' + str(loop))
 		os.mkdir(params.output + '/Output/Trees')
 
@@ -399,11 +427,12 @@ def run(params):
 
 		os.system('mv ' + params.output + '/Output/NotGapTrimmed ' + params.output + '/Output/NotGapTrimmed_' + str(loop))
 		os.mkdir(params.output + '/Output/NotGapTrimmed')
-
+		
 		params.start = 'unaligned'
 		params.end = 'trees'
 		params.tree_method = params.cl_tree_method
 
+		#Re-aligning and building trees without contaminant sequences... then ready for next iteration.
 		if params.cl_alignment_method == 'mafft_only':
 			cl_mafft(params)
 		else:
