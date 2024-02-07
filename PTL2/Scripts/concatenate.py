@@ -1,3 +1,22 @@
+# Last updated Jan 2024
+# Authors: Auden Cote-L'Heureux and Mario Ceron-Romero
+
+# This script chooses orthologs to concatenate OGs. This can be done as part of an end-to-end PhyloToL run, 
+# or by inputting already complete alignments and gene trees and running only the concatenation step. 
+# Use the --concatenate flag to run this step, and optionally use the argument --concat_target_taxa to input 
+# a file containing a list of taxon codes to be included in the concatenated alignment. If a GF has more 
+# than one sequence from a taxon, a representative ortholog must be chosen to include in the concatenated alignment. 
+# To do this, for each taxon PhyloToL keeps only the sequences falling in the monophyletic clade in the tree 
+# that contains the greatest number of species of the taxon’s minor clade (or major clade, if the ‘target taxon list’ 
+# uses major-clade codes). If multiple sequences from the taxon fall into this largest clade, then the sequence 
+# with the highest ‘score’ (defined as length times k-mer coverage for transcriptomic data with k-mer coverage 
+# in the sequence ID as formatted by rnaSpades, and otherwise just length) is kept for the concatenated alignment. 
+# If a GF is not present as a taxon, its missing data are filled in with gaps in the concatenated alignment. 
+# Along with the concatenated alignment, this part of the pipeline outputs individual alignments with orthologs 
+# selected (and re-aligned with MAFFT), in case a user wants to construct a model-partitioned or other specialized 
+# kind of species tree.
+
+#Dependencies
 import os, sys
 from Bio import SeqIO
 import ete3
