@@ -1,6 +1,6 @@
 import os, sys, re
 from Bio import SeqIO
-from logger import Logger
+
 
 def run(params):
 
@@ -11,10 +11,10 @@ def run(params):
 			preguidance_path = params.data
 
 		if not os.path.isdir(preguidance_path):
-			Logger.Error('The path ' + preguidance_path + ' could not be found when trying to locate pre-Guidance (unaligned) files. Make sure that the --start and --data parameters are correct and/or that the pre-Guidance step ran successfully.')
+			print('\nERROR: The path ' + preguidance_path + ' could not be found when trying to locate pre-Guidance (unaligned) files. Make sure that the --start and --data parameters are correct and/or that the pre-Guidance step ran successfully.\n')
 
 		if len([f for f in os.listdir(preguidance_path) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta')]) == 0:
-			Logger.Error('No pre-Guidance (unaligned) files could be found at the path ' + preguidance_path + '. Make sure that the --start and --data parameters are correct, that the pre-Guidance step ran successfully, and that the unaligned files are formatted correctly (they must have the file extension .faa, .fa, or .fasta).')
+			print('\nERROR: No pre-Guidance (unaligned) files could be found at the path ' + preguidance_path + '. Make sure that the --start and --data parameters are correct, that the pre-Guidance step ran successfully, and that the unaligned files are formatted correctly (they must have the file extension .faa, .fa, or .fasta).\n')
 
 		os.mkdir(params.output + '/Output/Intermediate/Guidance')
 		os.mkdir(params.output + '/Output/Intermediate/Guidance/Input')
@@ -35,7 +35,7 @@ def run(params):
 				n_recs = len([r for r in SeqIO.parse(guidance_input + '/' + file, 'fasta')])
 
 				if n_recs < 4:
-					Logger.Warning('Gene famiily ' + file.split('.')[0].split('_preguidance')[0] + ' contains fewer than 4 sequences after ' + str(i) + ' Guidance iterations, therefore no alignment will be produced for this gene family.')
+					print('\nWARNING: Gene famiily ' + file.split('.')[0].split('_preguidance')[0] + ' contains fewer than 4 sequences after ' + str(i) + ' Guidance iterations, therefore no alignment will be produced for this gene family.\n')
 					os.system('rm -rf ' + tax_guidance_outdir)
 					if i == 0:
 						fail = True
@@ -52,12 +52,12 @@ def run(params):
 					seqs_below = len([line for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names').readlines()[1:-1] if float(line.split()[-1]) < params.seq_cutoff])
 
 					if n_recs - seqs_below < 4:
-						Logger.Warning('Gene famiily ' + file.split('.')[0].split('_preguidance')[0] + ' contains fewer than 4 sequences after ' + str(i + 1) + ' Guidance iterations, therefore no alignment will be produced for this gene family.')
+						print('\nWARNING: Gene famiily ' + file.split('.')[0].split('_preguidance')[0] + ' contains fewer than 4 sequences after ' + str(i + 1) + ' Guidance iterations, therefore no alignment will be produced for this gene family.\n')
 						os.system('rm -rf ' + tax_guidance_outdir)
 						break
 
 					if seqs_below == 0 or i == params.guidance_iters - 1:
-						Logger.Message('Guidance complete after ' + str(i + 1) + ' iterations for gene family ' + file.split('.')[0].split('_preguidance')[0])
+						print('\nGuidance complete after ' + str(i + 1) + ' iterations for gene family ' + file.split('.')[0].split('_preguidance')[0] + '\n')
 						break
 
 					for line in [line for line in open(tax_guidance_outdir + '/MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names').readlines()[1:-1] if float(line.split()[-1]) < params.seq_cutoff]:
