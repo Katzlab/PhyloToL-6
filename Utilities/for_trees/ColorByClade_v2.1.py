@@ -244,7 +244,7 @@ def color(file, args):
 		
 	newick = get_newick(file)
 
-	tree = ete3.Tree(newick)
+	tree = ete3.Tree(newick, format = 1)
 
 	leaf_colors = []
 	for leaf in tree:
