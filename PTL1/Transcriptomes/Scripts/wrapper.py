@@ -149,7 +149,7 @@ def script_five(args):
 	lines = [line.strip().split('\t') for line in open(args.output + '/Output/gcode_output.tsv', 'r')]
 	with open(args.output + '/Output/gcode_output.tsv', 'r') as g:
 		for folder in os.listdir(args.output + '/Output'):
-			if os.path.isfile(args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta'):
+			if os.path.isfile(args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta') and os.path.isdir(args.output + '/Output/' + folder + '/StopCodonFreq'):
 				for line in lines:
 					if line[0] == folder and line[-1].lower() in valid_codes:
 						os.system('python 5_GCodeTranslate.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta --genetic_code ' + line[-1])
