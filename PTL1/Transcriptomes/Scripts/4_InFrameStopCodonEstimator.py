@@ -275,7 +275,6 @@ def prep_translations(args):
 	inFasta = [i for i in SeqIO.parse(args.input_file,'fasta')]
 
 	prot_dict = {}
-
 	for i in intsv:
 #		print i
 		prot_dict.setdefault(i.split('\t')[0],[])
@@ -293,6 +292,10 @@ def prep_translations(args):
 				prot_dict[i.split('\t')[0]].append(int(i.split('\t')[7]))
 			else:
 				prot_dict[i.split('\t')[0]].append(int(i.split('\t')[7])-4)
+
+	if len(list(prot_dict.keys())) < 50:
+		print('\nStop codon estimation CANCELLED for taxon ' + args.input_file[:10] + ' because its file contains fewer than 50 sequences. This check occurred in script 4.\n')
+		exit()
 
 
 	#------------- Prep translation with 'TAA' as the only Stop -------------#
