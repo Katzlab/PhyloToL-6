@@ -1,7 +1,7 @@
-# Last updated Sept 2023
+# Last updated March 2023 by Godwin Ani
 # Authors: Auden Cote-L'Heureux and Mario Ceron-Romero
 
-########### new code
+
 
 #Dependencies
 import os, sys, re
@@ -33,10 +33,8 @@ args = parser.parse_args()
 os.makedirs(args.output + '/Output/Intermediate/Guidance')
 os.mkdir(args.output + '/Output/Intermediate/Guidance/Input')
 os.mkdir(args.output + '/Output/Intermediate/Guidance/Output')
-#new
 os.mkdir(args.output + '/Output/Guidance')
 os.mkdir(args.output + '/Output/NotGapTrimmed')
-#new
 guidance_input = args.output + 'Output/Intermediate/Guidance/Input/'
 os.system('cp -r ' + args.input + '/* ' + guidance_input)
 
@@ -92,7 +90,6 @@ for file in [f for f in os.listdir(guidance_input) if f.endswith('.fa') or f.end
 				guidance_removed_file.write(line)
 			#Copying over the old file with the new results
 			os.system('cp ' + tax_guidance_outdir + '/Seqs.Orig.fas.FIXED.Without_low_SP_Seq.With_Names ' + guidance_input + '/' + file)
-			#new
 			#Handling intermediate files for each iteration.	
 			if args.keep_iter:
 				if i +1 < args.iterations:
@@ -111,7 +108,7 @@ for file in [f for f in os.listdir(guidance_input) if f.endswith('.fa') or f.end
 									os.system('mv ' + iteration_folder + '/' + gdir_file + ' ' + iteration_folder + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file + '.aln')
 								else:
 									os.system('mv ' + iteration_folder + '/' + gdir_file + ' ' + iteration_folder + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file)
-									#new
+									
 
 					
 		else:
