@@ -68,6 +68,8 @@ def get_params():
 	other.add_argument('--concat_target_taxa', nargs = '+', default = None, help = 'The taxonomic group (sequence prefix), groups, or a file containing a list of groups (multiple prefixes) for which to select sequences to construct a concatenated alignment')
 	other.add_argument('--tree_font_size', default = 12, help = "Change this if you're not quite happy with the font size in the output trees. If you want smaller font in your trees, you can lower this value; and if you want larger font in your trees, you can raise this value. Some common values are 8, 10, and 12. Size 16 font is pretty big, and size 4 font is probably too small for most purposes. Iconoclasts use size 9, 11, or 13 font.")
 	other.add_argument('--keep_temp', action = 'store_true', help = "Use this to keep ALL Guidance intermediate files")
+	other.add_argument('--keep_iter', '-z', action = 'store_true', help = 'Keep all Guidance iterations (beware this will be very large)')
+
 
 	return parser.parse_args()
 
