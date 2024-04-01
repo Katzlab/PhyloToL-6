@@ -214,18 +214,20 @@ def write_nexus(newick, leaf_colors, params):
 	
 
 def tree_formatting_wrapper(file):
-
-	newick = get_newick(file)	
-	tree = ete3.Tree(newick)
-
-	majs = list(dict.fromkeys([leaf.name[:2] for leaf in tree]))
-
-	#Only try to reroot trees with more than 2 major clades. This was added to fix the ETE3 "Cannot set myself as outgroup" error
-	if len(majs) > 2:
-		tree = reroot(tree)
+	try:
+		newick = get_newick(file)
+		tree = ete3.Tree(newick)
 		
-	tree.ladderize(direction = 1)
-	tree.write(outfile = 'ColoredTrees/' + file.split('/')[-1].split('.tree')[0] + '_Colored.tree')
+		majs = list(dict.fromkeys([leaf.name[:2] for leaf in tree]))
+		#Only try to reroot trees with more than 2 major clades. This was added to fix the ETE3 "Cannot set myself as outgroup" error
+		
+		if len(majs) > 2: 
+			tree = reroot(tree)	
+		tree.ladderize(direction = 1)
+		tree.write(outfile = 'ColoredTrees/' + file.split('/')[-1].split('.tree')[0] + '_Colored.tree')
+	except Exception as e:
+		print(f" {file.split('/')[-1]} has {e} error ")
+
 
 	
 def color(file, args):
