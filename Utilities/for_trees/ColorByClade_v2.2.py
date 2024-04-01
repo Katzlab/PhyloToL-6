@@ -1,4 +1,4 @@
-#Author, date: Auden Cote-L'Heureux & Godwin Ani, last updated Nov 27th 2023
+#Author, date: Auden Cote-L'Heureux & Godwin Ani, last updated Feb 21st 2024
 #Motivation: Visualize placement of taxa by taxonomic group in trees
 #Intent: Color tip labels in trees by taxonomic group
 #Dependencies: Python3, ete3
