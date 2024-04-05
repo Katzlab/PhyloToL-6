@@ -1,4 +1,4 @@
-#Author, date: Auden Cote-L'Heureux, last updated Aug 1st 2023
+#Author, date: Auden Cote-L'Heureux, last updated Apr 1st 2024 by GA
 #Motivation: Select robust sequences from trees
 #Intent: Select clades of interest from large trees using taxonomic specifications
 #Dependencies: Python3, ete3, Biopython
@@ -18,14 +18,14 @@ def get_args():
 
 	parser = argparse.ArgumentParser(
 		prog = 'Clade grabber, Version 2.1',
-		description = "Updated Aug 1st, 2023 by Auden Cote-L'Heureux"
+		description = "Updated Aug 1st, 2023 by Auden Cote-L'Heureux, modified by GA Feb 13th 2024"
 	)
 #add_argument section with parameters explained
 	parser.add_argument('-i', '--input', type = str, required = True, help = 'Path to a folder containing input trees (which must have the file extension .tre, .tree, .treefile, or .nex)')
 	parser.add_argument('-t', '--target', type = str, required = True, help = 'A comma-separated list of any number of digits/characters to describe focal taxa (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes. All sequences containing the complete/partial code will be identified as belonging to target taxa.')
 	parser.add_argument('-m', '--min_presence', type = int, required = True, help = 'Minimum number of target taxa present in clade for it to be selected')
-	parser.add_argument('-a', '--at_least', type = str, default = '', help = 'A comma-separated list of any number of digits/characters (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes, to describe taxa that MUST be present in a clade for it to be selected (e.g. you may want at least one whole genome).')
-	parser.add_argument('-na', '--n_at_least', type = int, default = 0, help = 'The number of species belonging to taxa in the --at_least list that must be present in the clade. Default is 0.')
+	parser.add_argument('-r', '--required_taxa', type = str, default = '', help = 'A comma-separated list of any number of digits/characters (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes, to describe taxa that MUST be present in a clade for it to be selected (e.g. you may want at least one whole genome).')
+	parser.add_argument('-nr', '--required_taxa_num', type = int, default = 0, help = 'The number of species belonging to taxa in the --required_taxa list that must be present in the clade. Default is 0.')
 	parser.add_argument('-o', '--outgroup', type = str, default = '', help = 'A comma-separated list of any number of digits/characters (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes, to describe taxa that will be included as outgroups in the output unaligned fasta files (which will contain only sequences from a single selected clade, and all outgroup sequences in the tree captured by this argument).')
 	parser.add_argument('-c', '--contaminants', type = float, default = 2, help = 'The number of non-ingroup contaminants allowed in a clade, or if less than 1 the proportion of sequences in a clade that can be non-ingroup (i.e. presumed contaminants). Default is to allow 2 contaminants.')
 	
@@ -98,22 +98,23 @@ def get_subtrees(args, file):
 	#Getting a clean list of all target taxa
 	if '.' in args.target:
 		try:
-			target_codes = [l.strip() for l in args.target.open().readlines() if l.strip() != '']
+			target_codes = [l.strip() for l in open(args.target, 'r').readlines() if l.strip() != '']
 		except AttributeError:
 			print('\n\nError: invalid "target" argument. This must be a comma-separated list of any number of digits/characters to describe focal taxa (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes. All sequences containing the complete/partial code will be identified as belonging to target taxa.\n\n')
 	else:
 		target_codes = [code.strip() for code in args.target.split(',') if code.strip() != '']
 
 	#Getting a clean list of all "at least" taxa
-	if '.' in args.at_least:
+	if '.' in args.required_taxa:
 		try:
-			at_least_codes = [l.strip() for l in args.at_least.open().readlines() if l.strip() != '']
+			required_taxa_codes = [l.strip() for l in open(args.required_taxa, 'r').readlines() if l.strip() != '']
 		except AttributeError:
-			print('\n\nError: invalid "at_least" argument. This must be a comma-separated list of any number of digits/characters (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes, to describe taxa that MUST be present in a clade for it to be selected (e.g. you may want at least one whole genome).\n\n')
+			print('\n\nError: invalid "required_taxa" argument. This must be a comma-separated list of any number of digits/characters (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes, to describe taxa that MUST be present in a clade for it to be selected (e.g. you may want at least one whole genome).\n\n')
 	else:
-		at_least_codes = [code.strip() for code in args.at_least.split(',') if code.strip() != '']
+		required_taxa_codes = [code.strip() for code in args.required_taxa.split(',') if code.strip() != '']
 
-	target_codes = list(dict.fromkeys(target_codes + at_least_codes))
+	target_codes = list(dict.fromkeys(target_codes + required_taxa_codes))
+	
 
 	#Creating a record of selected subtrees, and all of the leaves in those subtrees
 	selected_nodes = []; seen_leaves = []
@@ -121,6 +122,7 @@ def get_subtrees(args, file):
 	#Iterating through all nodes in tree, starting at "root" then working towards leaves
 	for node in tree.traverse('levelorder'):
 		#If a node is large enough and is not contained in an already selected clade
+
 		if len(node) >= args.min_presence and len(list(set(seen_leaves) & set([leaf.name for leaf in node]))) == 0:
 			leaves = [leaf.name for leaf in node]
 
@@ -128,29 +130,37 @@ def get_subtrees(args, file):
 			children_keep = 0
 			for child in node.children:
 				for code in target_codes:
+					taken = False
 					for leaf in child:
 						if leaf.name.startswith(code):
 							children_keep += 1
+							taken = True
 							break
+					if taken:
+						break
 
 			if children_keep == len(node.children):
-				#Creating a record of all leaves belonging to the target/"at least" group of taxa, and any other leaves are contaminants
-				target_leaves = set(); at_least_leaves = set()
+				target_leaves = set(); required_taxa_leaves = set()
+				
 				for code in target_codes:
 					for leaf in leaves[::-1]:
+						#print(leaf)
 						if leaf.startswith(code):
 							target_leaves.add(leaf[:10])
 
-							if code in at_least_codes:
-								at_least_leaves.add(leaf[:10])
-
+							for req in required_taxa_codes:
+								if leaf.startswith(req):
+								    required_taxa_leaves.add(leaf[:10])
+								    break
 							leaves.remove(leaf)
 
+
+
+
 				#Grab a clade as a subtree if 1) it has enough target taxa; 2) it has enough "at least" taxa; 3) it does not have too many contaminants
-				if len(target_leaves) >= args.min_presence and len(at_least_leaves) >= args.n_at_least and ((args.contaminants < 1 and len(leaves) < args.contaminants * len(target_leaves)) or len(leaves) < args.contaminants):
+				if len(target_leaves) >= args.min_presence and len(required_taxa_leaves) >= args.required_taxa_num and ((args.contaminants < 1 and len(leaves) < args.contaminants * len(target_leaves)) or len(leaves) < args.contaminants):
 					selected_nodes.append(node)
 					seen_leaves.extend([leaf.name for leaf in node])
-
 	#Write the subtrees to output .tre files
 	for i, node in enumerate(selected_nodes[::-1]):
 		with open('Subtrees/' + '.'.join(file.split('.')[:-1]) + '_' + str(i) + '.tre', 'w') as o:
@@ -165,7 +175,7 @@ def make_new_unaligned(args):
 	#Getting a clean list of outgroup taxa
 	if '.' in args.outgroup:
 		try:
-			outgroup_codes = [l.strip() for l in args.outgroup.open().readlines() if l.strip() != '']
+			outgroup_codes = [l.strip() for l in open(args.outgroup, 'r').readlines() if l.strip() != '']
 		except AttributeError:
 			print('\n\nError: invalid "target" argument. This must be a comma-separated list of any number of digits/characters (e.g. Sr_ci_S OR Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes, to describe taxa that will be included as outgroups in the output unaligned fasta files (which will contain only sequences from a single selected clade, and all outgroup sequences in the tree captured by this argument).\n\n')
 	else:
