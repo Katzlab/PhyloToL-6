@@ -4,7 +4,7 @@
 #Dependencies: Python3, ete3, Biopython
 #Inputs: A folder of trees and corresponding unaligned .fasta files
 #Outputs: A folder of grabbed clades and filtered unaligned fasta files
-#Example: python CladeGrabbing_v2.1.py --input /Path/to/trees --target Sr_rh --min_presence 20
+#Example: python CladeGrabbing_v3.2.py --input /Path/to/trees --target Sr_rh --min_presence 20
 #IMPORTANT: key parameters explained in "add_argument" section below
 
 #Dependencies
