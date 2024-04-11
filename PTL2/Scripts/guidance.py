@@ -1,4 +1,4 @@
-# Last updated Sept 2023
+# Last updated Apr 2 2024
 # Authors: Auden Cote-L'Heureux and Mario Ceron-Romero
 
 # This script runs Guidance in an iterative fashion for more both MSA construction 
@@ -98,7 +98,27 @@ def run(params):
 						guidance_removed_file.write(line)
 					#Copying over the old file with the new results
 					os.system('cp ' + tax_guidance_outdir + '/Seqs.Orig.fas.FIXED.Without_low_SP_Seq.With_Names ' + guidance_input + '/' + file)
-					#Cleaning up the intermediate files for the iteration.
+					
+					#Handling intermediate files for each iteration.	
+					if params.keep_iter:
+						if i +1 < params.guidance_iters:
+							os.makedirs(params.output + '/Output/Intermediate/Guidance/Iterations/', exist_ok = True)
+							os.makedirs(params.output + '/Output/Intermediate/Guidance/Iterations/' + str(i+1)+'/', exist_ok = True)
+							os.makedirs(params.output + '/Output/Intermediate/Guidance/Iterations/' + str(i+1) + '/' + file.split('.')[0].split('_preguidance')[0], exist_ok = True)
+							iteration_folder = params.output + '/Output/Intermediate/Guidance/Iterations/' + str(i +1) + '/' + file.split('.')[0].split('_preguidance')[0]
+							os.system('cp -r ' + tax_guidance_outdir + '/* ' + iteration_folder)
+							
+							
+							if not params.keep_temp:
+								for gdir_file in os.listdir(iteration_folder):
+									if gdir_file not in ('MSA.MAFFT.Guidance2_res_pair_seq.scr_with_Names', 'MSA.MAFFT.aln.With_Names', 'MSA.MAFFT.Guidance2_res_pair_col.scr', 'log', 'postGuidance_preTrimAl_unaligned.fasta'):
+										os.system('rm -r ' + iteration_folder + '/' + gdir_file)
+									else:
+										if gdir_file == 'MSA.MAFFT.aln.With_Names':
+											os.system('mv ' + iteration_folder + '/' + gdir_file + ' ' + iteration_folder + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file + '.aln')
+										else:
+											os.system('mv ' + iteration_folder + '/' + gdir_file + ' ' + iteration_folder + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file)
+				
 					os.system('rm -r ' + tax_guidance_outdir + '/*')
 				else:
 					fail = True
