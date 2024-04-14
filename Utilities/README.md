@@ -1,5 +1,7 @@
-![Lab image](https://github.com/Katzlab/PhyloToL-6/blob/621517812a5ed4256f19ba26498a665bdd5060af/Katzlab.png)
+![Kaztlab Logo](https://github.com/Katzlab/PhyloToL-6/assets/86856150/1f6df6bc-e970-4db6-86c1-aefdff09dbde)
+
 # Utilities
+
 > This folder contains many useful tools for analyzing sequence data.
 
 ## For Taxonomies dir:
