@@ -46,9 +46,9 @@ def run(params):
 			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G -T AUTO --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
 
 			#Copy over the final output
-			if os.path.isfile(tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile'):
-				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
-				#color(params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
+			if os.path.isfile(tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile'):
+				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
+				#color(params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.tree')
 			else:
 				print('\nWARNING: No tree file created by IQ-Tree for OG ' + file[:10] + '\n')
 
@@ -68,7 +68,7 @@ def run(params):
 			os.system('raxmlHPC -s ' + tax_raxml_outdir + '/aligned.phy -m PROTGAMMALG -f d -p 12345 -# 10 -n ' + file.split('.')[0].split('_preguidance')[0] + '_RAxML -T ' + str(params.guidance_threads))
 			
 			#Copy over final output
-			if os.path.isfile(tax_raxml_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.treefile'):
+			if os.path.isfile(tax_raxml_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile'):
 				os.system('cp ' + tax_raxml_outdir + '/RAxML_bestTree.' + file.split('.')[0].split('_preguidance')[0] + '_RAxML ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_RAxML.tree')
 				#color(params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_RAxML.tree')
 			else:
