@@ -43,7 +43,7 @@ def run(params):
 			os.mkdir(tax_iqtree_outdir)
 
 			#Run IQ-Tree
-			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G -T AUTO --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
+			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G -T 10 --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree')
 
 			#Copy over the final output
 			if os.path.isfile(tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile'):
