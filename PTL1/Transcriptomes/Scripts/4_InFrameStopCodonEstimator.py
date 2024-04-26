@@ -163,6 +163,8 @@ def check_args():
 	' Eukaryotic protein coding transcripts'+color.END)
 	required_arg_group.add_argument('--databases','-d', action='store',
 	help=color.BOLD+color.GREEN+"Path to databases"+color.END)
+	required_arg_group.add_argument('--seq_count','-c', action='store',
+	help=color.BOLD+color.GREEN+"sequence number cutoff"+color.END)
 
 	optional_arg_group = parser.add_argument_group(color.ORANGE+color.BOLD+'Options'+color.END)
 	optional_arg_group.add_argument('-author', action='store_true',
@@ -293,8 +295,10 @@ def prep_translations(args):
 			else:
 				prot_dict[i.split('\t')[0]].append(int(i.split('\t')[7])-4)
 
+	print(args.seq_count)
 	if len(list(prot_dict.keys())) < 50:
-		print('\nStop codon estimation CANCELLED for taxon ' + args.input_file[:10] + ' because its file contains fewer than 50 sequences. This check occurred in script 4.\n')
+		with open(args.databases +'/Taxa_with_few_sequences.txt', "a") as f:
+			f.write("\n" +args.input_file.split('/')[-1] )
 		exit()
 
 
@@ -752,11 +756,8 @@ def main():
 	prep_translations(args)
 	
 	diamond_ProtDB(args, diamond_path)
-
 	hunt_for_stops(args)
-	
 	clean_up(args)
-	
 	next_script(args)
- 
+	
 main()
