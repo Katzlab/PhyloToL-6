@@ -1,4 +1,4 @@
-# Last updated Sept 2023
+# Last updated Feb 2024
 # Authors: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
 # This script is intended to aid in identifying the genetic code of assembled
