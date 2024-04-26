@@ -35,7 +35,10 @@ def get_args():
 	parser.add_argument('-g', '--genetic_code', type = str, help = 'If all of your taxa use the same genetic code, you may enter it here (to be used in script 5). Alternatively, if you need to use a variety of genetic codes but know which codes to use, you may fill give here the path to a .txt or .tsv with two tab-separated columns, the first with the ten-digit codes and the second column with the corresponding genetics codes. Otherwise, stop at script 4 and fill in "gcode_output.tsv" before running script 5')
 	parser.add_argument('-min', '--minlen', type = int, default = 200, help = 'Minimum transcript length')
 	parser.add_argument('-max', '--maxlen', type = int, default = 12000, help = 'Maximum transcript length')
+	parser.add_argument('-c', '--seq_count', type = int, default = 50, help = 'minimum number of sequences after assigning OGs')
 	parser.add_argument('-d', '--databases', type = str, default = '../Databases', help = 'Path to databases folder')
+	
+
 
 	return parser.parse_args()
 
@@ -77,14 +80,23 @@ def script_three(args):
 	for folder in os.listdir(args.output + '/Output'):
 		if os.path.isfile(args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.fasta'):
 			os.system('python 3_AssignOGs.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.fasta --evalue 1e-15 --databases ' + args.databases)
+		
 
 
 #running the fourth script
 def script_four(args):			
 	for folder in os.listdir(args.output + '/Output'):
 		if os.path.isfile(args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta'):
-				os.system('python 4_InFrameStopCodonEstimator.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta --databases ' + args.databases)
-				
+				os.system('python 4_InFrameStopCodonEstimator.py --input_file ' + args.output + '/Output/' + folder + '/' + folder + '_WTA_EPU.Renamed.fasta --databases ' + args.databases + ' --seq_count ' + str(args.seq_count))
+	#Checking to see if there are taxa with less than the required number of sequences.
+	if os.path.exists(args.databases + '/Taxa_with_few_sequences.txt'):
+		with open(args.databases + '/Taxa_with_few_sequences.txt', 'r') as f:
+			content = f.read()
+			print(f'These samples do not run through PTL6p1, perhaps because they has no good hits to the hook. We suggest you remove them and restart.')
+			print(content)
+			print('Stopping Run.')
+		os.remove(args.databases + '/Taxa_with_few_sequences.txt')
+		sys.exit()			
 	#putting all of the gcode summaries produced by fourth script into a spreadsheet
 	gcode_info = []
 	for folder in os.listdir(args.output + '/Output'):
