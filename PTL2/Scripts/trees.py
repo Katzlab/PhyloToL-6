@@ -47,7 +47,7 @@ def run(params):
 
 			#Copy over the final output
 			if os.path.isfile(tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile'):
-				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '_IQTree.tree')
+				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.tree')
 				#color(params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.tree')
 			else:
 				print('\nWARNING: No tree file created by IQ-Tree for OG ' + file[:10] + '\n')
