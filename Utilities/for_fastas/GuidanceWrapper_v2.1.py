@@ -108,8 +108,7 @@ for file in [f for f in os.listdir(guidance_input) if f.endswith('.fa') or f.end
 									os.system('mv ' + iteration_folder + '/' + gdir_file + ' ' + iteration_folder + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file + '.aln')
 								else:
 									os.system('mv ' + iteration_folder + '/' + gdir_file + ' ' + iteration_folder + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file)
-									
-
+			os.system('rm -r ' + tax_guidance_outdir + '/*')
 					
 		else:
 			fail = True
