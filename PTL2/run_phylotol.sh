@@ -12,7 +12,7 @@ module use /gridapps/modules/all    #make sure module locations is loaded
 
 module load slurm
 module load ETE
-module load Biopython
+module load Biopython/1.79-foss-2021b
 module load DIAMOND/2.0.13-GCC-11.2.0
 module load MAFFT
 module load BioPerl
