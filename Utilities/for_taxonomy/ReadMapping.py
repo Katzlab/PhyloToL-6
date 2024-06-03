@@ -6,7 +6,7 @@
 #EDIT LINES: 18 & 32
 #Inputs: Folder named 'TrimmedReads' containing all the trimmed reads.
 #Outputs: Folders with the names of the LKHs containing the sam/bam files.
-#Example: python ReadMapping_v2.0.py
+#Example: python ReadMapping.py
 '''
 
 import os
