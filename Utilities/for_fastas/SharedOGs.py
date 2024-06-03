@@ -3,7 +3,7 @@
 #Intent: Create a spreadsheet summarizing OG presence
 #Inputs: A folder of ReadyToGo files
 #Outputs: Spreadsheet.
-#Example: Python SharedOGs_v1.0.py ReadyToGo_AA
+#Example: Python SharedOGs.py ReadyToGo_AA
 
 
 import os, sys
