@@ -4,7 +4,7 @@
 #Dependencies: Python3, ete3
 #Inputs: A folder of trees
 #Outputs: a folder of colored trees
-#Example: python ColorByClade_v2.1.py -i /path/to/trees
+#Example: python ColorByClade.py -i /path/to/trees
 
 
 import os, sys
