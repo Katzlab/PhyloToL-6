@@ -4,7 +4,7 @@
 #Dependencies: Python3, ete3
 #Inputs: A folder of trees
 #Outputs: Two spreadsheets summarizing sister relationships, one per sequence and another per taxon. 
-#Example: python ContaminationBySisters_v2.2.py --input /Path/to/trees
+#Example: python ContaminationBySisters.py --input /Path/to/trees
 
 #Dependencies
 import os, sys, re
