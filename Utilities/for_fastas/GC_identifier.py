@@ -4,7 +4,7 @@
 #Inputs: A folder of containing ReadyToGo files, PerSequenceStatSummaries, rules file and the script.
 #The csv file should contain 10 digit codes and the limits(column headers are name, lower, and upper).
 #Outputs: a folder of curated ready to go files.
-#Example: python GC_identifier_v1.0.py -i (input folder of r2gs), -r (rules csv file), -s (folder of per seq stats) 
+#Example: python GC_identifier.py -i (input folder of r2gs), -r (rules csv file), -s (folder of per seq stats) 
 '''
 
 
