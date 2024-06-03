@@ -4,7 +4,7 @@
 #Dependencies: Python3, numpy, BioPython
 #Inputs: Fasta file or folder of fasta files
 #Outputs: A fasta file filtered for properly formatted sequences and several spreadsheets summarizing GC, ENc, RSCU, etc.
-#Example: python3 CUB_v2.1.py -i seqs.fasta
+#Example: python3 CUB.py -i seqs.fasta
 
 #Dependencies
 import os
