@@ -4,7 +4,7 @@
 #Intent: For clustering nucleotide or amino acid sequences with the CD-Hit program.
 #Inputs: A folder of containing  Amino acid or DNA fasta files.
 #Outputs: A folder of clustered files.
-#Example: python Cluster_v2.0.py --type dna --identity 0.95 --overlap 0.67 --input input_folder_dna --output output_folder_dna
+#Example: python Cluster.py --type dna --identity 0.95 --overlap 0.67 --input input_folder_dna --output output_folder_dna
 '''
 
 
