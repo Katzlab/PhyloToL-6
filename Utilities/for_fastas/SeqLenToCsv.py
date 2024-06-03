@@ -4,7 +4,7 @@
 #Intent: Exports the length of DNA sequences excluding gaps and missing data to a csv file.
 #Inputs: A folder named 'Seq_length' containing DNA fasta files.
 #Outputs: A spreadsheet containing the length of the sequences.
-#Example: python SeqLenToCsv_v1.0.py
+#Example: python SeqLenToCsv.py
 '''
 
 
