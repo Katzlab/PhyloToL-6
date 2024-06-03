@@ -10,7 +10,7 @@ from Bio import SeqIO
 
 #Reading arguments
 parser = argparse.ArgumentParser(
-                    prog = 'Guidance Wrapper v2.1',
+                    prog = 'Guidance Wrapper',
                     description = "Updated July 21, 2023 by Auden Cote-L'Heureux"
                     )
 parser.add_argument('--input', '-i', required = True, type = str, help = 'Path to folder of unaligned amino acid fasta files to align. File extensions must be fasta, fa, fas, or faa. Try using the absolute rather than relative path if working on the Grid and having trouble')
