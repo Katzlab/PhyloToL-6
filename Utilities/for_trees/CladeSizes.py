@@ -4,7 +4,7 @@
 #Dependencies: Python3, ete3
 #Inputs: A folder of trees
 #Outputs: a spreadsheet describing clade sizes
-#Example: python CladeSizes_v2.0.py -i /path/to/trees
+#Example: python CladeSizes.py -i /path/to/trees
 
 
 import os, sys, re
