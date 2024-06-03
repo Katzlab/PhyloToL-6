@@ -6,7 +6,7 @@ Dependencies : Python3, Pandas
 Inputs : A folder containing trees and a csv file(with headers).
 The first column of the csv is the 10 digit code and other columns are the information to be added to the tip labels.
 Outputs : A folder of trees with renamed tips.
-python3 RenameTips_v1.0.py -i input to_folder_of_trees -s to_spreadsheet
+python3 RenameTips.py -i input to_folder_of_trees -s to_spreadsheet
 '''
 
 import os, re, sys, argparse
