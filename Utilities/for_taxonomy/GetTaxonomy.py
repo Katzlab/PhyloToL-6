@@ -4,7 +4,7 @@
 #Dependencies: Python3, esearch
 #Inputs: Spreadsheet with ten digit codes in the first column and the genus and species names in the second column.
 #Outputs: Spreadsheet with taxonomy.
-#Example: python GetTaxonomy_v1.0.py --input_file <path to .csv file>
+#Example: python GetTaxonomy.py --input_file <path to .csv file>
 '''
 
 import os
