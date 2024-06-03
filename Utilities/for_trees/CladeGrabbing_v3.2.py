@@ -2,7 +2,7 @@
 #Motivation: Select robust sequences from trees
 #Intent: Select clades of interest from large trees using taxonomic specifications
 #Dependencies: Python3, ete3, Biopython
-#Inputs: A folder of trees and corresponding unaligned .fasta files
+#Inputs: A folder containing: all PTLp2 output trees and all corresponding unaligned .fasta (pre-guidance) files
 #Outputs: A folder of grabbed clades and filtered unaligned fasta files
 #Example: python CladeGrabbing_v3.2.py --input /Path/to/trees --target Sr_rh --min_presence 20
 #IMPORTANT: key parameters explained in "add_argument" section below
