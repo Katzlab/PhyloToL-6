@@ -4,10 +4,10 @@
 #Dependencies: Python3, ete3
 #Inputs: A folder of trees
 #Outputs: a folder of colored trees
-#Example: python ColorByClade.py -i /path/to/trees
+#Example: python ColorByClade_v2.1.py -i /path/to/trees
 
 
-import os, sys
+import os, sys, shutil
 import ete3
 import argparse
 
@@ -43,7 +43,7 @@ figtree_format = '''begin figtree;
 	set nodeLabels.colorAttribute="User selection";
 	set nodeLabels.displayAttribute="Node ages";
 	set nodeLabels.fontName="sansserif";
-	set nodeLabels.fontSize=16;
+	set nodeLabels.fontSize=8;
 	set nodeLabels.fontStyle=0;
 	set nodeLabels.isShown=false;
 	set nodeLabels.significantDigits=4;
@@ -83,7 +83,7 @@ figtree_format = '''begin figtree;
 	set tipLabels.colorAttribute="User selection";
 	set tipLabels.displayAttribute="Names";
 	set tipLabels.fontName="sansserif";
-	set tipLabels.fontSize=16;
+	set tipLabels.fontSize=12;
 	set tipLabels.fontStyle=0;
 	set tipLabels.isShown=true;
 	set tipLabels.significantDigits=4;
@@ -213,7 +213,23 @@ def write_nexus(newick, leaf_colors, params):
 		write_lines(o, newick, taxa_and_colors, tree_font_size)
 	
 
+def tree_formatting_wrapper(file):
+	try:
+		newick = get_newick(file)
+		tree = ete3.Tree(newick)
+		
+		majs = list(dict.fromkeys([leaf.name[:2] for leaf in tree]))
+		#Only try to reroot trees with more than 2 major clades. This was added to fix the ETE3 "Cannot set myself as outgroup" error
+		
+		if len(majs) > 2: 
+			tree = reroot(tree)	
+		tree.ladderize(direction = 1)
+		tree.write(outfile = 'ColoredTrees/Temp/' + file.split('/')[-1].split('.tree')[0] + '_Colored.tree')
+	except Exception as e:
+		print(f" {file.split('/')[-1]} has {e} error ")
 
+
+	
 def color(file, args):
 
 	if args.keyfile != None:
@@ -226,19 +242,11 @@ def color(file, args):
 		else:
 			print('\nERROR: your input keyfile could not be found\n')
 	else:
-		colors = { 'Ba' : '[&!color=#000000]', 'Za' : '[&!color=#808080]', 'Sr' : '[&!color=#B4A26D]', 'Op' : '[&!color=#c07ba0]', 'Pl' : '[&!color=#026736]', 'Ex' : '[&!color=#E63B60]', 'EE' : '[&!color=#0343FC]', 'Am' : '[&!color=#29C5F6]', 'EE_cr' : '[&!color=#08B461]', 'EE_ha' : '[&!color=#03EA74]', 'Sr_ci' : '[&!color=#A97533]', 'Sr_ap' : '[&!color=#D4BA99]', 'Sr_rh' : '[&!color=#8A3324]', 'Sr_st' : '[&!color=#E97451]', 'Sr_di' : '[&!color=#492815]' }
-	#tree_formatting_wrapper	
-	try:
-		newick = get_newick(file)
-		tree = ete3.Tree(newick)
+		colors = { 'Ba' : '[&!color=#000000]', 'Za' : '[&!color=#808080]', 'Sr' : '[&!color=#B4A26D]', 'Op' : '[&!color=#1260CC]', 'Pl' : '[&!color=#026736]', 'Ex' : '[&!color=#E63B60]', 'EE' : '[&!color=#C76A6A]', 'Am' : '[&!color=#29C5F6]', 'EE_cr' : '[&!color=#08B461]', 'EE_ha' : '[&!color=#03EA74]', 'Sr_ci' : '[&!color=#A97533]', 'Sr_ap' : '[&!color=#D4BA99]', 'Sr_rh' : '[&!color=#8A3324]', 'Sr_st' : '[&!color=#E97451]', 'Sr_di' : '[&!color=#492815]' }
 		
-		majs = list(dict.fromkeys([leaf.name[:2] for leaf in tree]))
-		#Only try to reroot trees with more than 2 major clades. This was added to fix the ETE3 "Cannot set myself as outgroup" error
-		if len(majs) > 2: 
-			tree = reroot(tree)	
-		tree.ladderize(direction = 1)
-	except Exception as e:
-		print(f" {file.split('/')[-1]} has {e} error ")
+	newick = get_newick(file)
+
+	tree = ete3.Tree(newick)
 
 	leaf_colors = []
 	for leaf in tree:
@@ -255,7 +263,7 @@ def color(file, args):
 		else:
 			leaf_colors.append(leaf.name)
 	
-	with open('ColoredTrees/' + file.split('/')[-1].split('.tree')[0] + '_Colored.tree', 'w') as o:
+	with open('ColoredTrees/' + file.split('/')[-1].split('.tree')[0] + '.tree', 'w') as o:
 		write_lines(o, newick, leaf_colors, str(12))#change tree font size here (right now it is 12)
 
 if __name__ == '__main__':
@@ -265,7 +273,29 @@ if __name__ == '__main__':
 	if not os.path.isdir('ColoredTrees'):
 		os.mkdir('ColoredTrees')
 
+	if not os.path.isdir('ColoredTrees/Temp'):
+		os.mkdir('ColoredTrees/Temp')
+
 	for tree in os.listdir(args.input):
 		if tree.split('.')[-1] in ('tree', 'tre', 'treefile', 'nex'):
-			color(args.input + '/' + tree, args)
+			tree_formatting_wrapper(args.input + '/' + tree)
+        
+	for tree in os.listdir('ColoredTrees/Temp'):
+		if tree.split('.')[-1] in ('tree', 'tre', 'treefile', 'nex'):
+			color('ColoredTrees/Temp/' + tree, args)
+	shutil.rmtree('ColoredTrees/Temp')
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
 
