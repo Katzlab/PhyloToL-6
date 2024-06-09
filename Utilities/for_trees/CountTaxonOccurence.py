@@ -7,7 +7,8 @@ Inputs: Directory of postguidance files
 Optional: use the --minor flag and include a file named focal_minors.txt in same folder (do not put file name in command line). This file should be csv of targets (Am_tu, Sr_rh, Sr_ci)
 Optional: OR use the --major flag and include a file named focal_majors.txt in same folder (do not put file name in command line). This file should be csv of targets (Am, Sr)
 Outputs: CSV file tallying all the counts of taxa in each OG file plus minor and major clade tallies
-Command line: python3 CountTaxonOccurence_faster_minor.py  --input <dir of postguidance files> --minor
+Command line: python3 CountTaxonOccurence_faster_minor.py  --input <dir of postguidance files> --minor OR
+Command line: python3 CountTaxonOccurence_faster_minor.py  --input <dir of postguidance files> --major
 '''
 
 
