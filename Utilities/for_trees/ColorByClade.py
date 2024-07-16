@@ -1,10 +1,12 @@
-#Author, date: Auden Cote-L'Heureux & Godwin Ani, last updated Feb 21st 2024
+#Author, date: Auden Cote-L'Heureux & Godwin Ani & LAK, last updated July 16 2024
 #Motivation: Visualize placement of taxa by taxonomic group in trees
 #Intent: Color tip labels in trees by taxonomic group
 #Dependencies: Python3, ete3
 #Inputs: A folder of trees
 #Outputs: a folder of colored trees
 #Example: python ColorByClade_v2.1.py -i /path/to/trees
+#Example: python ColorByClade_v2.1.py -i /path/to/trees -k keys.txt
+#NOTE: turn off rooting at lines 227-229 if you want colored unrooted trees
 
 
 import os, sys, shutil
@@ -220,7 +222,8 @@ def tree_formatting_wrapper(file):
 		
 		majs = list(dict.fromkeys([leaf.name[:2] for leaf in tree]))
 		#Only try to reroot trees with more than 2 major clades. This was added to fix the ETE3 "Cannot set myself as outgroup" error
-		
+
+		#turn off the next three lines to color without rooting 
 		if len(majs) > 2: 
 			tree = reroot(tree)	
 		tree.ladderize(direction = 1)
