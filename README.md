@@ -1,4 +1,4 @@
-![Lab image](Katzlab.png)
+![Lab image](Other/Katzlab.png)
 # 💻🧬 PhyloToL-6
 > **PhyloToL-6** is an updated version of the PhyloToL program and it was started in 2023.
 ***
