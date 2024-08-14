@@ -1,0 +1,4 @@
+### Download the Script folder
+### than run :
+
+python3 Scripts/phylotol.py --force --start trees --end trees --data Input --output Output --contamination_loop seq --sister_rules sister_rules.txt --cl_tree_method iqtree_fast > log.out
