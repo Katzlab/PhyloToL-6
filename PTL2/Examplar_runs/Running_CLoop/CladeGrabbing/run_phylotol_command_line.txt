@@ -1,0 +1,4 @@
+### Download the Script folder
+### than run :
+
+python3 Scripts/phylotol.py --start trees --end trees --data Input --output Output/ --contamination_loop clade --clade_grabbing_rules_file clade_grabbing_rules.txt --clade_grabbing_exceptions exceptions.txt --cl_tree_method iqtree_fast --nloops 1 > log1.out
