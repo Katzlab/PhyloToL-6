@@ -1,0 +1,6 @@
+### Download and make your own ReadyToGo_AA_GC3_labelled folder with ReadyToGo files
+### Update the taxa list with the taxa files in your ReadyToGo folder
+### Download the Script folder
+### than run :
+
+python3 Scripts/phylotol.py --start raw --end trees --gf_list list_ogs.txt --taxon_list taxa_list.txt --data ReadyToGo_AA_GC3_labelled --output Output --similarity_filter --sim_cutoff 0.95 --og_identifier OG6 --tree_method iqtree > log1.out
