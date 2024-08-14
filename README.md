@@ -1,21 +1,4 @@
-![Lab image](Other/Katzlab.png)
-# 💻🧬 PhyloToL-6
-> **PhyloToL-6** is an updated version of the PhyloToL program and it was started in 2023.
-***
-[PTL1](/PTL1) includes scripts for assigning transcripts and cds' to gene familes (OGs).
-***
-[PTL2](/PTL2) is a repository for main MSA and tree building scripts.
-***
-[HookDB](/HookDB) is our set of eukaryotic gene families, a subsample of gene families from orthomcl 6.
-***
-[Utilities](/Utilities) includes many useful tools for analyzing sequence data.
-***
 
+<img src="https://github.com/Katzlab/PhyloToL-6/blob/main/Other/Katzlab.png">
 
-
-
-### Katz lab
->[About Katz Lab](https://www.science.smith.edu/katz-lab/)  &nbsp; \| &nbsp;
-📧:lkatz@smith.edu &nbsp; \| &nbsp; 📞: (413) 585-3825 &nbsp;   \|   
-:office: Address: Burton Hall 201, 46 College Lane,
-Smith College, Northampton Massachusetts.
+**PhyloToL version 6** is the latest version of the PhyloToL pipeline from the [Katz Lab](https://www.science.smith.edu/katz-lab/) at Smith College. PhyloToL is a phylogenomic toolkit for processing transcriptomic and genomic data that includes novel phylogeny-informed contamination removal techniques. See our [Wiki](https://github.com/Katzlab/PhyloToL-6/wiki) for more information on installation and usage!
