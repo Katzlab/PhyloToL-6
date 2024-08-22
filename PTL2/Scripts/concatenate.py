@@ -118,14 +118,14 @@ def remove_paralogs(params):
 
 			#Getting a clean list of all target taxa
 
-			if type(params.concat_target_taxa) is list:
-				target_codes = [code.strip() for code in params.concat_target_taxa if code.strip() != '']
-			elif params.concat_target_taxa != None:
+			if os.path.isdir(params.concat_target_taxa):
 				if os.path.isfile(params.concat_target_taxa):
 					try:
 						target_codes = [l.strip() for l in open(params.concat_target_taxa).readlines() if l.strip() != '']
 					except AttributeError:
 						print('\n\nError: invalid "concat_target_taxa" argument. This must be a comma-separated list of any number of digits/characters to describe focal taxa (e.g. Sr_ci_S OR Am_tu), or a file with the extension .txt containing a list of complete or partial taxon codes. All sequences containing the complete/partial code will be identified as belonging to target taxa.\n\n')
+			elif params.concat_target_taxa != None:
+				target_codes = [params.concat_target_taxa]
 			else:
 				print('\nERROR: missing --concat_target_taxa argument. When concatenating, you need to give the taxonomic group (sequence prefix), groups, or a file containing a list of groups (multiple prefixes) for which to select sequences to construct a concatenated alignment\n')
 				exit()
