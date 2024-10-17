@@ -1,4 +1,4 @@
-#Author, date: Xyrus (last modified by him Sept 17 2020), most recently updated by Auden on July 19 2023
+#Author, date: Xyrus (last modified by him Sept 17 2020), most recently updated by Auden on October 17 2024
 #Motivation: Generate lots of codon usage statistics to aid in identifying useful characteristics for de novo ORF calling
 #Intent: Summarize nucleotide composition statistics for a fasta file or folder of fasta files
 #Dependencies: Python3, numpy, BioPython
@@ -356,6 +356,12 @@ class GCeval():
         return round(GC(''.join([seq[n] for n in
             range(2, len(seq)-len(seq[2:]) % 3, 3)])), 4)
 
+    def gc3s(cdnTbl):
+        # This function return the GC content of the third position of a codon excluding Tryp and Met
+        syn = round(GC(''.join([k[-1]*v[-1] for k, v in cdnTbl.items() if v[0] != 'W' and v[0] != 'M'])), 4)
+        
+        return syn
+
     def gc3_4F(cdnTbl):
     #     # This function return the GC content of the third position of four-fold
     #     # degenerate codons
@@ -385,7 +391,7 @@ class SeqInfo(object):
 
     def ENcStats(self):
         # Stores the various Effective Number of Codons calculations in the class
-        self.expENc = CalcCUB.expWrightENc(self.gc3)
+        self.expENc = CalcCUB.expWrightENc(self.gc3s)
         self.obsENc_6F = CalcCUB.calcWrightENc(self.cdnCounts_6F)
         self.obsENc_No6F = CalcCUB.calcWrightENc(self.cdnCounts_No6F)
         self.SunENc_6F = CalcCUB.SunEq5(self.cdnCounts_6F)
@@ -396,6 +402,7 @@ class SeqInfo(object):
         for k, v in self.gcFuncs.items():
             setattr(self,k,v(self.ntd))
         self.gc4F = GCeval.gc3_4F(self.cdnCounts_No6F)
+        self.gc3s = GCeval.gc3s(self.cdnCounts_No6F)
 
 
     def RSCUstats(self):
@@ -429,23 +436,23 @@ def CalcRefFasta(fasta, gCode):
 def WriteWrightOut(seqData, outName, comp):
     if comp == False:
         with open(outName+'/SpreadSheets/'+outName.split('/')[-1]+'.ENc.Raw.tsv','w+') as w:
-            w.write('SequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\t'
+            w.write('SequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\tGC3S\t'
                 'GC3-Degen\tExpWrightENc\tObsWrightENc_6Fold\tObsWrightENc_No6Fold\t'
                 'ObsWeightedENc_6Fold\tObsWeightedENc_No6Fold\n')
             for k, v in seqData.items():
                 name = [k]
-                gcs = [str(v.gcOverall),str(v.gc1),str(v.gc2),str(v.gc3),str(v.gc4F)]
+                gcs = [str(v.gcOverall),str(v.gc1),str(v.gc2),str(v.gc3),str(v.gc3s),str(v.gc4F)]
                 ENc = [str(v.expENc),str(v.obsENc_6F),str(v.obsENc_No6F),
                 str(v.SunENc_6F),str(v.SunENc_No6F)]
                 w.write('\t'.join(name+[str(v.amb_cdn)]+gcs+ENc)+'\n')
     else:
         with open(outName+'/SpreadSheets/'+outName.split('/')[-1]+'.CompTrans.ENc.Raw.tsv','w+') as w:
-            w.write('SequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\t'
+            w.write('SequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\tGC3S\t'
                 'GC3-Degen\tExpWrightENc\tObsWrightENc_6Fold\tObsWrightENc_No6Fold\t'
                 'ObsWeightedENc_6Fold\tObsWeightedENc_No6Fold\n')
             for k, v in seqData.items():
                 name = [k]
-                gcs = [str(v.gcOverall),str(v.gc1),str(v.gc2),str(v.gc3),str(v.gc4F)]
+                gcs = [str(v.gcOverall),str(v.gc1),str(v.gc2),str(v.gc3),str(v.gc3s),str(v.gc4F)]
                 ENc = [str(v.expENc),str(v.obsENc_6F),str(v.obsENc_No6F),
                 str(v.SunENc_6F),str(v.SunENc_No6F)]
                 w.write('\t'.join(name+[str(v.amb_cdn)]+gcs+ENc)+'\n')
@@ -473,7 +480,7 @@ def getCompFasta(fasta, gCode, require_start, require_stop):
 
 def WriteNullENcOut(outName):
     with open(outName+'/SpreadSheets/' + outName.split('/')[-1] + '.ENc.Null.tsv','w+') as w:
-        w.write('GC3\tENc\n')
+        w.write('GC3S\tENc\n')
         w.write('\n'.join(CalcCUB.nullENcGC3()))
 
 
@@ -558,14 +565,14 @@ if __name__ == "__main__":
                             o.write(folder.split('/')[-1] + '\t' + line)
 
             with open('CUBOutput/SpreadSheets/ENc.Raw.tsv', 'w') as o:
-                o.write('File\tSequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\tGC3-Degen\tExpWrightENc\tObsWrightENc_6Fold\tObsWrightENc_No6Fold\tObsWeightedENc_6Fold\tObsWeightedENc_No6Fold\n')
+                o.write('File\tSequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\tGC3S\tGC3-Degen\tExpWrightENc\tObsWrightENc_6Fold\tObsWrightENc_No6Fold\tObsWeightedENc_6Fold\tObsWeightedENc_No6Fold\n')
                 for folder in folders:
                     for line in open(folder + '/SpreadSheets/' + folder.split('/')[-1] + '.ENc.Raw.tsv'):
                         if 'SequenceID' not in line:
                             o.write(folder.split('/')[-1] + '\t' + line)
 
             with open('CUBOutput/SpreadSheets/CompTrans.ENc.Raw.tsv', 'w') as o:
-                o.write('File\tSequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\tGC3-Degen\tExpWrightENc\tObsWrightENc_6Fold\tObsWrightENc_No6Fold\tObsWeightedENc_6Fold\tObsWeightedENc_No6Fold\n')
+                o.write('File\tSequenceID\tAmbiguousCodons\tGC-Overall\tGC1\tGC2\tGC3\tGC3S\tGC3-Degen\tExpWrightENc\tObsWrightENc_6Fold\tObsWrightENc_No6Fold\tObsWeightedENc_6Fold\tObsWeightedENc_No6Fold\n')
                 for folder in folders:
                     for line in open(folder + '/SpreadSheets/' + folder.split('/')[-1] + '.CompTrans.ENc.Raw.tsv'):
                         if 'SequenceID' not in line:
