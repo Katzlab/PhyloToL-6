@@ -158,7 +158,7 @@ def get_subtrees(args, file):
 
 
 				#Grab a clade as a subtree if 1) it has enough target taxa; 2) it has enough "at least" taxa; 3) it does not have too many contaminants
-				if len(target_leaves) >= args.min_presence and len(required_taxa_leaves) >= args.required_taxa_num and ((args.contaminants < 1 and len(leaves) < args.contaminants * len(target_leaves)) or len(leaves) < args.contaminants):
+				if len(target_leaves) >= args.min_presence and len(required_taxa_leaves) >= args.required_taxa_num and ((args.contaminants < 1 and len(leaves) <= args.contaminants * len(target_leaves)) or len(leaves) <= args.contaminants):
 					selected_nodes.append(node)
 					seen_leaves.extend([leaf.name for leaf in node])
 	#Write the subtrees to output .tre files
