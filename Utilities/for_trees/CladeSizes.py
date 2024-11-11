@@ -1,4 +1,4 @@
-#Author, date: Auden Cote-L'Heureux, last updated Dec 18th 2023
+#Author, date: Auden Cote-L'Heureux, last updated Nov 11th 2024 by Adri Grow
 #Motivation: Understand the topology of trees
 #Intent: Describe clade sizes for different taxonomic groups
 #Dependencies: Python3, ete3
@@ -236,9 +236,10 @@ if __name__ == '__main__':
 	for tree_file in tqdm(os.listdir(args.input)):
 		if tree_file.split('.')[-1] in ('tre', 'tree', 'treefile', 'nex'):
 			clades_per_tax, majs_per_clade, mins_per_clade = get_clades(args.input + '/' + tree_file, args)
-			clades_per_tax_per_file.update({ tree_file.split('.')[0] : clades_per_tax })
-			majs_per_clade_per_file.update({ tree_file.split('.')[0] : majs_per_clade })
-			mins_per_clade_per_file.update({ tree_file.split('.')[0] : mins_per_clade })
+			base_filename = os.path.splittext(tree_file)[0]
+			clades_per_tax_per_file.update({ base_filename : clades_per_tax })
+			majs_per_clade_per_file.update({ base_filename : majs_per_clade })
+			mins_per_clade_per_file.update({ base_filename : mins_per_clade })
 
 	write_output(clades_per_tax_per_file, args, majs_per_clade = majs_per_clade_per_file, mins_per_clade = mins_per_clade_per_file)
 
