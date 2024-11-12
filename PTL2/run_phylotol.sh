@@ -36,7 +36,7 @@ wait
 ###Unity start
 #SBATCH -c 24 # Number of Cores per Task
 #SBATCH --mem=125G # Requested Memory
-#SBATCH -p cpu-long # Partition
+#SBATCH -q long # Partition
 #SBATCH -t 336:00:00 # Job time limit
 module purge       #Cleans up any loaded modules
 module load miniconda/22.11.1-1
