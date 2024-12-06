@@ -1,6 +1,6 @@
 '''
 #Author, date: ?
-#Uploaded: updated by Adri Grow, 2024 (previous Adri Grow 2023)
+#Uploaded: updated by Adri Grow, 2024
 #Intent: map a group of trimmed reads to a reference. 
 #Dependencies: Python3, hisat2, samtools, sambamba
 #EDIT LINES: 18 & 32
@@ -45,7 +45,7 @@ for x in folder:
 				if(file.endswith('.sam') or file.endswith('.bam')):
 					os.rename(file,x[:7] + '/' + file)
 				
-print("~~~~~~~~~~~:>~") #When the snake appears, your script has run!
+print("~~~~~~~~~~~:>~") #When the snake appears in terminal, your script has finished running!
 		
 	
 	
