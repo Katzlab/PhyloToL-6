@@ -44,6 +44,7 @@ def get_params():
 	core.add_argument('--res_cutoff', default = 0.0, type = float, help = 'During guidance, residues are removed if their score is below this cutoff')
 	core.add_argument('--guidance_threads', default = 20, type = int, help = 'Number of threads to allocate to Guidance')
 	core.add_argument('--trimal_cutoff', default = 0.05, type = float, help = 'Gap masking threshold for TrimAl. The maximum proportion of sequences without gaps for a site to be removed (i.e. to remove sites with 95% or more gaps, set this parameter to 0.05).')
+	core.add_argument('--allow_large_files', action = 'store_true', help = 'Allow files with more than 2,000 sequences to run through Guidance.')
 
 	CL = parser.add_argument_group('Contamination loop parameters')
 	CL.add_argument('--contamination_loop', default = None, choices = {'seq', 'clade', 'both'}, help = 'Remove sequences by looking at the sisters of each sequence in a rules file or by picking the best clades')
