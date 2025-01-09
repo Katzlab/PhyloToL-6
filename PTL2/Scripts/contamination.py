@@ -323,7 +323,7 @@ def cl_mafft(params):
 		if file.split('.')[-1] in ('fasta', 'fas', 'faa'):
 			os.system('mafft ' + params.output + '/Output/Pre-Guidance/' + file + ' > ' + params.output + '/Output/NotGapTrimmed/' + file)
 
-			os.system('Scripts/trimal-trimAl/source/trimal -in ' + params.output + '/Output/NotGapTrimmed/' + file + ' -out ' + params.output + '/Output/Guidance/' + file.split('.')[0] + '.95gapTrimmed.fasta' + ' -gapthreshold 0.05 -fasta')
+			os.system('Scripts/trimal-trimAl/source/trimal -in ' + params.output + '/Output/NotGapTrimmed/' + file + ' -out ' + params.output + '/Output/Guidance/' + file.split('.')[0] + '.95gapTrimmed.fasta' + ' -gapthreshold ' + str(params.trimal_cutoff) + ' -fasta')
 
 #Utility function to run FastTree in between iterations (if this is the chosen tree-building method)
 def cl_fasttree(params):
