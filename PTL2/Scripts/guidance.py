@@ -53,6 +53,19 @@ def run(params):
 		guidance_removed_file = open(params.output + '/Output/GuidanceRemovedSeqs.txt', 'w')
 		guidance_removed_file.write('Sequence\tScore\n')
 
+		too_many_seqs = False
+
+		#For each unaligned AA fasta file
+		for file in [f for f in os.listdir(guidance_input) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta')]:
+			nseqs = len([rec for rec in SeqIO.parse(guidance_input + '/' + file, 'fasta')])
+
+			if nseqs > 2000:
+				too_many_seqs = True
+				break
+
+		if too_many_seqs and not params.allow_large_files:
+			return False
+
 		#For each unaligned AA fasta file
 		for file in [f for f in os.listdir(guidance_input) if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta')]:
 			tax_guidance_outdir = params.output + '/Output/Intermediate/Guidance/Output/' + file.split('.')[0].split('_preguidance')[0]
@@ -168,6 +181,7 @@ def run(params):
 								os.system('mv ' + tax_guidance_outdir + '/' + gdir_file + ' ' + tax_guidance_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '_' + gdir_file)
 
 		guidance_removed_file.close()
+		return True
 
 
 
