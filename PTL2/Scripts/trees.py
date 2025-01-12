@@ -34,7 +34,7 @@ def run(params):
 	for file in [f for f in os.listdir(guidance_path)  if f.endswith('.fa') or f.endswith('.faa') or f.endswith('.fasta') or f.endswith('.fas') or f.endswith('.aln')]:
 
 		#Run IQ-Tree
-		if params.tree_method == 'iqtree':
+		if params.tree_method == 'iqtree' or params.tree_method == 'iqtree_fast':
 			#Make intermediate folders
 			if not os.path.isdir(params.output + '/Output/Intermediate/IQTree'):
 				os.mkdir(params.output + '/Output/Intermediate/IQTree')
@@ -43,8 +43,11 @@ def run(params):
 			os.mkdir(tax_iqtree_outdir)
 
 			#Run IQ-Tree
-			os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G -T 10 --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree')
-
+			if params.tree_method == 'iqtree':
+				os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G -T 10 --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree')
+			elif params.tree_method == 'iqtree_fast':
+				os.system('iqtree2 -s ' + guidance_path + '/' + file + ' -m LG+G -T 10 --fast --prefix ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree')
+				
 			#Copy over the final output
 			if os.path.isfile(tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile'):
 				os.system('cp ' + tax_iqtree_outdir + '/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.treefile ' + params.output + '/Output/Trees/' + file.split('.')[0].split('_preguidance')[0] + '.IQTree.tree')
