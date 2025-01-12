@@ -28,7 +28,7 @@ def get_params():
 	common.add_argument('--data', help = 'Path to the input dataset. The format of this varies depending on your --start parameter. If you are running the contamination loop starting with trees, this folder must include both trees AND a fasta file for each tree (with identical file names other than the extension) that includes an amino-acid sequence for each tip of the tree (with the sequence names matching exactly the tip names).')
 	common.add_argument('--output', default = './', help = 'Directory where the output folder should be created. If not given, the folder will be created in the parent directory of the folder containing the scripts.')
 	common.add_argument('--force', action = 'store_true', help = 'Overwrite all existing files in the "Output" folder.')
-	common.add_argument('--tree_method', default = 'iqtree', choices = {'iqtree', 'raxml', 'all'}, help = 'Program to use for tree-building')
+	common.add_argument('--tree_method', default = 'iqtree', choices = {'iqtree', 'iqtree_fast', 'raxml', 'all'}, help = 'Program to use for tree-building')
 	common.add_argument('--blacklist', type = str, help = 'A text file with a list of sequence names not to consider')
 	common.add_argument('--og_identifier', default = 'OG', choices = {'OG','OG6','OGA','OGG'}, help = 'Program to use for selecting seq by GC width')
 	common.add_argument('--sim_taxa', default = None, help = 'Path to the file with the taxa (10-digit codes) to apply the similarity filter on.')
@@ -124,7 +124,7 @@ def clean_up(params):
 	if params.end == 'trees' or params.contamination_loop != None:
 		os.mkdir(params.output + '/Output/Trees')
 		os.mkdir(params.output + '/Output/ColoredTrees')
-		if params.start == 'trees':
+		if params.start == 'trees' and params.contamination_loop == None:
 			copy_input('Trees')
 
 	
