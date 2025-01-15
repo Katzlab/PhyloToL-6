@@ -8,7 +8,7 @@ Input:
 Output: 
     - a folder named 'renamed_transcripts' with 'transcripts.fasta' files now named by 10-digit codes; e.g. "Sr_rh_Ro04_assembledTranscripts.fasta"
 Dependencies: python3
-Usage: python3 ProcessAndRenamePlateTranscripts_AKG.py <assembled transcriptomes directory> <mapping_file.txt>
+Usage: python3 ProcessAndRenamePlateTranscripts.py <assembled transcriptomes directory> <mapping_file.txt>
 '''
 
 import os
