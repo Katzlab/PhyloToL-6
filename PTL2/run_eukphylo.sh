@@ -28,7 +28,7 @@ module load Python/3.9.6-GCCcore-11.2.0
 export PATH=$PATH:/beegfs/fast/katzlab/grid_phylotol_setup/programs/standard-RAxML-master
 parent='/beegfs/fast/katzlab/' #add your path starting with the name of your folder, should begin with /beegfs/fast/katzlab/
 #if you are running batches, you need an srun line for each batch!
-srun --exact -n 1 -D ${parent} python3 ${parent}Scripts/phylotol.py --similarity_filter --sim_cutoff 0.95 --sim_taxa sim_taxa.txt --blacklist GuidanceRemovedSeqs_allConservedRuns_ML_nov_dec_2023.txt --start raw --end trees --gf_list B1_listofOGs.txt --taxon_list taxon_list.txt --data OutgroupR2Gs --output ${parent}Output_folder_B1 > Output_folder_B1.out &
+srun --exact -n 1 -D ${parent} python3 ${parent}Scripts/eukphylo.py --similarity_filter --sim_cutoff 0.95 --sim_taxa sim_taxa.txt --blacklist GuidanceRemovedSeqs_allConservedRuns_ML_nov_dec_2023.txt --start raw --end trees --gf_list B1_listofOGs.txt --taxon_list taxon_list.txt --data OutgroupR2Gs --output ${parent}Output_folder_B1 > Output_folder_B1.out &
 wait
 ###Grid end
 
@@ -45,6 +45,6 @@ module load conda/latest
 conda activate /work/pi_lkatz_smith_edu/Conda_PTL6p2/envs/PTL/
 parent='/work/pi_lkatz_smith_edu/' #add your path startin>
 #if you are running batches, you need an srun line for each batch!
-srun -D ${parent} python3 ${parent}Scripts/phylotol.py --similarity_filter --sim_cutoff 0.99 -->
+srun -D ${parent} python3 ${parent}Scripts/eukphylo.py --similarity_filter --sim_cutoff 0.99 -->
 wait
 ###Unity end
