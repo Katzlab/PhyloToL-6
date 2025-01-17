@@ -2,7 +2,7 @@
 # Author: Auden Cote-L'Heureux
 
 # This script is what users should call when running any or all components of
-# PhyloToL 6 part 2. It briefly determines which parts of the pipeline should be
+# EukPhylo part 2. It briefly determines which parts of the pipeline should be
 # run (pre-Guidance, Guidance, tree building, contamination loop, and/or
 # concatenation) based on the --start and --end parameters, and then runs all 
 # of these components. Each component is actually run by the run() function in 
