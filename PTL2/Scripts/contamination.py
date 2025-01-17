@@ -1,4 +1,4 @@
-# Last updated Jan 2024
+# Last updated Jan 2025
 # Authors: Auden Cote-L'Heureux, Mario Ceron-Romero.
 
 # This script contains the entirety of the contamination loop, an iterative tool to assess 
