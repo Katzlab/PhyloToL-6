@@ -1,7 +1,7 @@
 # Last updated Sept 2023
 # Author: Auden Cote-L'Heureux
 
-# This script is a WRAPPER for the PhyloToL Part 1 GENOMES pipeline. Users should
+# This script is a WRAPPER for the EukPhylo Part 1 GENOMES pipeline. Users should
 # use this script to run the pipeline, rather than running any of the sub-scripts (number 1a through 5b)
 # independently. To run an individual step in the pipeline, use --script X where X is the number (1 through 5).
 # To run multiple sets (usually all of them), use --first script 1 --last_script 5, or whichever first
@@ -19,8 +19,8 @@ import CheckSetup
 def get_args():
 
 	parser = argparse.ArgumentParser(
-                prog = 'PhyloToL v6.0 Part 1 for GenBank Genomes',
-                description = "Updated January 19th, 2023 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
+                prog = 'EukPhylo Part 1 for GenBank Genomes',
+                description = "Updated January 19th, 2023 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/Katzlab/EukPhylo"
                 )
 
 	parser.add_argument('-s', '--script', default = -1, type = int, choices = { 1, 2, 3, 4, 5 }, help = 'Script to run if you are only running one script')
