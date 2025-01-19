@@ -1,7 +1,7 @@
 # Last updated Nov 2023
 # Author: Auden Cote-L'Heureux
 
-# This script is run as the first step of the PhyloToL 6 Part 1 TRANSCRIPTOMES pipeline,
+# This script is run as the first step of the EukPhylo Part 1 TRANSCRIPTOMES pipeline,
 # before any sequence data are actually processed. It checks to ensure that the input
 # assembled transcripts files, databases, genetic codes, and conspecific names files (the latter
 # used only with cross-plate contamination, script 1b) are properly located and formatted.
