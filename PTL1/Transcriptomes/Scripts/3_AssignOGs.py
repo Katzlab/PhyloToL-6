@@ -6,7 +6,7 @@
 # gene families. We provide the Hook database on the GitHub, but this
 # may be replaced with a custom reference database by REPLACING the
 # .dmnd and .fasta files in the Databases/db_OG folder. This script
-# is intended to be run as part of the PhyloToL 6 Part 1 pipeline using
+# is intended to be run as part of the EukPhylo Part 1 pipeline using
 # the script wrapper.py.
 								
 
