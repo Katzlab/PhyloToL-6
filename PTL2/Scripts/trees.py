@@ -2,7 +2,7 @@
 # Authors: Auden Cote-L'Heureux and Mario Ceron-Romero
 
 # This is a relatively simple script that only runs trees, using either IQ-Tree
-# or RAxML. The run() function is called in two places: both in phylotol.py, and
+# or RAxML. The run() function is called in two places: both in eukphylo.py, and
 # in contamination.py, where it is used to re-build trees. When starting at this
 # step, users must input one aligned amino acid fasta file per OG. Otherwise, if 
 # starting at the pre-Guidance or Guidance steps, this step will be run if --end = trees.
@@ -12,7 +12,7 @@ import os, sys, re
 from Bio import SeqIO
 from color import color
 
-#Called in phylotol.py and contamination.py
+#Called in eukphylo.py and contamination.py
 def run(params):
 
 	#Checking whether aligned files were input, or it should just start with the Guidance outputs from the previous step.
