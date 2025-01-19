@@ -5,12 +5,12 @@
 # all length-filtered assembled transcripts against a reference database. It then
 # writes these sequences into a separate file, removing them from the remainder
 # of the sequences that will go forwards for gene family assignment. This script
-# should be in Part 1 of the PhyloToL version 6 pipeline using the script wrapper.py.
+# should be in Part 1 of the EukPhylo pipeline using the script wrapper.py.
 
 # You must run Script 1a before this step. Optionally, you may also have run Script 1b.
 # Before running this script, ensure that you have a properly formatted rRNA reference
 # BLAST database in the Databases/db_BvsE/SSULSUdb folder; it is relatively narrow in scope 
-# and could be easily replaced
+# and could be easily replaced or updated to better capture a user's target taxa
 
 #Dependencies
 import argparse, os, sys
