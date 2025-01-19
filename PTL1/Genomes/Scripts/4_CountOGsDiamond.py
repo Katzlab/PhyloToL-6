@@ -1,5 +1,5 @@
 # Last updated Sept 19th 2023
-# Author: Xyrus Maurer-Alcala
+# Author: Xyrus Maurer-Alcala and Auden Cote-L'Heureux
 
 # This script classifies translated CDS into gene families by
 # similarity-searching using Diamond against a reference database of
