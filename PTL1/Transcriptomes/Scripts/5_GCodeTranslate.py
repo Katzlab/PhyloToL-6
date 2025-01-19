@@ -4,7 +4,7 @@
 # This script is intended to translate nucleotide sequences. It does this using
 # the gcode_output.tsv file output by script 4 and containing in-frame stop codon
 # frequencies. The user can use this stop codon information to fill in the last 
-# column in this file with the genetic code for each taxon. If the user input a
+# column in this file with the genetic code for each taxon, as outlined in the Wiki on Github. If the user input a
 # genetic code or list of genetic codes to script 1, then the gcode_output.tsv will
 # be filled automatically. sequences are translated using the Diamond BLASTp results 
 # from OG assignment as a starting point for determining coding sequence boundaries. 
@@ -14,7 +14,7 @@
 # of transcriptomic data, poor genetic code assignment or low-quality/partial data can 
 # interfere with this process).
 
-# This script is intended to be run using the wrapper.py as part of the PhyloToL 6 Part 1 
+# This script is intended to be run using the wrapper.py as part of the EukPhylo Part 1 
 # pipeline. It requires that the setup of the 'Output' folder be that as output by script 4
 # of this pipeline.
 
