@@ -1,7 +1,7 @@
 # Last updated Sept 2023
 # Author: Auden Cote-L'Heureux
 
-# This script is a WRAPPER for the PhyloToL Part 1 TRANSCRIPTOMES pipeline. Users should
+# This script is a WRAPPER for the EukPhylo Part 1 TRANSCRIPTOMES pipeline. Users should
 # use this script to run the pipeline, rather than running any of the sub-scripts (number 1a through 7b)
 # independently. To run an individual step in the pipeline, use --script X where X is the number (1 through 7).
 # To run multiple sets (usually all of them), use --first script 1 --last_script 7, or whichever first
@@ -21,8 +21,8 @@ import CheckSetup
 def get_args():
 
 	parser = argparse.ArgumentParser(
-                prog = 'PhyloToL v6.0 Part 1 for Transcriptomes',
-                description = "Updated September 29th, 2023 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
+                prog = 'EukPhylo Part 1 for Transcriptomes',
+                description = "Updated September 29th, 2023 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/Katzlab/EukPhylo"
                 )
 
 	parser.add_argument('-s', '--script', default = -1, type = int, choices = { 1, 2, 3, 4, 5, 6, 7 }, help = 'Script to run if you are only running one script')
