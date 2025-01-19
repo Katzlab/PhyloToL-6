@@ -2,12 +2,12 @@
 # Author: Auden Cote-L'Heureux
 
 # This script produces both taxon- and sequence-level statistics to describe the ReadyToGo files
-# output by PhyloToL Part 1, as well as some OG-level information from the Hook (OG reference)
+# output by EukPhylo Part 1, as well as some OG-level information from the Hook (OG reference)
 # database. It relies on the utility script CUB.py to calculate composition statistics (GC content, 
 # Effective Number of Codons, etc.). Both sequence level and taxon-level stats are summarized in tab-separated 
 # outputs written to the Output folder. This script requires that the OG reference database is available as an 
 # amino acid fasta file  in the Databases/db_OG folder with the same file name as the .dmnd file used in script 4. 
-# This script is intended to be run as part of the PhyloToL 6 Part 1 pipeline using the script wrapper.py.
+# This script is intended to be run as part of the EukPhylo Part 1 pipeline using the script wrapper.py.
 
 import os, sys
 import argparse
@@ -30,7 +30,7 @@ def get_args():
 		description = "Updated March 31th, 2023 by Auden Cote-L'Heureux"
 	)
 
-	parser.add_argument('-i', '--input', type = str, required = True, help = 'Input path to the "Output" folder produced by PhyloToL Part 1. This folder should contain both the "ReadyToGO" and "Intermediate" folders.')
+	parser.add_argument('-i', '--input', type = str, required = True, help = 'Input path to the "Output" folder produced by EukPhylo Part 1. This folder should contain both the "ReadyToGO" and "Intermediate" folders.')
 	parser.add_argument('-d', '--databases', type = str, default = '../Databases', help = 'Path to databases folder')
 	parser.add_argument('-r', '--r2g_jf', action = 'store_true', help = 'Create ReadyToGo files filtered to only include sequences between the 25th and 75th percentile of silent-site GC content. Please be aware that these are not necessarily the correct or non-contaminant sequences; examine the GC3xENc plots carefully before using these data.')
 
