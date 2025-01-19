@@ -2,11 +2,11 @@
 # Authors: Auden Cote-L'Heureux and Mario Ceron-Romero
 
 # This script runs Guidance in an iterative fashion for more both MSA construction 
-# and more rigorous homology assessment than what is offered in PhyloToL 6 part 1.
+# and more rigorous homology assessment than what is offered in EukPhylo part 1.
 # Guidance runs until the input number of iterations (--guidance_iters, default = 5) 
 # has been reached, or until there are no sequences below the sequence score cutoff.
 # All sequences below the score cutoff (--seq_cutoff, default = 0.3) are removed at
-# each iteration. By default, PhyloToL does not remove residues that fall below the 
+# each iteration. By default, EukPhylo does not remove residues that fall below the 
 # given residue cutoff (--res_cutoff) and columns that fall below the given column 
 # cutoff (--col_cutoff, defaults are 0), though this can be turned on by adjusting 
 # these parameters. Outputs at this point are found in the “Guidance_NotGapTrimmed” 
@@ -16,7 +16,7 @@
 
 # This step is either intended to be run starting with --start = unaligned (but not raw)
 # inputs, meaning one amino acid alignment per OG. It can also be run directly after the
-# preguidance step. The run() function is called in two places: in phylotol.py generally,
+# preguidance step. The run() function is called in two places: in eukphylo.py generally,
 # and in contamination.py if the contamination loop is using Guidance as the re-alignment
 # method.
 
@@ -24,7 +24,7 @@
 import os, sys, re
 from Bio import SeqIO
 
-#Called in phylotol.py and contamination.py
+#Called in eukphylo.py and contamination.py
 def run(params):
 
 	if params.start == 'raw' or params.start == 'unaligned':
