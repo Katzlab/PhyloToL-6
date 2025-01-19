@@ -3,8 +3,8 @@
 
 # This script does not process sequence data in any way. It only renames the outputs of 
 # script 6 to the 10-digit taxon code which prefixes the file names, and then moves output
-# 'ReadyToGo' files into a separate folder. It is intended to be run as part of the PhyloToL
-# 6 Part 1 pipeline using the script wrapper.py.
+# 'ReadyToGo' files into a separate folder. It is intended to be run as part of the EukPhylo
+# Part 1 pipeline using the script wrapper.py.
 
 import argparse, os, sys
 from argparse import RawTextHelpFormatter,SUPPRESS
