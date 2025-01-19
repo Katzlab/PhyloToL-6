@@ -3,7 +3,7 @@
 
 # This script is intended to remove transcripts below or above a given   		 			 
 # size range from a transcriptome assembly. It should be run as part
-# of Part 1 of the PhyloToL version 6 pipeline, using the script wrapper.py.
+# of Part 1 of the EukPhylo pipeline, using the script wrapper.py.
 
 # Prior to running this script, ensure that you have assembled your
 # transcriptome and renamed the assembled transcripts in the format of
