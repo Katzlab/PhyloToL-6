@@ -7,7 +7,7 @@
 # frequencies in all reading frames; it then reports these frequencies in a spreadsheet
 # (gcodes_output.tsv) for the user to inspect in deciding which genetic codes to use,
 # if unsure. This step can be skipped if genetic codes were input from the beginning. This
-# script should be run through the PhyloToL 6 Part 1 pipeline using the script wrapper.py.
+# script should be run through the EukPhylo Part 1 pipeline using the script wrapper.py.
 
 #----------------------------------------- NOTES -----------------------------------------#
 #
