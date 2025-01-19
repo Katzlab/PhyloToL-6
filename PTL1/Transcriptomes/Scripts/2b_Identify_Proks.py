@@ -9,7 +9,7 @@
 # to a prokaryotic sequence, it is labeled with an "E"; if it's best hit to a prokaryotic
 # sequence has an e-value >1000 times that of its best hit to a eukaryotic sequence, it is
 # labeled with a "P". Anything else gets a "U". This script should be run as part of the 
-# PhyloToL version 6 Part 1 pipeline using the script wrapper.py.
+# EukPhylo Part 1 pipeline using the script wrapper.py.
 
 # Prior to running this script, ensure that you have run scripts 1a (and optionally
 # script 1b) and 2a, and that your prokaryote and reference databases (or the default 
