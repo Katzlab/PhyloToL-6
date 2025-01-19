@@ -3,10 +3,12 @@
 
 # The aim of this script is to generate lots of codon usage statistics to aid in
 # identifying useful characteristics for de novo ORF calling. It is intended to be
-# stored in the 'Scripts' folder for the PhyloToL Part 1 pipeline scripts, and is
+# stored in the 'Scripts' folder for the EukPhylo Part 1 pipeline scripts, and is
 # called by Script 7b to calculate composition statistics for Part 1 output files.
 # It should not be run separately.
 
+# Users should think about including start/stop constraint as default includes all 
+# sequences, which can capture pseudogenes
 
 # Dependencies:
 # Python3, numpy, BioPython
