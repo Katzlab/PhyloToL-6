@@ -5,7 +5,7 @@
 # by removing sequences with low coverage relative to other
 # very similar sequences from samples sequenced on the same
 # plate. This script is optional, but to be run as part of the
-# PhyloToL version 6 Part 1 pipeline using the script wrapper.py
+# EukPhylo Part 1 pipeline using the script wrapper.py
 
 # The specifics of parameters are described below and include removing seqs 1/10 
 # the coverage of the most highly expressed, and keeping all seqs with coverage >50.
