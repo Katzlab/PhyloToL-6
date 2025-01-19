@@ -2,7 +2,7 @@
 # Authors: Auden Cote-L'Heureux, Mario Ceron-Romero, Godwin Ani
 
 # This script is only run when --start = unaligned. This typically means that a user
-# is inputting ReadyToGo files as output by PhyloToL 6 part 1. The script contains two optional
+# is inputting ReadyToGo files as output by EukPhylo part 1. The script contains two optional
 # filters. One filter aims to remove sequences outside silent-site GC content ranges set by 
 # the user, and relies on the output of the utility script ‘GC_Identifier_v1.0.py.’ See the manual
 # for details on using this filter. Sequence filtration by composition is set using the --og_prefix
@@ -27,7 +27,7 @@
 import os, sys, re
 from Bio import SeqIO
 
-#This function is called ONLY in phylotol.py.
+#This function is called ONLY in eukphylo.py.
 def run(params):
 
 	#Reading in the list of gene families to use (--gf_list)
