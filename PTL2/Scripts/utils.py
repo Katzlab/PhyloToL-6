@@ -2,27 +2,27 @@
 # Author: Auden Cote-L'Heureux
 
 # This script is a general utility script that does two main things. First, it has
-# a function to read in all PhyloToL parameters, which is called in phylotol.py.
-# It also has a function that checks for and cleans up existing PhyloToL part 2
+# a function to read in all EukPhylo parameters, which is called in eukphylo.py.
+# It also has a function that checks for and cleans up existing EukPhylo part 2
 # output files from previous runs, and creates a new, empty Output folder structure
-# for the new run. This function is also called only in phylotol.py.
+# for the new run. This function is also called only in eukphylo.py.
 
 #Dependencies
 import os, sys, re
 import argparse
 import shutil
 
-#Reading in all parameters. This function is only called once, in phylotol.py
+#Reading in all parameters. This function is only called once, in eukphylo.py
 def get_params():
 
 	parser = argparse.ArgumentParser(
-                    prog = 'PhyloToL v6.0',
-                    description = "Updated January, 2022 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/AudenCote/PhyloToL_v6.0"
+                    prog = 'EukPhylo v1.0',
+                    description = "Updated January, 2022 by Auden Cote-L'Heureux. Link to GitHub: https://github.com/Katzlab/EukPhylo"
                     )
 
 	common = parser.add_argument_group('Commonly adjusted parameters')
-	common.add_argument('--start', default = 'raw', choices = {'raw', 'unaligned', 'aligned', 'trees'}, help = 'Stage at which to start running PhyloToL.')
-	common.add_argument('--end', default = 'trees', choices = {'unaligned', 'aligned', 'trees'}, help = 'Stage until which to run PhyloToL. Options are "unaligned" (which will run up to but not including guidance), "aligned" (which will run up to but not including RAxML), and "trees" which will run through RAxML')
+	common.add_argument('--start', default = 'raw', choices = {'raw', 'unaligned', 'aligned', 'trees'}, help = 'Stage at which to start running EukPhylo.')
+	common.add_argument('--end', default = 'trees', choices = {'unaligned', 'aligned', 'trees'}, help = 'Stage until which to run EukPhylo. Options are "unaligned" (which will run up to but not including guidance), "aligned" (which will run up to but not including RAxML), and "trees" which will run through RAxML')
 	common.add_argument('--gf_list', default = None, help = 'Path to the file with the GFs of interest. Only required if starting from the raw dataset.')
 	common.add_argument('--taxon_list', default = None, help = 'Path to the file with the taxa (10-digit codes) to include in the output.')
 	common.add_argument('--data', help = 'Path to the input dataset. The format of this varies depending on your --start parameter. If you are running the contamination loop starting with trees, this folder must include both trees AND a fasta file for each tree (with identical file names other than the extension) that includes an amino-acid sequence for each tip of the tree (with the sequence names matching exactly the tip names).')
@@ -76,7 +76,7 @@ def get_params():
 	return parser.parse_args()
 
 
-#Cleaning up existing output and creating a new output folder structure. This function is only called once, in phylotol.py
+#Cleaning up existing output and creating a new output folder structure. This function is only called once, in eukphylo.py
 def clean_up(params):
 
 	#If an output folder doesn't exist, create one.
