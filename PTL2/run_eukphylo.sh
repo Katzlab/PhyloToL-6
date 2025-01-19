@@ -45,6 +45,6 @@ module load conda/latest
 conda activate /work/pi_lkatz_smith_edu/Conda_PTL6p2/envs/PTL/
 parent='/work/pi_lkatz_smith_edu/' #add your path startin>
 #if you are running batches, you need an srun line for each batch!
-srun -D ${parent} python3 ${parent}Scripts/eukphylo.py --similarity_filter --sim_cutoff 0.99 -->
+srun -D ${parent} python3 ${parent}Scripts/eukphylo.py --similarity_filter --sim_cutoff 0.99 ## This line is incomplete
 wait
 ###Unity end
