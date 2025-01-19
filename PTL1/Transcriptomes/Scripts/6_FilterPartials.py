@@ -6,7 +6,7 @@
 # from the same OG in the Hook database are removed. Then, for each transcriptomic sample, 
 # all sequences within an OG are compared at the nucleotide level to the sequence with the 
 # highest “score” (defined as k-mer coverage multiplied by length). The script should be run
-# as part of the PhyloToL 6 Part 1 pipeline using the script wrapper.py. It requires that the
+# as part of the EukPhylo Part 1 pipeline using the script wrapper.py. It requires that the
 # structure of the 'Output' folder be as output by script 5, and that the Databases/db_OG folder
 # contains a .fasta file containing all amino acid sequences in the OG reference database (Hook)
 # with the same file name (until the extension) as the .dmnd file for the reference database used
