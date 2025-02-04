@@ -1,5 +1,5 @@
 
-''' Author, Date : Godwin Ani, 15th - September - 2023.
+''' Author, Date : Godwin Ani, 10 - July - 2024.
 Motivation : To make phylogenetic trees more presentable.
 Intent : Shorten the tip labels of phylogenetic trees.
 Dependencies : Python3, ete3
