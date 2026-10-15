@@ -36,7 +36,8 @@ def get_newick(fname):
 
 
 #This function reroots the tree on the largest Ba/Za clade. If there is no prokaryote clade,
-#it roots on the largest Op clade, then Pl, then Am, then Ex, then Sr.
+#it roots on the largest Op clade, then Pl, then Am, then Ex, then Sr. This rooting reflects 
+#on set of views on roots, and a user could replace these rules with their own views.
 def reroot(tree):
 
 	#This nested function returns the largest clade of a given taxonomic group
