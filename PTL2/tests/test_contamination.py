@@ -8,6 +8,7 @@ from types import SimpleNamespace
 from unittest import mock
 
 import ete3
+from ete3.coretype.tree import TreeError
 import pytest
 
 import contamination
@@ -101,6 +102,16 @@ def test_reroot_leaves_tree_unchanged_without_large_enough_clade():
 	tree = contamination.reroot(tree)
 
 	assert tree.write(format=9) == ete3.Tree(newick).write(format=9)
+
+
+# Every leaf is a prokaryote, so the "largest prokaryote clade" is the whole tree, which ete3
+# can't use as its own outgroup
+TREE_ALL_PROKARYOTES = '((Ba_bb_Bsub_1,Ba_bb_Ecol_1),(Za_aa_Mjan_1,Ba_cc_Paer_1));'
+
+
+def test_reroot_whole_tree_as_outgroup_raises_tree_error():
+	with pytest.raises(TreeError):
+		contamination.reroot(ete3.Tree(TREE_ALL_PROKARYOTES))
 
 
 # --------------------------------------------------------------------------------------
@@ -205,8 +216,10 @@ def test_get_subtrees_rules_file(tmp_path):
 def test_get_subtrees_missing_input_file_exits(tmp_path, arg):
 	f = write_file(tmp_path, 'OG1.tre', TREE_ONE_NESTED_CILIATE)
 
-	with pytest.raises(SystemExit):
+	with pytest.raises(SystemExit) as excinfo:
 		contamination.get_subtrees(make_args(**{arg: str(tmp_path / 'does_not_exist.txt')}), f)
+
+	assert excinfo.value.code == 1
 
 
 # --------------------------------------------------------------------------------------
@@ -271,8 +284,10 @@ def test_get_sisters_cocontaminants_are_not_counted_as_sisters(tmp_path):
 def test_get_sisters_missing_cocontaminants_file_exits(tmp_path):
 	f = write_file(tmp_path, 'OG1.tre', TREE_CILIATE_SISTER_TO_BACTERIUM)
 
-	with pytest.raises(SystemExit):
+	with pytest.raises(SystemExit) as excinfo:
 		contamination.get_sisters(make_args(cocontaminants=str(tmp_path / 'missing.tsv')), f, SISTER_RULES, {})
+
+	assert excinfo.value.code == 1
 
 
 def test_get_sisters_subsister_rule(tmp_path):
@@ -294,6 +309,37 @@ def test_get_sisters_single_taxon_tree(tmp_path):
 	kept = contamination.get_sisters(make_args(), f, SISTER_RULES, {})
 
 	assert sorted(kept) == ['Sr_ci_AAAA_1', 'Sr_ci_AAAA_2', 'Sr_ci_AAAA_3']
+
+
+# --------------------------------------------------------------------------------------
+# test re-root failures in get_subtrees and get_sisters
+# --------------------------------------------------------------------------------------
+
+REMOVAL_METHODS = {
+	'clade': lambda f: contamination.get_subtrees(make_args(), f),
+	'sister': lambda f: contamination.get_sisters(make_args(), f, SISTER_RULES, {}),
+}
+
+
+@pytest.mark.parametrize('method', REMOVAL_METHODS)
+def test_unrootable_tree_warns_and_continues(tmp_path, capsys, method):
+	f = write_file(tmp_path, 'OG1.tre', TREE_ALL_PROKARYOTES)
+
+	kept = REMOVAL_METHODS[method](f)
+
+	# No ciliates in the tree, so nothing is removed; the warning names ete3's actual reason
+	assert sorted(kept) == leaf_names(ete3.Tree(TREE_ALL_PROKARYOTES))
+	assert 'Cannot set myself as outgroup' in capsys.readouterr().out
+
+
+@pytest.mark.parametrize('method', REMOVAL_METHODS)
+def test_unexpected_reroot_error_is_not_hidden(tmp_path, method):
+	f = write_file(tmp_path, 'OG1.tre', TREE_ONE_NESTED_CILIATE)
+
+	# Simulates a bug inside reroot: it should stop the run, not be reported as a re-root warning
+	with mock.patch('contamination.reroot', side_effect=NameError('simulated bug')):
+		with pytest.raises(NameError):
+			REMOVAL_METHODS[method](f)
 
 
 # --------------------------------------------------------------------------------------
@@ -355,8 +401,10 @@ def test_write_new_preguidance_multiple_matching_sequence_files(output_dir):
 def test_write_new_preguidance_missing_exclude_file_exits(output_dir):
 	params = make_args(output=str(output_dir), cl_exclude_taxa=str(output_dir / 'missing.txt'))
 
-	with pytest.raises(SystemExit):
+	with pytest.raises(SystemExit) as excinfo:
 		contamination.write_new_preguidance(params, [], SEQS_PER_OG, 'OG1_preguidance.FastTree.tre')
+
+	assert excinfo.value.code == 1
 
 
 # --------------------------------------------------------------------------------------
