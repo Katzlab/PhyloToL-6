@@ -6,6 +6,7 @@
 #Outputs: Filtered OGSharedness table or Presence/absence spreadsheets
 #Example: usage to run are below
 
+"""
 Filter the OGSharedness CSV or convert into a presence/absence CSV (Species, MinorClades, 
 MajorClades and the major-clade sums recomputed from presence). Sequences and Paralogness 
 are copied from the input. Species codes are XX_yy_Zzzz (major = XX, minor = XX_yy).
@@ -17,7 +18,7 @@ Two output modes:
                     (everything before the first XX_yy_Zzzz column), copied
                     unchanged, plus the filtered species columns with their
                     original sequence counts. The filters below, plus
-                    --target_clade and --non_target, still apply."
+                    --target_clade and --non_target, still apply.
 
 Arguments:
   -i, --input        Input OGSharedness.csv (required)
