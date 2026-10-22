@@ -150,7 +150,9 @@ def reroot(tree):
 
 		return best_clade
 
-	#Get the biggest clade for each taxonomic group (stops once it finds one)
+	#Get the biggest clade for each taxonomic group (stops once it finds one):
+	#Note that this is one way of rooting eukaryotic trees, and users might
+	#want to replace this list with their preferred rooting.
 	for taxon in [('Ba'), ('Za'), ('Op'), ('Pl'), ('Am'), ('Ex'), ('Sr')]:
 		clade = get_best_clade(taxon)
 		
