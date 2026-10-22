@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-"""
 #Author, date: Laura, Ozan, and Claude, Sept 1 2026
 #Motivation: Process the OGSharedness table
 #Intent: Filters the table and converts # seqs to pres/abs and allows users to specify targets
