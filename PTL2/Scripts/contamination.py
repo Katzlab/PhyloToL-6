@@ -19,6 +19,7 @@
 import os, sys, re
 from Bio import SeqIO
 import ete3
+from ete3.coretype.tree import TreeError
 import guidance
 import trees
 from statistics import mean
@@ -84,8 +85,8 @@ def get_subtrees(args, file):
 
 	try:
 		tree = reroot(tree)
-	except:
-		print('\nUnable to re-root the tree ' + file + ' (maybe it had only 1 major clade, or an inconvenient polytomy). Skipping this step and continuing to try to grab robust clades from the tree.\n')					
+	except TreeError as e:
+		print('\nUnable to re-root the tree ' + file + ' (maybe it had only 1 major clade, or an inconvenient polytomy). Reason: ' + str(e) + '. Skipping this step and continuing to try to grab robust clades from the tree.\n')
 
 	#Reading in clade grabbing exceptions
 	exceptions = []
@@ -94,7 +95,7 @@ def get_subtrees(args, file):
 			exceptions = [line.strip() for line in open(args.clade_grabbing_exceptions)]
 		else:
 			print('\nError: it looks like you tried to input a clade grabbing exceptions file, but it could not be found.\n')
-			exit()
+			sys.exit(1)
 
 	#Reading clade grabbing rules
 	rules_per_clade = []
@@ -110,7 +111,7 @@ def get_subtrees(args, file):
 
 		else:
 			print('\nError: it looks like you tried to input a clade grabbing rules file, but it could not be found.\n')
-			exit()
+			sys.exit(1)
 	else:
 		rules_per_clade.append({ 'target_taxa' : args.target_taxa, 'num_contams' : args.num_contams, 'min_target_presence' : args.min_target_presence, 'required_taxa' : args.required_taxa, 'required_taxa_num' : args.required_taxa_num })
 
@@ -121,7 +122,7 @@ def get_subtrees(args, file):
 				clade['target_taxa'] = [l.strip() for l in open(clade['target_taxa']).readlines() if l.strip() != '']
 			except AttributeError:
 				print('\nError: invalid "target_taxa" input (' + clade['target_taxa'] + '). This must be a comma-separated list of any number of digits/characters to describe focal taxa (e.g. Sr_ci_S,Am_t), or a file with the extension .txt containing a list of complete or partial taxon codes. All sequences containing the complete/partial code will be identified as belonging to target taxa.\n')
-				exit()
+				sys.exit(1)
 		else:
 			clade['target_taxa'] = [code.strip() for code in clade['target_taxa'].split(',') if code.strip() != '']
 
@@ -205,8 +206,8 @@ def get_sisters(args, file, sister_contam_per_tax, subsister_contam_per_tax):
 
 	try:
 		tree = reroot(tree)
-	except:
-		print('\nUnable to re-root the tree ' + file + ' (maybe it had only 1 major clade, or an inconvenient polytomy). Skipping this step and continuing to try to grab robust clades from the tree.\n')
+	except TreeError as e:
+		print('\nUnable to re-root the tree ' + file + ' (maybe it had only 1 major clade, or an inconvenient polytomy). Reason: ' + str(e) + '. Skipping this step and continuing with sister-based contamination removal on the tree as it is.\n')
 
 	mean_bl = mean([leaf.dist for leaf in tree])
 
@@ -223,7 +224,7 @@ def get_sisters(args, file, sister_contam_per_tax, subsister_contam_per_tax):
 						coconts.update({ line[0] : line[1] })
 		else:
 			print('\nERROR: It looks like you tried to input a co-contaminants file to the contamination loop, but the file could not be found.\n')
-			exit()
+			sys.exit(1)
 
 	for tax in all_taxa_in_tree:
 		if tax not in coconts:
@@ -293,7 +294,7 @@ def write_new_preguidance(params, seqs2keep, seqs_per_og, tree_file):
 			exclude_taxa = list(dict.fromkeys([line.strip() for line in open(params.cl_exclude_taxa)]))
 		except (FileNotFoundError, TypeError) as e:
 			print('\nERROR: Unable to read the file listing taxa to exclude in the first iteration of the contamination loop (--cl_exclude_taxa). Please make sure that the path is correct and that the file is formatted correctly.\n\n' + str(e) + '\n')
-			exit()
+			sys.exit(1)
 	else:
 		exclude_taxa = []
 
@@ -430,7 +431,7 @@ def run(params):
 						subsister_contam_per_tax[line.strip().split('\t')[0]].append(line.strip().split('\t')[1])
 				else:
 					print('\nERROR: It looks like you tried to input a sub-sister rules file to the contamination loop, but the file could not be found.\n')
-					exit()
+					sys.exit(1)
 
 			for tree_file in os.listdir(params.output + '/Output/Trees'):
 				if tree_file.split('.')[-1] in ('tre', 'tree', 'treefile', 'nex') and tree_file not in completed_ogs:

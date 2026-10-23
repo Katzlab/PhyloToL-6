@@ -1,0 +1,9 @@
+name: eukphylo-dev
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11
+  - biopython
+  - ete3
+  - tqdm
+  - pytest
+  - pytest-cov
